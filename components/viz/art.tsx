@@ -10,14 +10,14 @@ import {
   type MotionValue,
 } from "motion/react";
 import { Blob } from "@/components/viz/sketch";
-import { ART, type ArtGlow, type ArtId, type ArtMotion } from "@/lib/art";
-import { asset, cn } from "@/lib/utils";
+import { ART, artUrl, type ArtGlow, type ArtId, type ArtMotion } from "@/lib/art";
+import { cn } from "@/lib/utils";
 
 type Field = { sx: MotionValue<number>; sy: MotionValue<number> };
 const FieldCtx = createContext<Field | null>(null);
 
 /**
- * Stage — a relative frame that can lean its pins toward the pointer.
+ * Stage - a relative frame that can lean its pins toward the pointer.
  * Every composed illustration should sit in one of these.
  */
 export function ArtStage({
@@ -58,7 +58,7 @@ export function ArtStage({
 }
 
 /**
- * Pin — places a sprite on the stage. `x`/`y` are the centre. `depth` makes
+ * Pin - places a sprite on the stage. `x`/`y` are the centre. `depth` makes
  * the piece chase the pointer (and can be used as a parallax weight).
  */
 export function ArtPin({
@@ -143,7 +143,7 @@ export function Art({
             !reduce && "animate-art-glow",
           )}
         >
-          {/* flat organic wash, not a blur — same family as the herd auras */}
+          {/* flat organic wash, not a blur - same family as the herd auras */}
           <Blob
             shape="d"
             fill={glow === "pink" ? "var(--color-pink)" : glow === "signal" ? "var(--color-signal)" : "var(--color-butter)"}
@@ -153,10 +153,10 @@ export function Art({
       )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={asset(`/art/gen/${meta.file}`)}
+        src={artUrl(id)}
         alt={decorative ? "" : (alt ?? meta.alt)}
-        width={meta.px}
-        height={meta.px}
+        width={meta.w}
+        height={meta.h}
         draggable={false}
         className="pointer-events-none h-full w-full select-none object-contain"
       />

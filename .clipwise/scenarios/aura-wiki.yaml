@@ -19,7 +19,7 @@ output:
   filename: aura-wiki-tour
 
 steps:
-  - name: "Home — hero"
+  - name: "Home - hero"
     captureDelay: 100
     holdDuration: 1200
     actions:
@@ -52,7 +52,7 @@ steps:
         timeout: 8000
         waitFor: navigation
 
-  - name: "Description — scroll"
+  - name: "Description - scroll"
     captureDelay: 80
     holdDuration: 900
     actions:
@@ -68,7 +68,7 @@ steps:
         url: "http://localhost:3000/background"
         waitUntil: networkidle
 
-  - name: "Background — scroll"
+  - name: "Background - scroll"
     captureDelay: 50
     holdDuration: 800
     actions:

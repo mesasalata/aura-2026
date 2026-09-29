@@ -10,7 +10,7 @@ import {
   type MotionValue,
 } from "motion/react";
 
-/** Animated number — counts on view, or scrubs with a scroll `progress` value. */
+/** Animated number - counts on view, or scrubs with a scroll `progress` value. */
 export function CountUp({
   to,
   from = 0,

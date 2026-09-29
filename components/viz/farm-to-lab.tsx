@@ -4,21 +4,9 @@ import { motion } from "motion/react";
 import { Art } from "@/components/viz/art";
 import { DropMark, FlaskMark } from "@/components/viz/marks";
 import { Blob, LINE, SOFT_ID } from "@/components/viz/sketch";
+import { DoodadFrame, Staple } from "@/components/viz/doodads";
 
 const INK = LINE;
-
-/* small inked glyphs for the steps that have no prop in the kit */
-function ReadoutGlyph() {
-  return (
-    <svg viewBox="0 0 60 60" className="h-9 w-9 overflow-visible" aria-hidden>
-      <g filter={`url(#${SOFT_ID})`} strokeLinecap="round" strokeLinejoin="round">
-        <rect x="14" y="10" width="32" height="42" rx="6" fill="var(--color-milk)" stroke={INK} strokeWidth="2.2" />
-        <rect x="19" y="16" width="22" height="18" rx="2" fill="var(--color-pink-soft)" stroke={INK} strokeWidth="1.6" />
-        <circle cx="30" cy="43" r="3" fill="var(--color-butter)" stroke={INK} strokeWidth="1.4" />
-      </g>
-    </svg>
-  );
-}
 
 function DataGlyph() {
   return (
@@ -32,31 +20,22 @@ function DataGlyph() {
   );
 }
 
-function DecisionGlyph() {
-  return (
-    <svg viewBox="0 0 60 60" className="h-9 w-9 overflow-visible" aria-hidden>
-      <g filter={`url(#${SOFT_ID})`} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="30" cy="30" r="20" fill="var(--color-bio)" fillOpacity="0.35" stroke={INK} strokeWidth="2.2" />
-        <path d="M20 31 L27 38 L41 22" fill="none" stroke={INK} strokeWidth="2.8" />
-      </g>
-    </svg>
-  );
-}
-
 type PipelineStep = { label: string; sub: string; accent: string; glyph: React.ReactNode };
 
 const STEPS: PipelineStep[] = [
   { label: "Cow", sub: "Welfare first", accent: "var(--color-pink)", glyph: <Art id="cow" size={44} motion="none" /> },
-  { label: "Milk sample", sub: "Taken at milking", accent: "var(--color-orange)", glyph: <DropMark className="h-9 w-auto" /> },
-  { label: "Biosensor", sub: "Recognition → signal", accent: "var(--color-signal)", glyph: <FlaskMark className="h-10 w-auto" liquid="pink" /> },
-  { label: "Readout", sub: "Colour / fluorescence", accent: "var(--color-butter)", glyph: <ReadoutGlyph /> },
-  { label: "Data", sub: "Trend over time", accent: "var(--color-pink)", glyph: <DataGlyph /> },
-  { label: "Decision", sub: "Act earlier", accent: "var(--color-bio)", glyph: <DecisionGlyph /> },
+  { label: "Siphon", sub: "Each milking", accent: "var(--color-orange)", glyph: <DropMark className="h-9 w-auto" /> },
+  { label: "Catapult", sub: "miR-223 opens it", accent: "var(--color-signal)", glyph: <FlaskMark className="h-10 w-auto" liquid="pink" /> },
+  { label: "FET", sub: "Current ticks", accent: "var(--color-butter)", glyph: <Art id="biofet" size={52} motion="none" /> },
+  { label: "Score", sub: "This cow, this milking", accent: "var(--color-pink)", glyph: <DataGlyph /> },
+  { label: "Flag", sub: "Look closer", accent: "var(--color-bio)", glyph: <Art id="phoneAlert" size={48} motion="none" /> },
 ];
 
-/** FarmToLabPipeline — cow → milk → biosensor → readout → data → decision, drawn. */
+/** FarmToLabPipeline - cow → milk → biosensor → readout → data → decision, drawn. */
 export function FarmToLabPipeline() {
   return (
+    <DoodadFrame>
+      <Staple className="doodad-staple--strip" />
     <div className="flex flex-wrap items-start justify-center gap-x-2 gap-y-6 sm:gap-x-1">
       {STEPS.map((s, i) => (
         <motion.div
@@ -85,5 +64,6 @@ export function FarmToLabPipeline() {
         </motion.div>
       ))}
     </div>
+    </DoodadFrame>
   );
 }

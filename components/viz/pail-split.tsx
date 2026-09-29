@@ -2,10 +2,11 @@
 
 import { motion, useTransform, type MotionValue } from "motion/react";
 import { LINE, SHINE, SOFT_ID } from "@/components/viz/sketch";
+import { DoodadFrame, Tape } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 /**
- * PailSplit — where a euro lost to mastitis goes, drawn as a milk pail that
+ * PailSplit - where a euro lost to mastitis goes, drawn as a milk pail that
  * fills from the bottom as you scroll. The costs nobody invoices (culling,
  * discarded milk, lost yield) are the milk; the treatment bill is the thin
  * pink skin on top. Same ink-and-flat-fill hand as the hero pail.
@@ -74,9 +75,11 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
   const offsets = LAYERS.map((_, i) => LAYERS.slice(0, i).reduce((s, l) => s + l.share, 0));
 
   return (
+    <DoodadFrame className={cn("pt-3", className)}>
+      <Tape className="doodad-tape--pail" />
     <svg
       viewBox="0 0 460 336"
-      className={cn("block h-auto w-full overflow-visible", className)}
+      className="block h-auto w-full overflow-visible"
       role="img"
       aria-label="Of every euro lost to mastitis, roughly 15% is treatment; the rest is lost yield (45%), discarded milk (22%) and early culling (18%). Illustrative split."
     >
@@ -130,5 +133,6 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
         of every euro lost · illustrative split
       </text>
     </svg>
+    </DoodadFrame>
   );
 }

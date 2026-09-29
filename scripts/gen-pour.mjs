@@ -80,7 +80,7 @@ async function ffmpeg(args) {
 async function candidates(count = 4, start = 1) {
   await mkdir(REVIEW, { recursive: true });
   const styleId = await readStyleId();
-  if (!styleId) throw new Error("no cast-style-id.txt — run gen-cast.mjs lock first");
+  if (!styleId) throw new Error("no cast-style-id.txt - run gen-cast.mjs lock first");
   const meta = {};
   await Promise.all(
     Array.from({ length: count }, (_, i) => i + start).map(async (n) => {
@@ -102,7 +102,7 @@ async function candidates(count = 4, start = 1) {
         meta[tag] = { url, key };
         // A near-white "green" means Recraft ignored the screen and the key ate the milk.
         const [r, g, b] = [0, 2, 4].map((i) => parseInt(key.slice(i, i + 2), 16));
-        const warn = g - Math.max(r, b) < 12 ? " — background is not green, do not pick" : "";
+        const warn = g - Math.max(r, b) < 12 ? " - background is not green, do not pick" : "";
         console.log(`${tag} ok (key ${key})${warn}`);
       } catch (e) {
         console.log(`${tag} failed: ${e.message.slice(0, 200)}`);

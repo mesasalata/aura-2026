@@ -1,23 +1,23 @@
-# Brand Kit — tone & manner and copy for your videos.
+# Brand Kit - tone & manner and copy for your videos.
 # Motion templates (title/chapter cards) read this config.
 
 product: "My Product"
 
 # Tone preset: midnight | daylight | neon
-#   midnight — deep black + soft glow (keynote tone, default)
-#   daylight — light editorial (docs/blog tone)
-#   neon     — deep purple + gradient typography (launch-hype tone)
+#   midnight - deep black + soft glow (keynote tone, default)
+#   daylight - light editorial (docs/blog tone)
+#   neon     - deep purple + gradient typography (launch-hype tone)
 tone: midnight
 
 accent: "#6366f1"
 
 # Font preset: editorial | grotesk | system
-#   editorial — Inter + Instrument Serif italic emphasis (default)
-#   grotesk   — Space Grotesk display (tech-launch mood)
-#   system    — system fonts (no network needed)
+#   editorial - Inter + Instrument Serif italic emphasis (default)
+#   grotesk   - Space Grotesk display (tech-launch mood)
+#   system    - system fonts (no network needed)
 font: editorial
 
-# Line-draw emphasis — animated underlines/circles/arrows/markers
+# Line-draw emphasis - animated underlines/circles/arrows/markers
 annotations: true
 
 # Frequently used catchphrases / one-liners

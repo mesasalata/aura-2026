@@ -4,13 +4,13 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Model",
-  description: "Kinetics, sensitivity analysis, and decision thresholds for AURA biosensor design.",
+  description: "On-farm miR-223 load scores: FET residual against the sample’s own reference electrodes, flagged only when it stays high.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "kinetics", label: "Kinetics" },
-  { id: "sensitivity", label: "Sensitivity" },
+  { id: "baseline", label: "Baseline" },
+  { id: "score", label: "Load score" },
   { id: "thresholds", label: "Thresholds" },
   { id: "limits", label: "Limits" },
 ];
@@ -20,8 +20,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Dry Lab · Model"
       accent="signal"
-      title="Kinetics, sensitivity & thresholds"
-      lede="Dry-lab models that guide bench priorities — explicitly theoretical until calibrated."
+      title="A score for this cow, this milking"
+      lede="Subtract the sample’s own salt, score miR-223 load, flag only when it stays high - a note, not a verdict."
       current="/model"
       toc={TOC}
     >

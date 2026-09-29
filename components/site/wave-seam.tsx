@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 export const WAVE =
   "M0 36 C 160 4, 320 68, 500 28 C 680 0, 860 64, 1040 24 C 1200 4, 1340 52, 1440 36 L 1440 80 L 0 80 Z";
 
-/** Page tones — cream/50 matches `bg-cream/50` over the milk body. */
+/** Page tones - cream/50 matches `bg-cream/50` over the milk body. */
 export const MILK = "var(--color-milk)";
 export const CREAM = "var(--color-cream)";
 export const CREAM50 = "color-mix(in srgb, var(--color-cream) 50%, var(--color-milk))";

@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Blob, LINE, SHINE, SOFT_ID } from "@/components/viz/sketch";
+import { DoodadFrame, PaperCorner } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ *
- * BiosensorDiagram — an interactive, illustrated "specimen viewer".
+ * BiosensorDiagram - an interactive, illustrated "specimen viewer".
  * A glass vial of milk swishes continuously; stepping through the four
  * stages makes the liquid react: a droplet falls in, sensors bind the
  * biomarker, the signal cascades, and the milk visibly changes colour.
  * Auto-plays, pauses on interaction, and is fully clickable.
- * Drawn on paper in the kit's ink-outline hand — no glow, no chrome.
+ * Drawn on paper in the kit's ink-outline hand - no glow, no chrome.
  * ------------------------------------------------------------------ */
 
 const INK = LINE;
@@ -32,31 +33,31 @@ const STAGES: Stage[] = [
     accent: "var(--color-orange)",
     liquidFront: "#f3ead8",
     liquidBack: "#e4d7bd",
-    desc: "A raw milk sample is drawn into the sensor. Somatic cells, fats, and — if there's infection — the mastitis biomarker are all swimming in here, invisible to the eye.",
+    desc: "Each milking, a siphoned sip of milk enters the chamber. Fats, salts, and - if the cow is fighting bacteria - bta-miR-223 are all in here, invisible to the eye.",
   },
   {
     label: "Recognition",
-    tag: "Biomarker captured",
+    tag: "Catapult binds miR-223",
     accent: "var(--color-signal)",
     liquidFront: "#e6f1ee",
     liquidBack: "#d1e4df",
-    desc: "Engineered sensing elements lock onto the mastitis biomarker and ignore everything else — the moment healthy milk is told apart from infected milk.",
+    desc: "A DNA catapult on the FET surface has an invasion region complementary to miR-223. When the miRNA associates, the stem opens - a shape change, not a colour.",
   },
   {
-    label: "Amplification",
-    tag: "Signal multiplied",
+    label: "Transduction",
+    tag: "Current ticks",
     accent: "var(--color-butter)",
     liquidFront: "#f5ecd2",
     liquidBack: "#e9dbb3",
-    desc: "A genetic circuit turns each single binding event into a flood of signal molecules, so even a faint trace of the marker becomes impossible to miss.",
+    desc: "Opening the catapult moves charge away from the FET surface. The transistor reads that as a change in current between source and drain. Reference electrodes taste the milk first so salt does not raise a false flag.",
   },
   {
     label: "Output",
-    tag: "Readable result",
+    tag: "A flag, not a verdict",
     accent: "var(--color-pink)",
     liquidFront: "#ffd6e6",
     liquidBack: "#f7b9d2",
-    desc: "The amplified signal drives a visible colour and fluorescence change you can read by eye — a clear answer, no lab bench required.",
+    desc: "A small on-farm model turns the residual current into a miR-223 load score. If it stays high across milkings, the parlour computer marks this cow - look closer, skip blanket antibiotics.",
   },
 ];
 
@@ -68,7 +69,7 @@ function buildWave(amp: number, wavelength: number, phase: number) {
   const pts: string[] = [];
   for (let x = -40; x <= 240; x += 8) {
     const y = SURFACE + amp * Math.sin((x / wavelength) * Math.PI * 2 + phase);
-    pts.push(`${x === -40 ? "M" : "L"}${x} ${y.toFixed(2)}`);
+    pts.push(`${x === -40 ? "M" : "L"}${x} ${y.toFixed(3)}`);
   }
   pts.push("L240 200 L-40 200 Z");
   return pts.join(" ");
@@ -214,15 +215,23 @@ function RecognitionScene({ reduce }: { reduce: boolean }) {
   );
 }
 
+const AMPLIFY_CY = 128;
+const AMPLIFY_PARTICLES = [0, 1, 2, 3, 4, 5].map((i) => {
+  const a = (i / 6) * Math.PI * 2;
+  return {
+    cxEnd: Number((CENTER_X + Math.cos(a) * 30).toFixed(3)),
+    cyEnd: Number((AMPLIFY_CY + Math.sin(a) * 30).toFixed(3)),
+  };
+});
+
 function AmplificationScene({ reduce }: { reduce: boolean }) {
-  const cy = 128;
   return (
     <g>
       {[0, 1, 2].map((i) => (
         <motion.circle
           key={i}
           cx={CENTER_X}
-          cy={cy}
+          cy={AMPLIFY_CY}
           fill="none"
           stroke="var(--color-butter)"
           strokeWidth={1.6}
@@ -232,25 +241,22 @@ function AmplificationScene({ reduce }: { reduce: boolean }) {
         />
       ))}
       {!reduce &&
-        [0, 1, 2, 3, 4, 5].map((i) => {
-          const a = (i / 6) * Math.PI * 2;
-          return (
-            <motion.circle
-              key={`d${i}`}
-              cx={CENTER_X}
-              cy={cy}
-              r={2.2}
-              fill="var(--color-butter)"
-              initial={{ opacity: 0 }}
-              animate={{
-                cx: [CENTER_X, CENTER_X + Math.cos(a) * 30],
-                cy: [cy, cy + Math.sin(a) * 30],
-                opacity: [1, 0],
-              }}
-              transition={{ duration: 1.6, delay: 0.3 + i * 0.08, repeat: Infinity, ease: "easeOut" }}
-            />
-          );
-        })}
+        AMPLIFY_PARTICLES.map((p, i) => (
+          <motion.circle
+            key={`d${i}`}
+            cx={CENTER_X}
+            cy={AMPLIFY_CY}
+            r={2.2}
+            fill="var(--color-butter)"
+            initial={{ opacity: 0 }}
+            animate={{
+              cx: [CENTER_X, p.cxEnd],
+              cy: [AMPLIFY_CY, p.cyEnd],
+              opacity: [1, 0],
+            }}
+            transition={{ duration: 1.6, delay: 0.3 + i * 0.08, repeat: Infinity, ease: "easeOut" }}
+          />
+        ))}
     </g>
   );
 }
@@ -300,7 +306,7 @@ function VialScene({ active, reduce }: { active: number; reduce: boolean }) {
         </clipPath>
       </defs>
 
-      {/* Flat colour wash behind the vial — re-tints with the active stage */}
+      {/* Flat colour wash behind the vial - re-tints with the active stage */}
       <motion.g
         initial={false}
         animate={{ scale: active === 3 ? 1.12 : 1, opacity: active === 3 ? 0.22 : 0.14 }}
@@ -310,7 +316,7 @@ function VialScene({ active, reduce }: { active: number; reduce: boolean }) {
         <motion.path
           d="M 100 22 C 150 18, 192 58, 188 110 C 184 162, 150 200, 100 198 C 50 196, 10 160, 14 108 C 18 56, 50 26, 100 22 Z"
           fill={STAGES[0].accent}
-          initial={false}
+          initial={{ fill: STAGES[0].accent }}
           animate={{ fill: stage.accent }}
           transition={{ duration: 0.8 }}
           filter={`url(#${SOFT_ID})`}
@@ -326,7 +332,7 @@ function VialScene({ active, reduce }: { active: number; reduce: boolean }) {
           width={120}
           height={120}
           fill={STAGES[0].liquidBack}
-          initial={false}
+          initial={{ fill: STAGES[0].liquidBack }}
           animate={{ fill: stage.liquidBack }}
           transition={{ duration: 0.8 }}
         />
@@ -334,7 +340,7 @@ function VialScene({ active, reduce }: { active: number; reduce: boolean }) {
         <motion.path
           d={waveBack}
           fill={STAGES[0].liquidBack}
-          initial={false}
+          initial={{ fill: STAGES[0].liquidBack, x: 0 }}
           animate={reduce ? { fill: stage.liquidBack } : { x: [0, -100], fill: stage.liquidBack }}
           transition={{
             x: { duration: 7, repeat: Infinity, ease: "linear" },
@@ -346,7 +352,7 @@ function VialScene({ active, reduce }: { active: number; reduce: boolean }) {
         <motion.path
           d={waveFront}
           fill={STAGES[0].liquidFront}
-          initial={false}
+          initial={{ fill: STAGES[0].liquidFront, x: 0 }}
           animate={reduce ? { fill: stage.liquidFront } : { x: [0, -80], fill: stage.liquidFront }}
           transition={{
             x: { duration: 4.5, repeat: Infinity, ease: "linear" },
@@ -416,20 +422,29 @@ function StageButton({
   index,
   active,
   onSelect,
+  onKeyDown,
+  buttonRef,
 }: {
   stage: Stage;
   index: number;
   active: boolean;
   onSelect: () => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
+  buttonRef: (el: HTMLButtonElement | null) => void;
 }) {
   return (
     <button
+      ref={buttonRef}
       type="button"
       onClick={onSelect}
+      onKeyDown={onKeyDown}
       aria-pressed={active}
+      aria-label={`Step ${index + 1}, ${stage.label}: ${stage.tag}`}
       className={cn(
         "group relative flex w-full items-center gap-3 rounded-[14px_18px_12px_16px] border-2 p-3 text-left transition-all duration-300",
-        active ? "border-ink bg-milk" : "border-ink/12 bg-transparent hover:border-ink/35",
+        active
+          ? "border-ink bg-milk shadow-[0_0_0_2px_var(--color-milk),0_0_0_3px_var(--color-ink)]"
+          : "border-ink/12 bg-transparent hover:border-ink/35",
       )}
     >
       {/* inked disc with the step number; fills with the stage colour when active */}
@@ -464,6 +479,7 @@ export function BiosensorDiagram() {
   const reduce = !!useReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const stageRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const stage = STAGES[active];
 
   useEffect(() => {
@@ -472,7 +488,31 @@ export function BiosensorDiagram() {
     return () => clearInterval(id);
   }, [paused, reduce]);
 
+  const selectStage = (index: number) => {
+    setActive(index);
+    stageRefs.current[index]?.focus();
+  };
+
+  const onStageKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let next = index;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      next = (index + 1) % STAGES.length;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      next = (index - 1 + STAGES.length) % STAGES.length;
+    } else if (e.key === "Home") {
+      next = 0;
+    } else if (e.key === "End") {
+      next = STAGES.length - 1;
+    } else {
+      return;
+    }
+    e.preventDefault();
+    selectStage(next);
+  };
+
   return (
+    <DoodadFrame>
+      <PaperCorner className="doodad-corner--tr" />
     <div
       className="painted overflow-hidden p-5 sm:p-8"
       onMouseEnter={() => setPaused(true)}
@@ -488,14 +528,18 @@ export function BiosensorDiagram() {
 
         {/* Controls + narration */}
         <div>
-          <div className="grid gap-2.5 sm:grid-cols-2">
+          <div role="group" aria-label="Biosensor stages" className="grid gap-2.5 sm:grid-cols-2">
             {STAGES.map((s, i) => (
               <StageButton
                 key={s.label}
                 stage={s}
                 index={i}
                 active={i === active}
-                onSelect={() => setActive(i)}
+                onSelect={() => selectStage(i)}
+                onKeyDown={(e) => onStageKeyDown(e, i)}
+                buttonRef={(el) => {
+                  stageRefs.current[i] = el;
+                }}
               />
             ))}
           </div>
@@ -537,5 +581,6 @@ export function BiosensorDiagram() {
         </div>
       </div>
     </div>
+    </DoodadFrame>
   );
 }

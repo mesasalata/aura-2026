@@ -12,7 +12,7 @@ export type Member = {
   initials: string;
 };
 
-/** TeamCard — professional hover; reveals role, contribution and a quote. */
+/** TeamCard - professional hover; reveals role, contribution and a quote. */
 export function TeamCard({ member }: { member: Member }) {
   const hex = ACCENT_HEX[member.accent];
   return (

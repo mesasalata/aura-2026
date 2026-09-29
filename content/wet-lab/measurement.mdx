@@ -1,44 +1,44 @@
 <Section id="overview" title="Measurement overview" kicker="01">
 
-Characterisation turns constructs into comparable data: how bright, how leaky, how fast, and over what concentration range. This page collects calibration methods and results as they land.
+Characterisation turns the inline FET into comparable data: how far the current ticks, how noisy the milk is, and when a residual becomes a flag. This page collects calibration methods and results as they land.
 
 </Section>
 
-<Section id="fluorescence" title="Fluorescence readout" kicker="02">
+<Section id="fet" title="FET current" kicker="02">
 
-**Setup.** Plate reader or fluorimeter with excitation/emission matched to reporter; blank with media or lysate alone.
+**Setup.** Source–drain current recorded while milk (or buffer) washes the gated catapult surface; blank with unspiked matrix.
 
 **Metrics.**
-- Basal fluorescence (leakiness)
-- Fold induction at saturating inducer / marker
-- EC₅₀ from dose–response fit where applicable
+- Baseline current with the catapult closed
+- ΔI when miR-223 opens the invasion-region stem
+- Residual after subtracting that sample's reference-electrode baseline
 
-<Placeholder label="Representative fluorescence curves — data pending" />
+<Placeholder label="Representative FET current traces - data pending" />
 
 </Section>
 
-<Section id="colorimetric" title="Colorimetric readout" kicker="03">
+<Section id="electrodes" title="Reference electrodes" kicker="03">
 
-For strip or tube formats, colour intensity is compared against a reference card under fixed lighting. Photographs are white-balanced where possible.
+Ionic concentration and electrochemical activity are read upstream of the chamber, so salty milk is less likely to raise a false flag. Calibration uses known-salt standards in milk matrix.
 
-<Placeholder label="Reference card calibration images — pending" />
+<Placeholder label="Electrode baseline calibration - pending" />
 
 </Section>
 
 <Section id="calibration" title="Calibration standards" kicker="04">
 
-Spiked marker stocks at known concentration anchor biological readouts. Standards are prepared fresh or thawed from documented aliquots with chain-of-custody in the notebook.
+Spiked miR-223 stocks at known concentration anchor the load score. Standards are prepared fresh or thawed from documented aliquots with chain-of-custody in the notebook.
 
 </Section>
 
 <Section id="units" title="Units & reporting" kicker="05">
 
-We report in SI-friendly units with clear definition: RFU for fluorescence, absorbance for colour, and qualitative band intensity for strips until quantitative strip densitometry is validated.
+We report source–drain current in SI units (ampere, or a documented multiple), electrode baselines in the same run, and the residual as a dimensionless miR-223 load score until wet-lab calibration is complete.
 
 <ScienceExplainer
   accent="signal"
-  analogy="Like zeroing a kitchen scale before weighing — calibration tells you what 'zero' and 'one gram' mean for your instrument."
-  precise="Calibration curves map raw instrument output to known standard concentrations, enabling comparison across runs and labs."
+  analogy="Like zeroing a kitchen scale before weighing - the reference electrodes tell you what 'zero' means for this sip of milk."
+  precise="Calibration curves map FET residual current to known miR-223 standards, enabling comparison across runs, cows, and milkings."
 />
 
 </Section>

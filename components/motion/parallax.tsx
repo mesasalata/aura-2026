@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "motion/react"
 import { cn } from "@/lib/utils";
 
 /**
- * Parallax — translates its children on the Y axis as the element scrolls
+ * Parallax - translates its children on the Y axis as the element scrolls
  * through the viewport, creating real depth (not just a fade-in). Positive
  * `speed` means the layer trails the scroll (drifts up as you scroll down);
  * larger values = more travel, use bigger numbers for background/decorative

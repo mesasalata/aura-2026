@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowUp } from "lucide-react";
+import { getHomeLenis } from "@/lib/home-lenis";
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -17,14 +18,24 @@ export function BackToTop() {
     <AnimatePresence>
       {visible && (
         <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-ink text-milk shadow-lg transition-transform hover:-translate-y-1"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 12 }}
+          transition={{ duration: 0.22 }}
+          onClick={() => {
+            const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const lenis = getHomeLenis();
+            if (lenis) {
+              lenis.scrollTo(0, { immediate: reduce });
+              return;
+            }
+            window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+          }}
+          className="back-tab"
           aria-label="Back to top"
         >
-          <ArrowUp className="h-5 w-5" />
+          <span className="back-tab-label">top</span>
+          <ArrowUp className="h-4 w-4" strokeWidth={2.2} />
         </motion.button>
       )}
     </AnimatePresence>

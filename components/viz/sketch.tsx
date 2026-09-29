@@ -17,7 +17,7 @@ export const GRAIN_ID = "aura-grain";
  * the kit are ~2.2–2.6 on a 100–200 unit box.
  */
 export const LINE = "#5a3d33";
-/** Flat white highlight fill — the one clip-art cliché we keep, on purpose. */
+/** Flat white highlight fill - the one clip-art cliché we keep, on purpose. */
 export const SHINE = "#fffdf5";
 
 /** Rendered once in the root layout. Filters are referenced by id across SVGs. */
@@ -41,8 +41,8 @@ export function SketchDefs() {
 }
 
 /*
- * Cow spots, 100×100. Lobed patches with pinched necks — the same silhouettes
- * as the tan patches on the cow sprite — so every wash, spot and accent on
+ * Cow spots, 100×100. Lobed patches with pinched necks - the same silhouettes
+ * as the tan patches on the cow sprite - so every wash, spot and accent on
  * the site is a bit of hide, not a rounded blob.
  */
 export const BLOB = {
@@ -59,7 +59,7 @@ export type BlobShape = keyof typeof BLOB;
 /**
  * A flat cow-spot patch. `soft` adds the light wobble; `outline` draws the
  * cocoa pen line around it (for spots that sit in the foreground, like the
- * ones on the cow — washes behind things stay unlined).
+ * ones on the cow - washes behind things stay unlined).
  */
 export function Blob({
   shape = "a",
@@ -91,7 +91,7 @@ export function Blob({
   );
 }
 
-/** Short tapered dash — the accent rule under a kicker, drawn not ruled. */
+/** Short tapered dash - the accent rule under a kicker, drawn not ruled. */
 export function BrushDash({ color = "currentColor", className }: { color?: string; className?: string }) {
   return (
     <svg viewBox="0 0 80 12" aria-hidden className={cn("h-3 w-20 overflow-visible", className)}>

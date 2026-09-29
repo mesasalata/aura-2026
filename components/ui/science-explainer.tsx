@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { ACCENT_HEX, type Accent } from "@/components/ui/badge";
 
 /**
- * ScienceExplainer — friendly "explain like I'm curious" block:
+ * ScienceExplainer - friendly "explain like I'm curious" block:
  * a plain-language analogy paired with the precise version.
  */
 export function ScienceExplainer({

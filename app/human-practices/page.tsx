@@ -4,7 +4,7 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Human Practices",
-  description: "Stakeholders who shaped AURA — farmers, vets, processors, regulators, and consumers.",
+  description: "Stakeholders who shaped AURA - farmers, vets, processors, regulators, and consumers.",
 };
 
 const TOC = [

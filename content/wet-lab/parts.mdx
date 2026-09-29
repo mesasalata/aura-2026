@@ -1,6 +1,6 @@
 <Section id="overview" title="Parts overview" kicker="01">
 
-AURA parts are designed for biosensor screening and low-leak reporter expression. Registry IDs will be added on submission; sequences and intended use are documented here first.
+AURA parts are DNA sequences for the catapult on the FET gate - invasion regions complementary to bta-miR-223, plus off-target controls. Registry IDs will be added on submission; sequences and intended use are documented here first.
 
 <Callout variant="note" title="Characterisation">
   Parts without measurement data are labelled <em>uncharacterised</em>. Do not assume performance from sequence alone.
@@ -12,36 +12,35 @@ AURA parts are designed for biosensor screening and low-leak reporter expression
 
 | Part | Type | Status | Role |
 | --- | --- | --- | --- |
-| pAura-screen | Plasmid backbone | Uncharacterised | Cloning vector for recognition screens |
-| BBa_AURA_prom | Promoter | Testing | Low-leak inducible promoter |
-| BBa_AURA_rbs | RBS | Designed | Ribosome binding for reporter tuning |
-| BBa_AURA_gfp | Reporter | Testing | Fluorescent readout variant |
-| BBa_AURA_lacZ | Reporter | Designed | Colorimetric readout variant |
+| AuraCat-stem | DNA stem | Uncharacterised | Surface-tethered stem that stays closed until invasion |
+| AuraCat-inv | Invasion region | Testing | Complementary to bta-miR-223 |
+| AuraCat-off | Off-target control | Designed | Invasion region for an irrelevant RNA |
+| AuraRef-probe | Electrode probe | Testing | Ionic / electrochemical baseline upstream of the chamber |
 
-<Placeholder label="Registry part numbers — to be added" />
+<Placeholder label="Registry part numbers - to be added" />
 
 </Section>
 
 <Section id="composite" title="Composite parts" kicker="03">
 
-Composite sensing units combine recognition logic with reporter cassettes. Assembly follows standard BioBrick or Gibson strategy depending on part compatibility.
+Composite sensing units combine the stem, invasion region, and FET-surface chemistry. Assembly is oligo synthesis and surface attachment, not a living circuit.
 
 | Composite | Components | Status |
 | --- | --- | --- |
-| AuraSense-v1 | promoter + RBS + reporter | Build complete |
-| AuraSense-v2 | tuned RBS spacing | In design |
-| AuraRead-strip | coupling module for immobilised format | Pending |
+| AuraCatapult-v1 | stem + miR-223 invasion region | In design |
+| AuraCatapult-v2 | tuned stem length | In design |
+| AuraGate-FET | catapult + gate chemistry | Pending |
 
 </Section>
 
 <Section id="measurement" title="Measurement data" kicker="04">
 
-Characterisation data — fluorescence curves, leakiness, copy number — will be linked from the Measurement page as assays complete.
+Characterisation data - opening assays, FET current traces, electrode baselines - will be linked from the Measurement page as assays complete.
 
 </Section>
 
 <Section id="contribution" title="For future teams" kicker="05">
 
-Parts ship with sequence files, intended use, and known failure modes. If a part did not work as expected, we document that too — negative results are contributions.
+Parts ship with sequence files, intended use, and known failure modes. If a part did not work as expected, we document that too - negative results are contributions.
 
 </Section>

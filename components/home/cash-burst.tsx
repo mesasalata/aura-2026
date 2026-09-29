@@ -2,15 +2,16 @@
 
 import { useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { motion } from "motion/react";
-import { asset } from "@/lib/utils";
+import { artUrl, type ArtId } from "@/lib/art";
 import { cn } from "@/lib/utils";
 
 /**
  * Recraft notes on the flanks. Scroll brings them in and fades them;
  * a looping flutter keeps the paper flopping so they never sit still.
+ * Bills remain on gen/ — no images/ equivalent yet (see ART.bill1…3).
  */
 
-const BILLS = [1, 2, 3].map((n) => asset(`/art/gen/bill-${n}.png`));
+const BILLS = (["bill1", "bill2", "bill3"] as const satisfies ArtId[]).map(artUrl);
 
 type Note = {
   x0: number;

@@ -15,7 +15,7 @@ export type WikiNavCardProps = {
   onNavigate?: () => void;
 };
 
-/** WikiNavCard — solid milk surface, accent bar, pink CTA on hover. */
+/** WikiNavCard - solid milk surface, accent bar, pink CTA on hover. */
 export function WikiNavCard({
   href,
   label,

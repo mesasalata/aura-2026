@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { LINE as PEN, SHINE, SOFT_ID } from "@/components/viz/sketch";
+import { Asterisk, DoodadFrame, HandCaption } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 // A falling trace with a few dead-cat bounces. Slightly uneven steps so it reads drawn, not plotted.
@@ -9,19 +10,24 @@ const LINE = "M6 24 L21 31 L33 25 L47 41 L59 35 L73 59 L87 51 L101 75 L115 67 L1
 const AREA = `${LINE} L154 128 L6 128 Z`;
 
 /**
- * PlungeChart — the bill going the wrong way. Flat coral line, flat wash
+ * PlungeChart - the bill going the wrong way. Flat coral line, flat wash
  * underneath, light pencil grid; the line draws and a milk-drop marker lands
  * at the end, all scrubbed by `progress`.
  */
 export function PlungeChart({ className, progress }: { className?: string; progress: MotionValue<number> }) {
   const reduce = useReducedMotion();
   const start = reduce ? 1 : 0;
-  const pathLength = useTransform(progress, [0.1, 0.62], [start, 1]);
-  const areaOpacity = useTransform(progress, [0.3, 0.66], [start, 1]);
-  const markerScale = useTransform(progress, [0.6, 0.7], [start, 1]);
+  const pathLength = useTransform(progress, [0, 0.1, 0.62, 1], [start, start, 1, 1]);
+  const areaOpacity = useTransform(progress, [0, 0.3, 0.66, 1], [start, start, 1, 1]);
+  const markerScale = useTransform(progress, [0, 0.6, 0.7, 1], [start, start, 1, 1]);
 
   return (
-    <svg viewBox="0 0 168 136" className={cn("w-full overflow-visible text-ink", className)} aria-hidden>
+    <DoodadFrame className={className}>
+      <HandCaption className="doodad-caption--est">
+        <Asterisk className="doodad-asterisk--inline" />
+        est.
+      </HandCaption>
+    <svg viewBox="0 0 168 136" className="w-full overflow-visible text-ink" aria-hidden>
       <defs>
         <linearGradient id="plungeWash" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="var(--color-coral)" stopOpacity="0.28" />
@@ -68,5 +74,6 @@ export function PlungeChart({ className, progress }: { className?: string; progr
         <ellipse cx="151" cy="120" rx="1.6" ry="3" fill={SHINE} transform="rotate(14 151 120)" />
       </motion.g>
     </svg>
+    </DoodadFrame>
   );
 }

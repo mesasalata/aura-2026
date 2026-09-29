@@ -5,7 +5,7 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 export const metadata: Metadata = {
   title: "Results",
   description:
-    "What AURA measured and observed — with explicit placeholders where wet-lab data is still pending.",
+    "What AURA measured and observed - with explicit placeholders where wet-lab data is still pending.",
 };
 
 const TOC = [
@@ -25,7 +25,7 @@ export default function ResultsPage() {
     <WikiMdxShell
       kicker="Project · Results"
       accent="bio"
-      title="What we found — and what's still running"
+      title="What we found - and what's still running"
       lede="Honest reporting of construct work, assay design, and prototype readouts. Pending data is marked, not implied."
       current="/results"
       toc={TOC}

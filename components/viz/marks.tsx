@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const BAND = "#ded4c2";
 const SOFT = `url(#${SOFT_ID})`;
 
-/** Farm milk pail — tapered, two bands, wire bail. Milk to the brim. */
+/** Farm milk pail - tapered, two bands, wire bail. Milk to the brim. */
 export function PailMark({ className, fill = 1 }: { className?: string; fill?: number }) {
   const surfaceY = 96 + (1 - fill) * 100;
   return (
@@ -105,7 +105,7 @@ export function FlaskMark({ className, liquid = "pink" }: { className?: string; 
   );
 }
 
-/** A sticker-cut green banknote — chunky clip-art, one wobble, two flats. */
+/** A sticker-cut green banknote - chunky clip-art, one wobble, two flats. */
 export function BillMark({ className, kind = 0 }: { className?: string; kind?: 0 | 1 | 2 }) {
   const body =
     kind === 1

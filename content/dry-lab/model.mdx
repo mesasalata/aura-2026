@@ -1,39 +1,39 @@
 <Section id="overview" title="Modeling overview" kicker="01">
 
-Dry-lab models guide where to spend bench time: which promoter strength, which incubation window, and what detection threshold would matter on a farm. Models are theoretical until calibrated with wet-lab data.
+The on-farm model is small on purpose. After each reading it compares FET current with a baseline from that same sample’s reference electrodes, turns the residual into a **miR-223 load score** for that cow and that milking, and only flags when the score stays high. Models are theoretical until calibrated with wet-lab data.
 
 </Section>
 
-<Section id="kinetics" title="Binding & induction kinetics" kicker="02">
+<Section id="baseline" title="Sample-wise baseline" kicker="02">
 
-We model marker binding and downstream reporter induction as coupled processes. Parameters come from literature where available and from our own assays when measured.
+Milk’s salt and electrochemical noise are measured just upstream of the chamber. The FET current is not judged against a herd average - it is judged against **this sample**. That is how we offset highly ionic conditions on the biosensor surface.
 
-<Placeholder label="Kinetic schematic and parameter table — pending calibration" />
+<Placeholder label="Baseline subtraction schematic - pending calibration" />
 
 </Section>
 
-<Section id="sensitivity" title="Sensitivity analysis" kicker="03">
+<Section id="score" title="Load score" kicker="03">
 
-Sensitivity analysis asks which parameters most affect time-to-signal and limit of detection: promoter leakiness, degradation rate, marker concentration, and milk matrix effects.
+The residual becomes a miR-223 load score. Sensitivity analysis asks which terms dominate: electrode noise, siphon timing, catapult occupancy, and how sticky the FET gate is after a string of milkings.
 
 <ScienceExplainer
   accent="signal"
-  analogy="Turning knobs on a mixing desk to see which one actually changes the sound — sensitivity analysis finds the knobs that matter."
-  precise="Partial derivatives or Monte Carlo sweeps over parameter ranges identify which biochemical constants dominate output variance."
+  analogy="Not a smoke alarm that screams at steam - a score that asks whether this cow, this week, is still high after you subtract the milk she always has."
+  precise="The residual is FET current minus a function of the reference-electrode ionic and electrochemical reading for the same siphoned sample."
 />
 
 </Section>
 
-<Section id="thresholds" title="Decision thresholds" kicker="04">
+<Section id="thresholds" title="Consecutive sessions, not one spike" kicker="04">
 
-Thresholds are framed with veterinary input: a screen should flag risk for follow-up, not diagnose. Model outputs suggest feasible regions; stakeholders set what is actionable.
+One noisy spike is not a verdict. If the score stays above a threshold across consecutive sessions, the parlour computer marks the animal. Veterinary input sets what is actionable; the model only proposes a region.
 
 </Section>
 
 <Section id="limits" title="Limits" kicker="05">
 
 <Callout variant="warn" title="Not a substitute for data">
-  Models without calibration are hypotheses. We do not use unvalidated model output as evidence of clinical performance.
+  Models without calibration are hypotheses. We do not use unvalidated model output as evidence of clinical performance. The message to the farmer is a flag, not a diagnosis.
 </Callout>
 
 </Section>

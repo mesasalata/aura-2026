@@ -32,7 +32,7 @@ export const WHITE_BG = "Plain solid white background.";
 export const GREEN_BG =
   "The whole background is one flat solid bright green colour (green screen), nothing else in the background.";
 
-/* Recraft caps prompts at 1000 chars — keep the detail short. */
+/* Recraft caps prompts at 1000 chars - keep the detail short. */
 export const look = (detail = "", bg = WHITE_BG) => [HAND, detail, RULES, bg, NEGATIVES].filter(Boolean).join(" ");
 export const LOOK = look();
 export const COW_LOOK = look("Off-white ivory cream body, small pale horns, dark-brown hooves.");

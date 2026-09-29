@@ -1,5 +1,5 @@
 /**
- * Floppy green bills bursting on a blue screen (not green — the notes are green).
+ * Floppy green bills bursting on a blue screen (not green - the notes are green).
  * Recraft still → Kling 2.5 i2v → colorkey → VP9/HEVC alpha.
  *
  *   node scripts/gen-cash.mjs stills [n]
@@ -82,7 +82,7 @@ async function stills(count = 3, start = 1) {
         const key = await keyOut(raw, dest);
         await toPng(dest, 1920);
         meta[tag] = { url, key, blue: isBlue(key) };
-        console.log(`${tag} ok (key ${key})${isBlue(key) ? "" : " — background is not blue, skip"}`);
+        console.log(`${tag} ok (key ${key})${isBlue(key) ? "" : " - background is not blue, skip"}`);
       } catch (e) {
         console.log(`${tag} failed: ${e.message.slice(0, 200)}`);
       }

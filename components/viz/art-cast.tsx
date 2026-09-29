@@ -74,11 +74,11 @@ export function IdeaCast({ className }: { className?: string }) {
   return (
     <div className={cn("flex h-72 w-64 items-center justify-center", className)}>
       <Art
-        id="mascot"
+        id="milkSensor"
         motion="breathe"
         size={240}
         decorative={false}
-        alt="The AURA cow scientist holding a glowing pink flask"
+        alt="Inline milk biosensor chamber on the milking line"
       />
     </div>
   );

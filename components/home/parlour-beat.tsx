@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Sunset, then a milk tide with a drawn wave crest wipes over it.
- * The farms beat lives on that milk — same pin, no page cut.
+ * The farms beat lives on that milk - same pin, no page cut.
  */
 
 function useSpan(progress: MotionValue<number>, input: number[], output: number[]) {
@@ -65,7 +65,7 @@ export function ParlourBeat() {
   const duskIn = useSpan(progress, [0.14, 0.3], [reduce ? 0 : 0, 1]);
   const duskOut = useSpan(progress, [0.54, 0.68], [1, 0]);
   const duskOpacity = useTransform([duskIn, duskOut], ([a, b]) => Number(a) * Number(b));
-  const duskFill = useTransform(progress, [0.18, 0.5], ["#e8a078", "#c24e42"]);
+  const duskFill = useTransform(progress, [0, 0.18, 0.5, 1], ["#e8a078", "#e8a078", "#c24e42", "#c24e42"]);
   const duskBg = useTransform(duskFill, (c) => `linear-gradient(180deg, transparent 0%, ${c} 42%, ${c} 100%)`);
 
   const tideH = useTransform(progress, [0.54, 0.78], [reduce ? 100 : 0, 100]);
@@ -179,7 +179,7 @@ export function ParlourBeat() {
               <SectionHeader
                 accent="pink"
                 title="Designed with farms, not just labs"
-                lede="We spoke with farmers, vets, processors, regulators and consumers — and let what we heard change the design."
+                lede="We spoke with farmers, vets, processors, regulators and consumers - and let what we heard change the design."
               />
               <div className="mt-8">
                 <StakeholderMap />

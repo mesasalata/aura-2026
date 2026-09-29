@@ -18,7 +18,7 @@ effects:
     borderRadius: 14
     shadow: true
 
-# Recording-time injection — tweak the page without touching your code.
+# Recording-time injection - tweak the page without touching your code.
 # All assets referenced here resolve relative to this file.
 # prepare:
 #   hide:

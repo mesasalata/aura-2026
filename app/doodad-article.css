@@ -1,0 +1,248 @@
+/* Article booklet marks. Sparse - paper, wayfinding, figures.
+   Prefix booklet-* so we never collide with viz doodad-* marks. */
+
+.booklet-spread {
+  position: relative;
+}
+
+/* Spine punches sit beside the TOC, not down the full page */
+.booklet-binder {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  align-self: start;
+  gap: 2.5rem;
+  padding-top: 2.7rem;
+  pointer-events: none;
+}
+
+@media (min-width: 64rem) {
+  .booklet-binder {
+    display: flex;
+  }
+}
+
+.booklet-hole {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #f7f0de 0 38%, #d8c9ae 72%, #c4b394 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(90, 61, 51, 0.28),
+    0 0 0 1.7px #5a3d33;
+}
+
+.booklet-hole:nth-child(2) { transform: translateX(1px); }
+.booklet-hole:nth-child(4) { transform: translateX(-1px); }
+
+/* Wobbly notebook rule - left margin, clear of type */
+.booklet-rule {
+  position: absolute;
+  top: 1.35rem;
+  bottom: 1.35rem;
+  left: 1.55rem;
+  width: 8px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.booklet-rule path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--color-pink-deep) 18%, transparent);
+  stroke-width: 1.35;
+  stroke-linecap: round;
+}
+
+@media (min-width: 40rem) {
+  .booklet-rule { left: 1.85rem; }
+}
+
+@media (min-width: 64rem) {
+  .booklet-rule { left: 2.05rem; }
+}
+
+/* Dog-ear: reuse PaperCorner, sized as a page fold */
+.booklet-ear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3rem;
+  height: 3rem;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.booklet-ear .doodad-corner {
+  top: 0;
+  right: 0;
+  width: 2.85rem;
+}
+
+.booklet-folio {
+  position: absolute;
+  top: 2.55rem;
+  right: 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--color-ink) 48%, transparent);
+  transform: rotate(11deg);
+  line-height: 1;
+}
+
+.booklet-paper > .booklet-page-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Chapter pips: hand-numbered, a bit indecisive */
+.booklet-chapter {
+  margin: 0 0 0.45rem;
+}
+
+.booklet-pip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--color-pink-deep);
+  transform: rotate(-5deg);
+}
+
+.booklet-paper section:nth-child(3n) .booklet-pip { transform: rotate(6deg); }
+.booklet-paper section:nth-child(3n + 2) .booklet-pip { transform: rotate(3deg); }
+
+/* Ink/pink pip - principles list, not a Lucide check */
+.booklet-mark {
+  display: inline-block;
+  width: 0.52rem;
+  height: 0.52rem;
+  flex-shrink: 0;
+  border-radius: 50% 42% 48% 40%;
+  background: var(--color-pink-deep);
+  box-shadow: 0 0 0 1.3px color-mix(in srgb, var(--color-ink) 42%, transparent);
+  transform: rotate(-14deg);
+}
+
+/* TOC: same numbers as the chapters; circled pip = you are here */
+.booklet-toc {
+  position: relative;
+}
+
+.booklet-toc-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  color: color-mix(in srgb, var(--color-ink) 42%, transparent);
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+
+.booklet-toc .booklet-pip {
+  min-width: 1.55rem;
+  font-size: 0.72rem;
+}
+
+.booklet-toc .booklet-pip.is-here {
+  padding: 0.18rem 0.28rem;
+  border-radius: 999px;
+  box-shadow: 0 0 0 1.45px color-mix(in srgb, var(--color-pink-deep) 50%, transparent);
+  transform: rotate(-8deg);
+}
+
+.booklet-toc li:nth-child(even) .booklet-pip { transform: rotate(4deg); }
+.booklet-toc li:nth-child(even) .booklet-pip.is-here { transform: rotate(4deg); }
+.booklet-toc li:nth-child(3n) .booklet-pip { transform: rotate(-6deg); }
+.booklet-toc li:nth-child(3n) .booklet-pip.is-here { transform: rotate(-6deg); }
+
+/* Figure scrap - inline, not the absolutely-placed viz caption */
+.booklet-fig {
+  display: inline-block;
+  margin-right: 0.35rem;
+  padding: 0.08rem 0.4rem 0.12rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  font-style: italic;
+  color: #5a3d33;
+  background: color-mix(in srgb, var(--color-butter) 32%, #fffdf2);
+  box-shadow: 0 0 0 1.2px #5a3d33;
+  transform: rotate(-3deg);
+}
+
+/* Hero tape sits on the illustration only.
+   Mobile: small prop on the milk seam, clear of the H1.
+   sm+: original mid-banner placement. */
+.booklet-hero-prop {
+  isolation: isolate;
+  right: 3%;
+  bottom: 0.35rem;
+  top: auto;
+  transform: scale(0.48);
+  transform-origin: bottom right;
+}
+
+@media (min-width: 40rem) {
+  .booklet-hero-prop {
+    right: 8%;
+    top: 26%;
+    bottom: auto;
+    transform: none;
+  }
+}
+
+.booklet-tape-a {
+  top: -10px;
+  left: 18%;
+  width: 4.8rem;
+  transform: rotate(-8deg);
+}
+
+.booklet-tape-b {
+  top: 32%;
+  left: -14px;
+  width: 3.15rem;
+  transform: rotate(64deg);
+}
+
+.booklet-tape-figure {
+  top: -0.45rem;
+  left: 42%;
+  width: 3.6rem;
+  transform: rotate(-4deg);
+}
+
+/* Members route has no paper - this is the you-are-here mark */
+.booklet-here {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--color-ink) 48%, transparent);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+
+.booklet-next {
+  background: #fffdf2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booklet-pip,
+  .booklet-folio,
+  .booklet-mark,
+  .booklet-tape-a,
+  .booklet-tape-b,
+  .booklet-tape-figure,
+  .booklet-toc-label,
+  .booklet-here,
+  .booklet-fig {
+    transform: none;
+  }
+}

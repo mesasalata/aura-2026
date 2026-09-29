@@ -1,8 +1,8 @@
 <Section id="overview" title="Engineering overview" kicker="01">
 
-AURA's engineering story is organised around five Design–Build–Test–Learn (DBTL) cycles. Each cycle starts with a question, turns it into a biological design, tests that design against controls, and feeds what we learn back into the next loop.
+We treated this as a farm tool first, a circuit second. Engineering is five Design–Build–Test–Learn cycles that start in the parlour: sit in the milking line, cost less than the loss they prevent, and return a flag anyone can act on before the tank is mixed.
 
-We chose DBTL deliberately: a biosensor is not a single construct but a system — recognition, amplification, readout, and deployment all have to work together. Iteration is how we get there without overclaiming.
+That ruled out culture and PCR as the everyday test. The loops that remain are how we read **bta-miR-223** on a FET without a fluorescent workbench.
 
 <Callout variant="note" title="How to read this page">
   Cycles describe intent, design rationale, and what we tested or plan to test. Where wet-lab data is still pending, we say so explicitly.
@@ -10,41 +10,41 @@ We chose DBTL deliberately: a biosensor is not a single construct but a system �
 
 </Section>
 
-<Section id="cycle-1" title="Cycle 1 — Target selection" kicker="02">
+<Section id="cycle-1" title="Cycle 1 - Target: miR-223" kicker="02">
 
-**Design.** We surveyed mastitis-associated biomarkers in milk — somatic cells, acute-phase proteins, enzymes — and ranked them by how early they move, how specific they are to inflammation, and how tractable they are for a cell-free or contained biosensor.
+**Design.** Farmers and vets needed something earlier than a swollen udder and more specific than a generic inflammation count. Literature on host miRNAs in milk pointed at **bta-miR-223**, which rises to control bacterial inflammation before physiological changes show.
 
-**Build.** Literature review and stakeholder interviews narrowed the field. We drafted a decision matrix scoring each candidate on detectability, cost, and farm-deployability.
+**Build.** A decision matrix scored SCC, conductivity, culture, PCR, and miR-223 on timing, bacterial specificity, and whether the test could live in the line.
 
-**Test.** We compared predicted signal windows against published SCC and inflammatory marker kinetics from mastitis challenge studies.
+**Test.** We compared published miR-223 windows against SCC kinetics from mastitis challenge studies.
 
-**Learn.** Host-response signals that rise before clinical signs are more useful than pathogen-specific targets for a first-generation screen. Cycle 2 focuses on turning that insight into a recognition module.
-
-</Section>
-
-<Section id="cycle-2" title="Cycle 2 — Recognition module" kicker="03">
-
-**Design.** Select a biological recognition element — aptamer, antibody fragment, or engineered receptor — that binds the chosen marker with usable affinity in milk matrix.
-
-**Build.** Order or assemble candidate recognition sequences; clone into a test backbone with a constitutive reporter for binding-screening assays.
-
-**Test.** Binding assays against purified marker and spiked milk samples, with irrelevant-protein controls.
-
-**Learn.** Milk matrix interferes with some formats more than others. We adjusted buffer conditions and immobilisation strategy before moving to genetic circuit design.
-
-<Placeholder label="Binding assay curves — data pending" />
+**Learn.** A hit on miR-223 can mean bacterial subclinical mastitis, not just “something’s off.” Cycle 2 asks how to catch that molecule on a surface.
 
 </Section>
 
-<Section id="cycle-3" title="Cycle 3 — Genetic circuit" kicker="04">
+<Section id="cycle-2" title="Cycle 2 - DNA catapult" kicker="03">
 
-**Design.** Wire recognition to a regulated promoter and reporter gene so that binding events produce an amplified, readable output — colour or fluorescence.
+**Design.** A DNA catapult on the FET surface carries an invasion region complementary to the miR-223 strand. Association should open the stem: the negative backbone of the miRNA repels the invasion region from the complementary DNA stem.
 
-**Build.** Assemble promoter–RBS–reporter constructs; prepare cell-free lysate or contained-cell expression format depending on biosafety constraints.
+**Build.** Design and immobilise catapult oligos with a defined invasion region; control sequences that should not open on off-target miRNAs.
 
-**Test.** Characterise dose–response against marker concentration; measure leakiness, dynamic range, and time-to-signal.
+**Test.** Binding and opening in buffer, then in milk matrix, against miR-223 and irrelevant RNA.
 
-**Learn.** Reporter choice trades sensitivity against background. We iterated on promoter strength and ribosome-binding site spacing to reduce basal expression.
+**Learn.** Milk is ionic and noisy. Opening still has to move charge far enough from the surface for the FET to notice - which is cycle 3.
+
+<Placeholder label="Catapult opening assays - data pending" />
+
+</Section>
+
+<Section id="cycle-3" title="Cycle 3 - FET current" kicker="04">
+
+**Design.** No fluorescent workbench. When the invasion region moves away from the biosensor surface, the local electrical field changes. The FET reads that as current between source and drain.
+
+**Build.** Couple catapults to a FET gate; define source–drain bias and sampling window per milking siphon.
+
+**Test.** Current traces with and without miR-223; spiked milk versus unspiked.
+
+**Learn.** Highly ionic milk can swamp the surface field. Reference electrodes go upstream of the chamber so we can subtract the sample’s own salt.
 
 <div className="not-prose my-6 rounded-[var(--radius-card)] border border-ink/10 bg-ink p-6">
   <BiosensorDiagram />
@@ -52,30 +52,30 @@ We chose DBTL deliberately: a biosensor is not a single construct but a system �
 
 </Section>
 
-<Section id="cycle-4" title="Cycle 4 — Readout & device" kicker="05">
+<Section id="cycle-4" title="Cycle 4 - Inline siphon & electrodes" kicker="05">
 
-**Design.** Translate the biological output into something a farmer or vet can read at the parlour — lateral-flow strip, colour card, or simple fluorescence reader.
+**Design.** During each milking, siphon a small sample into a chamber that washes the FET. Place reference electrodes before the chamber to register ionic concentration and electrochemical activity, then calibrate the FET residual.
 
-**Build.** Prototype a paper-based or membrane strip format; pair with a low-cost LED excitation module for fluorescent reporters.
+**Build.** Chamber and electrode layout meant to integrate into milking machines at construction, with minimal upkeep.
 
-**Test.** End-to-end runs with control and spiked milk; measure limit of detection, time-to-result, and robustness to temperature variation.
+**Test.** Flow, fouling, and electrode baselines on milk-like matrices; temperature variation in a parlour range.
 
-**Learn.** A two-band strip (control + test) is essential for interpretability. Hardware and wet-lab cycles ran in parallel so readout format shaped construct design.
+**Learn.** Hardware and wet-lab ran together: the siphon sets how long the catapult has to work, and the electrodes set what “zero” means for that cow that milking.
 
 </Section>
 
-<Section id="cycle-5" title="Cycle 5 — Integration & validation" kicker="06">
+<Section id="cycle-5" title="Cycle 5 - Flag, not verdict" kicker="06">
 
-**Design.** Combine recognition, circuit, and readout into a single workflow: sample → incubate → read → interpret. Define pass/fail thresholds with veterinary input.
+**Design.** After each reading, compare FET current to the sample’s own electrode baseline. A small on-farm model turns the residual into a miR-223 load score. One noisy spike is not a verdict.
 
-**Build.** Freeze the construct set; document the full protocol; prepare positive and negative control panels.
+**Build.** Threshold logic: if the score stays high across consecutive sessions, the parlour computer marks the animal and sends a quiet alert to the farmer’s phone or the parlour display.
 
-**Test.** Blind runs on characterised milk samples (where available); compare AURA output against SCC and culture reference methods.
+**Test.** Simulated milking series - noisy singles versus persistent highs - with veterinary input on what is actionable.
 
-**Learn.** Integration exposes failure modes invisible in isolated assays — matrix effects, timing, and user interpretation. This cycle closes the loop and sets the agenda for post-competition validation.
+**Learn.** Human Practices kept the last mile honest: look at this cow, consider confirmatory testing, skip blanket treatment of the herd.
 
 <Callout variant="safety" title="Scope reminder">
-  AURA is diagnostic-support, not diagnostic. Thresholds are designed to flag risk for follow-up, not to replace veterinary judgement or culture.
+  AURA is diagnostic-support, not diagnostic. The message is a flag, not a courtroom diagnosis.
 </Callout>
 
 </Section>
@@ -88,12 +88,12 @@ We chose DBTL deliberately: a biosensor is not a single construct but a system �
 
 </Section>
 
-<Section id="pipeline" title="From milk to signal" kicker="08">
+<Section id="pipeline" title="From cow to flag" kicker="08">
 
 <div className="not-prose my-4">
   <FarmToLabPipeline />
 </div>
 
-The pipeline above is the engineering backbone: every DBTL cycle touches one or more of these stages. Keeping the diagram in view helps us avoid optimising one block while another becomes the bottleneck.
+Every cycle touches this line: siphon, catapult, FET, electrodes, score, flag. Keeping it in view stops us from polishing one block while another becomes the bottleneck.
 
 </Section>

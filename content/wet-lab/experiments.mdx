@@ -1,6 +1,6 @@
 <Section id="overview" title="Experimental plan" kicker="01">
 
-Experiments are organised around AURA's five DBTL cycles. Each assay answers a specific question before we commit to the next design. This page is the map; protocols and the notebook hold the detail.
+Experiments follow AURA's five DBTL cycles. Each assay answers one question before we commit to the next design: does miR-223 bind the catapult, does the FET tick, can the siphon sit in the line. This page is the map; protocols and the notebook hold the detail.
 
 <Callout variant="note" title="Status">
   Some runs are scheduled or in progress. Results land on the Results page as data arrives.
@@ -10,11 +10,11 @@ Experiments are organised around AURA's five DBTL cycles. Each assay answers a s
 
 <Section id="goals" title="Goals" kicker="02">
 
-1. Confirm that a chosen host-response marker can be detected in milk matrix
-2. Characterise recognition-module binding specificity
-3. Measure circuit leakiness, dynamic range, and time-to-signal
-4. Validate end-to-end readout on a strip prototype
-5. Compare exploratory output against SCC / culture references where samples allow
+1. Confirm that bta-miR-223 can be detected in milk matrix
+2. Characterise DNA-catapult opening against miR-223 versus irrelevant RNA
+3. Measure FET current change when the catapult opens
+4. Validate reference electrodes against salty milk so salt does not raise a false flag
+5. Compare the on-farm load score against SCC / culture references where samples allow
 
 </Section>
 
@@ -22,30 +22,30 @@ Experiments are organised around AURA's five DBTL cycles. Each assay answers a s
 
 | Phase | Assay | Question |
 | --- | --- | --- |
-| 1 | Literature + spiking design | Which marker window is realistic? |
-| 2 | Binding screen | Does recognition work in milk? |
-| 3 | Expression / cell-free run | Does the circuit report? |
-| 4 | Dose–response | What is dynamic range and EC₅₀? |
-| 5 | Strip end-to-end | Can a non-specialist read the output? |
+| 1 | Literature + spiking design | Is the miR-223 window realistic in milk? |
+| 2 | Catapult opening screen | Does recognition work in milk? |
+| 3 | FET current traces | Does the transistor report? |
+| 4 | Electrode baseline | Does this sample's own salt cancel out? |
+| 5 | Consecutive-session flag | Is one spike a verdict, or do we wait? |
 
 </Section>
 
 <Section id="controls" title="Controls" kicker="04">
 
-Every experiment includes positive controls (known marker or induced signal), negative controls (unspiked milk, irrelevant protein), and matrix blanks. Strip tests always include a control line.
+Every experiment includes positive controls (known miR-223 spike), negative controls (unspiked milk, irrelevant RNA), and matrix blanks. FET runs always include the upstream reference electrodes so the residual is against that sample, not a generic zero.
 
 </Section>
 
 <Section id="samples" title="Samples" kicker="05">
 
-Development uses spiked milk panels prepared under documented conditions. Any comparison to field samples requires veterinary oversight and is exploratory only — not a clinical validation study.
+Development uses spiked milk panels prepared under documented conditions. Any comparison to field samples requires veterinary oversight and is exploratory only - not a clinical validation study.
 
-<Placeholder label="Sample panel metadata table — pending" />
+<Placeholder label="Sample panel metadata table - pending" />
 
 </Section>
 
 <Section id="timeline" title="Timeline" kicker="06">
 
-Assays follow the engineering cycles: binding before circuit tuning, circuit before strip integration. Parallel dry-lab modeling informs which conditions to test first, reducing wasted bench time.
+Assays follow the engineering cycles: catapult opening before FET traces, FET traces before siphon integration, siphon before the consecutive-session flag. Parallel dry-lab modeling informs which conditions to test first, reducing wasted bench time.
 
 </Section>

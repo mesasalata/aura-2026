@@ -22,7 +22,7 @@ export default function Page() {
       kicker="Wet Lab · Experiments"
       accent="bio"
       title="What we're testing and why"
-      lede="Assays mapped to engineering cycles — each experiment answers one question before the next design commit."
+      lede="Assays mapped to engineering cycles - each experiment answers one question before the next design commit."
       current="/experiments"
       toc={TOC}
     >

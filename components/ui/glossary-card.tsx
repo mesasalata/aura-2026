@@ -7,7 +7,7 @@ import { ACCENT_HEX } from "@/components/ui/badge";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/** GlossaryCard — tap to expand from short analogy to full definition. */
+/** GlossaryCard - tap to expand from short analogy to full definition. */
 export function GlossaryCard({ term }: { term: GlossaryTerm }) {
   const [open, setOpen] = useState(false);
   const hex = ACCENT_HEX[term.accent];

@@ -12,51 +12,49 @@ Reproducible methods for AURA bench work. Each protocol lists reagents, steps, c
 1. Collect or thaw milk aliquots; record source and date
 2. Centrifuge to remove fat if required for assay format
 3. Filter or dilute per assay SOP; document dilution factor
-4. Spike marker at defined concentrations; include unspiked control
+4. Spike miR-223 at defined concentrations; include unspiked control
 
 <Callout variant="lab" title="Matrix matters">
-  Buffer-only controls are necessary but not sufficient — always include unspiked and spiked milk.
+  Buffer-only controls are necessary but not sufficient - always include unspiked and spiked milk. Milk is ionic; that is why the reference electrodes exist.
 </Callout>
 
 </Section>
 
-<Section id="binding" title="Binding screen" kicker="03">
+<Section id="binding" title="Catapult opening screen" kicker="03">
 
-**Purpose.** Compare recognition-element candidates against purified marker and milk matrix.
+**Purpose.** Compare DNA-catapult candidates against purified miR-223 and milk matrix.
 
 **Outline.**
-1. Immobilise candidate on surface or capture format
-2. Incubate with marker in buffer, then in diluted milk
-3. Wash; apply detection reagent or coupled reporter
-4. Read signal; compare to irrelevant-protein control
+1. Immobilise candidate catapult on the FET gate (or a screening surface)
+2. Incubate with miR-223 in buffer, then in diluted milk
+3. Wash; include irrelevant-RNA control
+4. Read opening (shape change / current) against the closed-stem baseline
 
-<Placeholder label="Full step-by-step with volumes — expand before submission" />
+<Placeholder label="Full step-by-step with volumes - expand before submission" />
 
 </Section>
 
-<Section id="expression" title="Cell-free / contained expression" kicker="04">
+<Section id="fet" title="FET current traces" kicker="04">
 
-**Purpose.** Produce readable reporter output from assembled circuit.
+**Purpose.** Turn catapult opening into source–drain current.
 
 **Outline.**
-1. Prepare lysate or induce contained cells per biosafety approval
-2. Add template DNA at defined concentration
-3. Incubate at controlled temperature; time-course if needed
-4. Quench and read fluorescence or colour
+1. Mount the gated surface; record closed-stem baseline in unspiked milk
+2. Introduce miR-223 spike or field sample
+3. Record current between source and drain through the milking-pulse window
+4. Subtract that run's reference-electrode baseline to get the residual
 
 </Section>
 
-<Section id="strip" title="Strip assembly & readout" kicker="05">
+<Section id="electrodes" title="Reference electrodes" kicker="05">
 
-**Purpose.** Translate biological output to a lateral-flow style readout.
+**Purpose.** Taste this sample's salt and electrochemical noise before the chamber, so ionic milk is less likely to raise a false flag.
 
 **Outline.**
-1. Apply sample to well; allow capillary flow
-2. Wait for control line to appear (required for valid test)
-3. Read test line against reference card
-4. Record photograph and time-to-result
-
-<StripDemo />
+1. Place electrodes upstream of the siphon chamber
+2. Register ionic concentration and electrochemical activity for that pulse
+3. Store the baseline with the FET trace for the same cow and milking
+4. Feed both into the on-farm load score
 
 </Section>
 

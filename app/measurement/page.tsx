@@ -21,7 +21,7 @@ export default function Page() {
       kicker="Wet Lab · Measurement"
       accent="pink"
       title="Calibration & characterisation"
-      lede="How we turn raw signals into comparable data — and what we report."
+      lede="How we turn raw signals into comparable data - and what we report."
       current="/measurement"
       toc={TOC}
     >

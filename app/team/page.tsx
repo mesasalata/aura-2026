@@ -8,7 +8,7 @@ import { Callout } from "@/components/ui/callout";
 
 export const metadata: Metadata = {
   title: "Members",
-  description: "The students behind AURA — wet lab, dry lab, human practices, and design.",
+  description: "The students behind AURA - wet lab, dry lab, human practices, and design.",
 };
 
 export default function Page() {
@@ -23,6 +23,9 @@ export default function Page() {
       />
 
       <Container size="wide" className="pb-20 pt-4">
+        <p className="booklet-here" aria-hidden>
+          this page · members
+        </p>
         <TeamRoster />
 
         <section className="mt-20 grid gap-6 lg:grid-cols-2">

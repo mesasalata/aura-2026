@@ -9,11 +9,11 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
+import { BLOB, Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ *
- * SignalBeats — how a milk sample becomes a readable result, as one
+ * SignalBeats - how a milk sample becomes a readable result, as one
  * long scroll-pinned stage. The same vial stays on screen through four
  * chapters (input, recognition, amplification, output) and the liquid
  * itself is scrubbed by scroll: it fills, the biomarker docks, the
@@ -39,7 +39,7 @@ const STAGES: Stage[] = [
     index: "01",
     label: "Input",
     tag: "Milk sample loaded",
-    desc: "A raw milk sample is drawn into the sensor. Somatic cells, fats, and — if there's infection — the mastitis biomarker are all swimming in here, invisible to the eye.",
+    desc: "Each milking, a siphoned sip of milk enters the chamber. Fats, salts, and - if the cow is fighting bacteria - bta-miR-223 are all in here, invisible to the eye.",
     accent: "var(--color-orange)",
     wash: "b",
     window: [0, 0.05, 0.21, 0.26],
@@ -47,17 +47,17 @@ const STAGES: Stage[] = [
   {
     index: "02",
     label: "Recognition",
-    tag: "Biomarker captured",
-    desc: "Engineered sensing elements lock onto the mastitis biomarker and ignore everything else — the moment healthy milk is told apart from infected milk.",
+    tag: "Catapult binds miR-223",
+    desc: "A DNA catapult on the FET surface has an invasion region complementary to miR-223. When the miRNA associates, the stem opens - a shape change, not a colour.",
     accent: "var(--color-signal)",
     wash: "a",
     window: [0.26, 0.31, 0.46, 0.51],
   },
   {
     index: "03",
-    label: "Amplification",
-    tag: "Signal multiplied",
-    desc: "A genetic circuit turns each single binding event into a flood of signal molecules, so even a faint trace of the marker becomes impossible to miss.",
+    label: "Transduction",
+    tag: "Current ticks",
+    desc: "Opening the catapult moves charge away from the FET surface. The transistor reads that as a change in current between source and drain. Reference electrodes taste the milk first so salt does not raise a false flag.",
     accent: "var(--color-butter)",
     wash: "d",
     window: [0.51, 0.56, 0.71, 0.76],
@@ -65,8 +65,8 @@ const STAGES: Stage[] = [
   {
     index: "04",
     label: "Output",
-    tag: "Readable result",
-    desc: "The amplified signal drives a visible colour and fluorescence change you can read by eye — a clear answer, no lab bench required.",
+    tag: "A flag, not a verdict",
+    desc: "A small on-farm model turns the residual current into a miR-223 load score. If it stays high across milkings, the parlour computer marks this cow - look closer, skip blanket antibiotics.",
     accent: "var(--color-pink)",
     wash: "a",
     window: [0.76, 0.81, 1, 1],
@@ -78,10 +78,10 @@ const LAST = STAGES.length - 1;
 /**
  * Scroll-linked `opacity` on HTML elements is handed to a native ViewTimeline
  * animation by motion, which uses the input range verbatim as keyframe
- * offsets — outside that range the browser falls back to the element's inline
+ * offsets - outside that range the browser falls back to the element's inline
  * value instead of clamping. Pad every range to [0, 1] so the ends hold.
  */
-function useSpan(progress: MotionValue<number>, input: number[], output: number[]) {
+function useSpan<T extends number | string>(progress: MotionValue<number>, input: number[], output: T[]) {
   const i = [...input];
   const o = [...output];
   if (i[0] > 0) {
@@ -118,7 +118,7 @@ function buildWave(amp: number, wavelength: number, phase: number) {
   const pts: string[] = [];
   for (let x = -40; x <= 240; x += 8) {
     const y = SURFACE + amp * Math.sin((x / wavelength) * Math.PI * 2 + phase);
-    pts.push(`${x === -40 ? "M" : "L"}${x} ${y.toFixed(2)}`);
+    pts.push(`${x === -40 ? "M" : "L"}${x} ${y.toFixed(3)}`);
   }
   pts.push("L240 300 L-40 300 Z");
   return pts.join(" ");
@@ -197,7 +197,7 @@ function Ray({ angle, at, progress, stroke }: { angle: number; at: number; progr
   const y = useTransform(reach, (r) => Math.sin(rad) * r);
   return (
     <motion.path
-      d={`M0 -8 L${(Math.cos(rad) * 4).toFixed(2)} ${(-8 + Math.sin(rad) * 4).toFixed(2)}`}
+      d={`M0 -8 L${(Math.cos(rad) * 4).toFixed(3)} ${(-8 + Math.sin(rad) * 4).toFixed(3)}`}
       style={{ x, y, opacity, stroke }}
       strokeWidth={1.6}
       strokeLinecap="round"
@@ -216,7 +216,7 @@ function OuterMark({ mark, progress }: { mark: Mark; progress: MotionValue<numbe
         <motion.path d={STAR} fill={mark.color} style={{ scale, opacity }} />
       ) : (
         <motion.path
-          d={`M0 0 L${(Math.cos(rad) * mark.size).toFixed(2)} ${(Math.sin(rad) * mark.size).toFixed(2)}`}
+          d={`M0 0 L${(Math.cos(rad) * mark.size).toFixed(3)} ${(Math.sin(rad) * mark.size).toFixed(3)}`}
           fill="none"
           stroke={mark.color}
           strokeWidth={1.8}
@@ -244,7 +244,7 @@ function DockingSite({ x, i, progress }: { x: number; i: number; progress: Motio
   const lockAt = at + 0.1;
   const lockScale = useTransform(progress, [lockAt, lockAt + 0.07], [0.5, 1.6]);
   const lockOpacity = useTransform(progress, [lockAt, lockAt + 0.02, lockAt + 0.07], [0, 0.8, 0]);
-  const stroke = useTransform(progress, RECEPTOR_IN, RECEPTOR_OUT);
+  const stroke = useSpan(progress, RECEPTOR_IN, RECEPTOR_OUT);
   const rayAt = 0.53 + i * 0.03;
 
   return (
@@ -253,7 +253,7 @@ function DockingSite({ x, i, progress }: { x: number; i: number; progress: Motio
         <circle cy={-8} r={3.4} fill="var(--color-pink)" />
       </motion.g>
       <motion.circle cy={-8} r={9} fill="none" stroke="var(--color-signal)" strokeWidth={1.2} vectorEffect="non-scaling-stroke" style={{ scale: lockScale, opacity: lockOpacity }} />
-      {/* once bound, each site throws four short dashes — the signal leaving the receptor */}
+      {/* once bound, each site throws four short dashes - the signal leaving the receptor */}
       {[-135, -45, 45, 135].map((angle, k) => (
         <Ray key={angle} angle={angle} at={rayAt + k * 0.012} progress={progress} stroke={stroke} />
       ))}
@@ -277,8 +277,8 @@ function SampleVial({ progress }: { progress: MotionValue<number> }) {
   const waveY = useTransform(level, (y) => y - SURFACE);
   const waveX = useTransform(progress, [0, 1], [0, -80]);
   const lineY = useTransform(level, (y) => y - 1);
-  const front = useTransform(progress, TINT_IN, FRONT_OUT);
-  const back = useTransform(progress, TINT_IN, BACK_OUT);
+  const front = useSpan(progress, TINT_IN, FRONT_OUT);
+  const back = useSpan(progress, TINT_IN, BACK_OUT);
   const motesIn = useTransform(progress, [0.08, 0.2], [0, 1]);
 
   const dropY = useTransform(progress, [0.15, 0.22], [-34, SURFACE - 52]);
@@ -384,13 +384,13 @@ type Readout = { title: string; verdict: string; note: string; accent: string };
 const HEALTHY: Readout = {
   title: "Healthy milk",
   verdict: "No signal",
-  note: "Biomarker below threshold — the readout stays pale and quiet.",
+  note: "miR-223 score stays with the sample’s own baseline - no flag.",
   accent: "var(--color-bio)",
 };
 const INFECTED: Readout = {
   title: "Infected milk",
   verdict: "Signal fires",
-  note: "Biomarker recognised and amplified — colour and fluorescence bloom.",
+  note: "Score stays high across milkings - the parlour marks this cow.",
   accent: "var(--color-pink)",
 };
 
@@ -417,7 +417,7 @@ function SignalVisual({ progress, className }: { progress: MotionValue<number>; 
   const sampleX = useTransform(progress, [0.76, 0.88], ["-50%", "0%"]);
   const controlOpacity = useSpan(progress, [0.8, 0.9], [0, 1]);
   const controlX = useTransform(progress, [0.8, 0.9], [reduce ? "0%" : "-18%", "0%"]);
-  const verdictOpacity = useSpan(progress, [0.88, 0.97], [0, 1]);
+  const verdictOpacity = useSpan(progress, [0.88, 0.97], [0, 1] as number[]);
   const verdictY = useTransform(progress, [0.88, 0.97], [reduce ? 0 : 14, 0]);
 
   return (
@@ -530,12 +530,36 @@ function SignalIntro() {
           style={{ opacity: enter, y: textY }}
           className="relative mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-6 text-center"
         >
-          <p className="font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.06] tracking-tight text-ink text-balance">
-            How a sample becomes something you can read
-          </p>
+          <div className="relative">
+            {/* Milk-ring stain - marks this as the assay chapter, like a mug sat on the notes. */}
+            <div className="doodad-milk-ring" aria-hidden>
+              <svg viewBox="0 0 100 100">
+                <path
+                  d={BLOB.ring}
+                  fill="none"
+                  stroke="#8a6a4a"
+                  strokeWidth="8"
+                  strokeOpacity="0.22"
+                  filter={`url(#${SOFT_ID})`}
+                />
+                <path
+                  d={BLOB.ring}
+                  fill="none"
+                  stroke="#5a3d33"
+                  strokeWidth="2.4"
+                  strokeOpacity="0.12"
+                  transform="translate(10 9) scale(0.8)"
+                  filter={`url(#${SOFT_ID})`}
+                />
+              </svg>
+            </div>
+            <p className="font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.06] tracking-tight text-ink text-balance">
+              How a siphoned sip becomes a flag
+            </p>
+          </div>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-70 text-pretty">
-            A milk sample carries a biological marker. An engineered sensing system recognises it,
-            amplifies the response, and turns it into a colour or fluorescence you can interpret.
+            Each milking, milk washes a DNA catapult on an FET. miR-223 opens it; current ticks;
+            a small model decides whether to flag this cow.
           </p>
         </motion.div>
       </div>

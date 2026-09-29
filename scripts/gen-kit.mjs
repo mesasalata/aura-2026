@@ -161,7 +161,7 @@ for (const job of JOBS) {
   }
 }
 
-console.log("Candidates in public/art/gen/review/ — pick one object, throw away the rest.");
+console.log("Candidates in public/art/gen/review/ - pick one object, throw away the rest.");
 if (!existsSync(path.join(OUT, "style-id.txt"))) {
   await copyFile(path.join(REVIEW, "style-id.txt"), path.join(OUT, "style-id.txt"));
 }

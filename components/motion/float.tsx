@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
- * Floaty — an endless, gentle bob + drift for decorative accents (icons, dots,
+ * Floaty - an endless, gentle bob + drift for decorative accents (icons, dots,
  * small shapes). Deterministic per `seed` so several can coexist without moving
  * in lockstep. Respects reduced-motion (renders static).
  */
@@ -42,7 +42,7 @@ export function Floaty({
 }
 
 /**
- * AuraDrift — a soft coloured bloom that slowly breathes and drifts in place.
+ * AuraDrift - a soft coloured bloom that slowly breathes and drifts in place.
  * Use behind section content for ambient depth. Colour comes from `className`
  * (e.g. an `aura-bloom` utility) or inline `style`.
  */

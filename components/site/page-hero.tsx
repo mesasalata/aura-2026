@@ -7,9 +7,11 @@ import { DropMark, FlaskMark, PailMark } from "@/components/viz/marks";
 import { Blob } from "@/components/viz/sketch";
 import { HERO_CAST, HERO_PROP, type ArtScene } from "@/lib/art";
 import { MILK, WaveSeam } from "@/components/site/wave-seam";
+import { Tape } from "@/components/viz/doodads";
+import "@/app/doodad-article.css";
 
 /**
- * Illustrated page banner — ink sky, milk type, cream hide only under the fold.
+ * Illustrated page banner - ink sky, milk type, cream hide only under the fold.
  * Type never sits on a mixed ground.
  */
 export function PageHero({
@@ -48,24 +50,9 @@ export function PageHero({
           />
         </div>
 
-        <div
-          className="pointer-events-none absolute right-[8%] top-[26%] z-10 hidden sm:block"
-          aria-hidden
-        >
-          {lead ? (
-            <Art id={lead.id} size={188} motion="breathe" glow={lead.glow} />
-          ) : prop === "pail" ? (
-            <PailMark className="h-44 w-auto lg:h-52" />
-          ) : prop === "flask" ? (
-            <FlaskMark className="h-40 w-auto lg:h-48" liquid="pink" />
-          ) : prop === "drop" ? (
-            <DropMark className="h-36 w-auto lg:h-44" tint="pink" />
-          ) : null}
-        </div>
-
         <Container
           size="wide"
-          className="relative z-10 flex min-h-[17rem] flex-col justify-end pb-16 pt-10 sm:min-h-[20rem] sm:pb-20"
+          className="relative z-10 flex min-h-[17rem] flex-col justify-end pb-28 pt-10 sm:min-h-[20rem] sm:pb-20"
         >
           <p className="kicker text-pink-soft">{kicker}</p>
           <h1 className="mt-3 max-w-4xl font-display text-milk display-hero">{word}</h1>
@@ -81,7 +68,7 @@ export function PageHero({
           )}
         </Container>
 
-        {/* Sit in the banner, behind the wave — no overflow clip on this section,
+        {/* Sit in the banner, behind the wave - no overflow clip on this section,
             so the spots keep their full silhouette down to the seam. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40" aria-hidden>
           <Blob
@@ -102,6 +89,20 @@ export function PageHero({
         </div>
 
         <WaveSeam from="transparent" to={MILK} className="relative z-10" />
+
+        <div className="booklet-hero-prop pointer-events-none absolute z-20" aria-hidden>
+          <Tape className="booklet-tape-a hidden sm:block" />
+          <Tape className="booklet-tape-b hidden sm:block" />
+          {lead ? (
+            <Art id={lead.id} size={188} motion="breathe" glow={lead.glow} />
+          ) : prop === "pail" ? (
+            <PailMark className="h-44 w-auto lg:h-52" />
+          ) : prop === "flask" ? (
+            <FlaskMark className="h-40 w-auto lg:h-48" liquid="pink" />
+          ) : prop === "drop" ? (
+            <DropMark className="h-36 w-auto lg:h-44" tint="pink" />
+          ) : null}
+        </div>
       </section>
     </div>
   );

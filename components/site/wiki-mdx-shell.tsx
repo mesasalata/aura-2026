@@ -34,7 +34,7 @@ export function WikiMdxShell({
         scene={sceneFor(current)}
       />
       <WikiLayout toc={toc} current={current} scene={sceneFor(current)}>
-        <div className="space-y-4 [&>section]:scroll-mt-24">{children}</div>
+        <div className="space-y-4 [&>section]:scroll-mt-28">{children}</div>
       </WikiLayout>
     </>
   );

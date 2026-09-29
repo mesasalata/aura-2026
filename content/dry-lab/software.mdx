@@ -1,29 +1,29 @@
 <Section id="overview" title="Software overview" kicker="01">
 
-Software supports analysis, documentation, and optional readout assistance. Nothing in the critical path requires a network connection at the parlour.
+Software supports analysis, documentation, and the on-farm load score. Nothing in the critical path requires a network connection at the parlour.
 
 </Section>
 
 <Section id="analysis" title="Analysis scripts" kicker="02">
 
-Python notebooks process dose–response data, fit curves, and export figures for the wiki. Scripts take raw CSV from plate readers and return EC₅₀ estimates with uncertainty.
+Python notebooks process FET traces, subtract that sample's reference-electrode baseline, and export figures for the wiki. Scripts take raw current CSV and return a miR-223 load score with uncertainty.
 
-<Placeholder label="Repository link and example notebook — pending" />
+<Placeholder label="Repository link and example notebook - pending" />
 
 </Section>
 
 <Section id="wiki" title="This wiki" kicker="03">
 
-The site is a static Next.js export — fast, deployable to iGEM hosting, accessible without JavaScript for core content. MDX pages keep prose editable without touching layout code.
+The site is a static Next.js export - fast, deployable to iGEM hosting, accessible without JavaScript for core content. MDX pages keep prose editable without touching layout code.
 
 </Section>
 
-<Section id="reader-app" title="Optional reader app" kicker="04">
+<Section id="reader-app" title="On-farm flag" kicker="04">
 
-A minimal mobile-friendly page could photograph strip results and archive them with timestamp and herd ID. Privacy and data ownership would be farm-controlled; no cloud requirement in v1.
+The parlour computer already has the score. If it stays high across consecutive sessions, it marks the cow and sends a quiet alert to the farmer's phone or the parlour display. Privacy and data ownership would be farm-controlled; no cloud requirement in v1.
 
 <Callout variant="note" title="Scope">
-  Reader app is exploratory. The proof-of-concept works without it.
+  The flag is a design target. The proof-of-concept FET and model work without a phone app.
 </Callout>
 
 </Section>

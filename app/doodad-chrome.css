@@ -1,0 +1,166 @@
+/* AURA site chrome - small handmade marks. Keep quiet. */
+
+:root {
+  --doodad-cocoa: #5a3d33;
+}
+
+/* --- Nav: team-wiki wayfinding kicker --- */
+.nav-wiki-kicker {
+  position: relative;
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  line-height: 1;
+  transform: rotate(-2.8deg);
+  transform-origin: left center;
+  opacity: 0.72;
+}
+
+.nav-wiki-kicker::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -2px;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: rotate(0.6deg) scaleX(1.04);
+  opacity: 0.55;
+}
+
+.nav-aura-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* --- Footer: crooked student stamp --- */
+.footer-student-stamp {
+  display: inline-block;
+  margin-top: 0.35rem;
+  padding: 0.22rem 0.55rem 0.28rem;
+  border: 1.5px solid color-mix(in srgb, var(--doodad-cocoa) 55%, transparent);
+  border-radius: 2px 3px 2px 4px;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-milk) 62%, var(--doodad-cocoa));
+  transform: rotate(-2.4deg);
+  transform-origin: left center;
+  line-height: 1.2;
+}
+
+.footer-pail-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: 0.75rem;
+  border-radius: 999px;
+  transition: transform 0.2s var(--ease-out-soft, ease);
+}
+
+.footer-pail-home:hover {
+  transform: rotate(-4deg) scale(1.06);
+}
+
+.footer-pail-home:focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 3px;
+}
+
+/* --- Back-to-top: paper tab, not FAB --- */
+.back-tab {
+  position: fixed;
+  bottom: 0;
+  right: 1.25rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.65rem 0.55rem;
+  border: 1.5px solid color-mix(in srgb, var(--doodad-cocoa) 70%, transparent);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background: var(--color-milk);
+  color: var(--color-ink);
+  box-shadow:
+    0 -2px 0 color-mix(in srgb, var(--doodad-cocoa) 12%, transparent),
+    -3px 0 0 color-mix(in srgb, var(--doodad-cocoa) 8%, transparent);
+  cursor: pointer;
+}
+
+.back-tab::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0.85rem;
+  height: 0.85rem;
+  background: linear-gradient(
+    225deg,
+    var(--color-cream) 48%,
+    color-mix(in srgb, var(--doodad-cocoa) 35%, transparent) 48%,
+    color-mix(in srgb, var(--doodad-cocoa) 35%, transparent) 52%,
+    var(--color-milk) 52%
+  );
+}
+
+.back-tab-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--doodad-cocoa) 85%, var(--color-ink));
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+
+.back-tab:hover {
+  transform: translateY(-2px);
+}
+
+/* --- Mobile nav: notebook margin + tape --- */
+.mobile-nav-sheet {
+  position: relative;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-pink) 28%, transparent) 0,
+      color-mix(in srgb, var(--color-pink) 28%, transparent) 1px,
+      transparent 1px,
+      transparent 2.75rem
+    ),
+    var(--color-milk);
+}
+
+.mobile-nav-sheet::before {
+  content: "";
+  position: absolute;
+  top: 3.25rem;
+  left: 1.1rem;
+  right: 1.1rem;
+  height: 1.1rem;
+  background: color-mix(in srgb, var(--color-cream) 82%, var(--color-butter) 18%);
+  border: 1px solid color-mix(in srgb, var(--doodad-cocoa) 22%, transparent);
+  opacity: 0.38;
+  transform: rotate(-0.8deg);
+  pointer-events: none;
+}
+
+.mobile-nav-scroll {
+  padding-left: 2.75rem;
+}
+
+/* --- Scroll progress: decorative ticks --- */
+.progress-tick {
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 5px;
+  opacity: 0.5;
+  background: color-mix(in srgb, var(--doodad-cocoa) 45%, transparent);
+  transform: translate(-50%, -50%) rotate(-1.5deg);
+  pointer-events: none;
+}
+

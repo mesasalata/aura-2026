@@ -1,6 +1,6 @@
 /**
  * The bitmap cast, regenerated in one look: bold clip art with a hand in it.
- * Thick even cocoa outlines, flat fills, one flat white shine — the same
+ * Thick even cocoa outlines, flat fills, one flat white shine - the same
  * language as the SVG marks in components/viz/marks.tsx.
  *
  *   node scripts/gen-cast.mjs explore [n]        # n healthy-cow candidates in the base style → review/explore-N.png
@@ -23,7 +23,7 @@ const exec = promisify(execFile);
 const CAST = [
   {
     name: "cow-grazing",
-    prompt: `ONLY one friendly healthy dairy cow, full body, standing, side view facing left, all four legs visible, gentle smile, bright open eyes, ears up. Its patches are LIGHT TAN BEIGE (caramel latte colour) — absolutely NO pink patches; the only pink is a small pink nose and a small tidy pink udder. ${LOOK}`,
+    prompt: `ONLY one friendly healthy dairy cow, full body, standing, side view facing left, all four legs visible, gentle smile, bright open eyes, ears up. Its patches are LIGHT TAN BEIGE (caramel latte colour) - absolutely NO pink patches; the only pink is a small pink nose and a small tidy pink udder. ${LOOK}`,
   },
   {
     name: "cow-sick",

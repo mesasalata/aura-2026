@@ -1,6 +1,6 @@
 <Section id="overview" title="Results overview" kicker="01">
 
-This page collects what we measured, what we observed in prototypes, and what remains open. AURA is a proof-of-concept in progress — we report outcomes honestly and mark pending work rather than implying validation we do not yet have.
+This page collects what we measured, what we observed in prototypes, and what remains open. AURA is a proof-of-concept in progress - we report outcomes honestly and mark pending work rather than implying validation we do not yet have.
 
 <Callout variant="note" title="Pending data">
   Where a result depends on wet-lab work still underway, you will see an explicit placeholder. We will update this page as data arrives.
@@ -8,69 +8,69 @@ This page collects what we measured, what we observed in prototypes, and what re
 
 </Section>
 
-<Section id="constructs" title="Construct characterisation" kicker="02">
+<Section id="constructs" title="Catapult sequences" kicker="02">
 
-We designed reporter backbones for screening recognition elements and circuit variants. Initial cloning confirmed insert size and sequence for the primary test constructs.
+We designed DNA catapults with an invasion region complementary to bta-miR-223, plus off-target controls. Sequence files and intended use are documented on the Parts page.
 
-<Placeholder label="Gel electrophoresis and sequencing confirmation — figures pending" />
+<Placeholder label="Oligo design and synthesis confirmation - figures pending" />
 
-**What we can say now:** assembly strategy is documented; constructs are ready for expression and assay work. Quantitative characterisation (expression level, leakiness, dose–response) is the next milestone.
-
-</Section>
-
-<Section id="binding" title="Binding assays" kicker="03">
-
-Cycle 2 targeted binding of the selected marker in buffer and in diluted milk matrix. Controls included irrelevant proteins and unspiked milk.
-
-<Placeholder label="Binding curves and specificity table — data pending" />
-
-**Expected readouts:** apparent affinity, signal-to-noise in milk, and whether immobilisation format affects sensitivity.
+**What we can say now:** sequence strategy is documented; catapults are ready for surface attachment and opening assays. Quantitative characterisation (opening, ΔI, residual) is the next milestone.
 
 </Section>
 
-<Section id="circuit" title="Circuit performance" kicker="04">
+<Section id="binding" title="Opening assays" kicker="03">
 
-The genetic circuit was designed for a measurable output above a low basal level. Characterisation includes time-course expression, dynamic range across marker concentrations, and comparison of reporter options.
+Cycle 2 targeted opening of the selected catapult in buffer and in diluted milk matrix. Controls included irrelevant RNA and unspiked milk.
 
-<Placeholder label="Fluorescence / colorimetric time courses — data pending" />
+<Placeholder label="Opening curves and specificity table - data pending" />
+
+**Expected readouts:** whether miR-223 opens the stem, signal-to-noise in milk, and whether surface attachment affects sensitivity.
+
+</Section>
+
+<Section id="fet" title="FET performance" kicker="04">
+
+The field-effect transistor is designed so that catapult opening moves charge away from the gate and ticks current between source and drain. Characterisation includes time-course traces, residual after electrode subtraction, and comparison of catapult variants.
+
+<Placeholder label="FET current traces - data pending" />
 
 <ScienceExplainer
   accent="bio"
-  analogy="Think of the circuit like a dimmer switch: we want it dark when nothing is wrong, and clearly lit when the marker is present — without flickering on its own."
-  precise="We measure basal reporter expression (leakiness), fold-induction at saturating marker, and half-maximal effective concentration (EC₅₀) where the model applies."
+  analogy="Think of the FET like a dimmer switch: we want it quiet when nothing is wrong, and clearly ticking when miR-223 is present - without flickering on salt alone."
+  precise="We measure closed-stem baseline current, ΔI at saturating miR-223, and the residual after subtracting that sample's reference-electrode baseline."
 />
 
 </Section>
 
-<Section id="device" title="Device & strip prototypes" kicker="05">
+<Section id="device" title="Siphon & electrode prototypes" kicker="05">
 
-Paper-based strip prototypes were built to test whether biological output translates into a visible band a non-specialist could read. Control lines were included on every strip.
+Inline siphon chambers were built to test whether a milking pulse can wash the FET surface without another trip to the lab. Reference electrodes sit upstream of the chamber on every prototype.
 
-<Placeholder label="Strip prototype photos and readout comparison — data pending" />
+<Placeholder label="Siphon prototype photos and electrode placement - data pending" />
 
-Early bench tests focused on flow uniformity and control-line visibility before running biological samples.
+Early bench tests focused on flow through the chamber and electrode stability before running biological samples.
 
 </Section>
 
 <Section id="comparison" title="Comparison to reference methods" kicker="06">
 
-The ultimate question is whether AURA's signal moves earlier or more accessibly than methods farms already use. We frame comparison against:
+The ultimate question is whether AURA's flag moves earlier or more accessibly than methods farms already use. We frame comparison against:
 
 - Somatic cell count (industry standard early indicator)
 - Electrical conductivity (common inline proxy)
 - Culture or PCR (confirmatory reference)
 
-<Placeholder label="Side-by-side comparison table — pending paired samples" />
+<Placeholder label="Side-by-side comparison table - pending paired samples" />
 
-We do not claim clinical validation. Any comparison is exploratory and sample-limited.
+We do not claim clinical validation. Any comparison is exploratory and sample-limited. AURA is a flag, not a diagnosis.
 
 </Section>
 
 <Section id="modelling" title="Modelling support" kicker="07">
 
-Dry-lab work estimated sensitivity thresholds and incubation times that would make a strip useful at the parlour. Model outputs informed cycle 3 promoter tuning and cycle 4 time-to-result targets.
+Dry-lab work estimated load-score thresholds and consecutive-session rules that would make a flag useful at the parlour. Model outputs informed cycle 3 FET traces and cycle 5 flag logic.
 
-<Placeholder label="Model plots linked from the Model page — pending" />
+<Placeholder label="Model plots linked from the Model page - pending" />
 
 </Section>
 
@@ -78,11 +78,11 @@ Dry-lab work estimated sensitivity thresholds and incubation times that would ma
 
 | Milestone | Status | Notes |
 | --- | --- | --- |
-| Construct assembly | In progress | Sequences confirmed; expression data pending |
-| Binding in milk matrix | Pending | Assays designed, runs scheduled |
-| Circuit dose–response | Pending | Reporter variants under test |
-| Strip end-to-end | Pending | Prototype built; biological runs pending |
-| Field-relevant comparison | Not started | Requires paired samples and vet oversight |
+| Catapult sequence design | In progress | Sequences drafted; opening data pending |
+| Opening in milk matrix | Pending | Assays designed, runs scheduled |
+| FET current traces | Pending | Gate chemistry under test |
+| Siphon + electrodes | Pending | Prototype built; biological runs pending |
+| Consecutive-session flag | Not started | Requires paired milkings and vet oversight |
 
 </Section>
 
@@ -90,8 +90,8 @@ Dry-lab work estimated sensitivity thresholds and incubation times that would ma
 
 Results from cycles 4 and 5 depend on integration testing. Priority order:
 
-1. Complete circuit characterisation with positive controls
-2. Run end-to-end strip tests with spiked milk panels
+1. Complete catapult opening assays with positive controls
+2. Run FET traces with spiked milk panels
 3. Document limits of detection and false-positive/negative rates in controlled settings
 4. Publish raw data and protocols for reproducibility
 

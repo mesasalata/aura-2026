@@ -21,7 +21,9 @@ const MENISCUS =
  * title and lede peel away it grows and the stream plays. The cream pool
  * that fills the viewport is CSS so the last frame is exactly `--color-milk`.
  *
- * If no source can play, the CSS pail + stream take over.
+ * The clip is scrubbed to the scroll target in both directions (the file is
+ * all-intra VP9, so `currentTime` lands on the right frame). If no source
+ * can play, the CSS pail + stream take over.
  */
 
 const GROW: [number, number] = [0.3, 0.48];
@@ -48,71 +50,125 @@ export function BucketPour({ progress }: { progress: MotionValue<number> }) {
 
 /* ------------------------------------------------------------------ clip */
 
+function mapProgress(p: number, duration: number) {
+  const t = ((p - CLIP_START) / (CLIP_END - CLIP_START)) * duration;
+  return Math.min(Math.max(t, 0), Math.max(duration - 1 / 24, 0));
+}
+
 function ClipPail({ progress, onFail }: { progress: MotionValue<number>; onFail: () => void }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLVideoElement>(null);
   const duration = useRef(0);
-  const pending = useRef<number | null>(null);
-
-  const seek = (p: number) => {
-    const v = ref.current;
-    if (!v || !duration.current) return;
-    const t = ((p - CLIP_START) / (CLIP_END - CLIP_START)) * duration.current;
-    const clamped = Math.min(Math.max(t, 0), duration.current - 0.04);
-    if (pending.current !== null) return;
-    pending.current = requestAnimationFrame(() => {
-      pending.current = null;
-      if (!ref.current) return;
-      if (Math.abs(ref.current.currentTime - clamped) > 0.02) ref.current.currentTime = clamped;
-    });
-  };
-
-  useMotionValueEvent(progress, "change", seek);
+  const target = useRef(0);
+  const onFailRef = useRef(onFail);
+  const [near, setNear] = useState(false);
+  onFailRef.current = onFail;
 
   useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { root: null, rootMargin: "240px 0px", threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useMotionValueEvent(progress, "change", (p) => {
+    if (!duration.current) return;
+    target.current = mapProgress(p, duration.current);
+  });
+
+  useEffect(() => {
+    if (!near) return;
     const v = ref.current;
     if (!v) return;
+
     const onMeta = () => {
       duration.current = v.duration || 0;
       v.pause();
-      seek(progress.get());
+      target.current = mapProgress(progress.get(), duration.current);
     };
+    const onError = () => onFailRef.current();
     v.addEventListener("loadedmetadata", onMeta);
-    const onError = () => onFail();
     v.addEventListener("error", onError);
     if (v.readyState >= 1) onMeta();
+
+    /* Same path as rewind: seek to the latest scroll target, then wait for
+     * `seeked` before the next jump so we do not pile up currentTime writes. */
+    let raf = 0;
+    let seeking = false;
+    const FRAME = 1 / 24;
+
+    const snap = () => {
+      if (!duration.current || v.readyState < 1 || seeking) return;
+      const err = target.current - v.currentTime;
+      if (Math.abs(err) < FRAME * 0.55) {
+        if (!v.paused) v.pause();
+        return;
+      }
+      if (!v.paused) v.pause();
+      seeking = true;
+      v.currentTime = target.current;
+    };
+
+    const onSeeked = () => {
+      seeking = false;
+      snap();
+    };
+    v.addEventListener("seeked", onSeeked);
+
+    const tick = () => {
+      raf = requestAnimationFrame(tick);
+      snap();
+    };
+    raf = requestAnimationFrame(tick);
+
     return () => {
+      cancelAnimationFrame(raf);
       v.removeEventListener("loadedmetadata", onMeta);
       v.removeEventListener("error", onError);
-      if (pending.current !== null) cancelAnimationFrame(pending.current);
+      v.removeEventListener("seeked", onSeeked);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [near, progress]);
 
   /* Origin sits on the pail so it stays in the middle of the stage while
    * the stream grows downward. Scale is 1 at the end of GROW. */
   const scale = useTransform(progress, GROW, [0.22, 1.05]);
   /* stay gone until the title and lede have actually peeled apart */
   const opacity = useTransform(progress, [0, 0.3, 0.36, 1], [0, 0, 1, 1]);
+  const poster = asset("/art/video/pour-poster.png");
 
   return (
     <motion.div
+      ref={wrapRef}
       style={{ scale, opacity }}
       className="absolute left-1/2 top-[48%] z-0 h-[130svh] origin-[50%_16%] -translate-x-1/2 -translate-y-[16%]"
     >
-      <video
-        ref={ref}
-        muted
-        playsInline
-        preload="auto"
-        poster={asset("/art/video/pour-poster.png")}
-        className="h-full w-auto max-w-none"
-        onError={(e) => {
-          if (e.currentTarget.error) onFail();
-        }}
-      >
-        <source src={asset("/art/video/pour.mov")} type='video/quicktime; codecs="hvc1"' />
-        <source src={asset("/art/video/pour.webm")} type='video/webm; codecs="vp9"' />
-      </video>
+      {near ? (
+        <video
+          ref={ref}
+          muted
+          playsInline
+          preload="metadata"
+          poster={poster}
+          className="h-full w-auto max-w-none bg-transparent"
+          onError={(e) => {
+            if (e.currentTarget.error) onFail();
+          }}
+        >
+          <source src={`${asset("/art/video/pour.webm")}?v=alpha`} type='video/webm; codecs="vp9"' />
+        </video>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element -- poster placeholder until clip mounts
+        <img src={poster} alt="" className="h-full w-auto max-w-none bg-transparent" />
+      )}
     </motion.div>
   );
 }
@@ -120,7 +176,7 @@ function ClipPail({ progress, onFail }: { progress: MotionValue<number>; onFail:
 /* ------------------------------------------------------------------ pool */
 
 function Pool({ progress }: { progress: MotionValue<number> }) {
-  /* Height, not scaleY — scaling flattened the meniscus into a straight line. */
+  /* Height, not scaleY - scaling flattened the meniscus into a straight line. */
   const poolH = useTransform(progress, [0.7, 0.88, 1], [0, 36, 128]);
   const height = useTransform(poolH, (v) => `${v}%`);
   const splash = useTransform(progress, [0.7, 0.82, 0.96], [0, 1, 0.3]);

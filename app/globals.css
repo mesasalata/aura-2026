@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
-  AURA — iGEM 2025 design system
+  AURA - iGEM 2026 design system
   "prestige biotech wiki meets indie teen science film"
   Milk is quiet. Infection is not.
 */
@@ -30,15 +30,15 @@
   --color-bio: #46d19b; /* fresh biological green */
   --color-warn: #ff5a2c; /* warning red-orange (sparse) */
 
-  /* --- Neutral text scale (on milk) --- */
+  /* --- Neutral text scale (on milk). ink-40/55 must pass ~4.5:1 for small type. --- */
   --color-ink-70: rgba(28, 20, 15, 0.72);
-  --color-ink-55: rgba(28, 20, 15, 0.56);
-  --color-ink-40: rgba(28, 20, 15, 0.4);
+  --color-ink-55: rgba(28, 20, 15, 0.66);
+  --color-ink-40: rgba(28, 20, 15, 0.62);
 
   /* --- Fonts (all sans-serif; no serif display, no monospace) --- */
   --font-display: var(--font-space), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  /* Kept as a token for the label/eyebrow style — now sans, not mono. */
+  /* Kept as a token for the label/eyebrow style - now sans, not mono. */
   --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
   /* --- Radius --- */
@@ -59,8 +59,15 @@
 }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
+  /* Nav is 4rem; milk-edge progress is 1.5rem under it. Extra air for hash jumps. */
+  scroll-padding-top: 7rem;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Lenis (homepage only) must own interpolation - CSS smooth fights it. */
+html.lenis {
+  scroll-behavior: auto;
 }
 
 body {
@@ -78,11 +85,46 @@ body {
   color: var(--color-ink);
 }
 
-/* Focus ring — accessible keyboard states */
+/* Focus ring - accessible keyboard states */
 :where(a, button, [role="button"], input, select, textarea, summary):focus-visible {
   outline: 2px solid var(--color-pink-deep);
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+/* Skip control: hidden until focused. z-100 sits above nav (50) + progress (60). */
+.skip-link {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-milk);
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 
 /* Dark section utility: flips the surface to midnight */
@@ -127,7 +169,7 @@ body {
   padding-bottom: 0.04em;
 }
 
-/* Quiet label — same weight as body, no wide tracking, no shout. */
+/* Quiet label - same weight as body, no wide tracking, no shout. */
 .kicker {
   font-family: var(--font-sans);
   font-weight: 550;
@@ -162,7 +204,7 @@ body {
 }
 
 /*
-  THE AURA — signature soft radial bloom (from the hoodie reference).
+  THE AURA - signature soft radial bloom (from the hoodie reference).
   Pink core → warm orange/butter mid → cyan halo, fading to nothing.
   Use as a background layer behind hero content on dark surfaces.
 */
@@ -273,7 +315,91 @@ body {
   animation: milk-wave 2.8s linear infinite;
 }
 
-/* Flat wash behind a character: a slow, small breathe — no blur, no opacity pulse. */
+/* Progress rail: tile the leading milk-edge vertically. */
+@keyframes milk-edge {
+  to { transform: translate3d(0, -50%, 0); }
+}
+.milk-edge {
+  animation: milk-edge 1.4s linear infinite;
+  will-change: transform;
+}
+
+/* Cow beat: translucent hide-splotches that hang off a 3D pin. */
+.cow-splotch-layer {
+  overflow: hidden;
+}
+.cow-splotch {
+  position: relative;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.cow-splotch-pin {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 11px;
+  height: 11px;
+  translate: -50% -50%;
+  border-radius: 60% 40% 55% 45%;
+  background: #5a3d33;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-milk) 55%, transparent);
+}
+.cow-splotch-hang {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15.2rem;
+  min-height: 7.2rem;
+  scale: var(--depth, 1);
+  rotate: var(--tilt, 0deg);
+}
+.cow-splotch[data-hang="1"] .cow-splotch-hang {
+  translate: calc(1.2rem + var(--nudge-x, 0px)) calc(-50% + var(--nudge-y, 0px));
+  transform-origin: left center;
+}
+.cow-splotch[data-hang="-1"] .cow-splotch-hang {
+  translate: calc(-100% - 1.2rem + var(--nudge-x, 0px)) calc(-50% + var(--nudge-y, 0px));
+  transform-origin: right center;
+}
+.cow-splotch-fill {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--cover, 20rem);
+  height: var(--cover, 20rem);
+  translate: -50% -50%;
+  overflow: visible;
+}
+.cow-splotch-fill path {
+  fill: color-mix(in srgb, var(--color-pink-soft) 52%, transparent);
+  stroke: color-mix(in srgb, var(--color-ink) 28%, transparent);
+  stroke-width: 1.4;
+  filter: url(#aura-soft);
+}
+.cow-splotch-copy {
+  position: relative;
+  z-index: 1;
+  padding: 1.15rem 1.25rem 1.2rem;
+  color: var(--color-ink);
+}
+.cow-splotch-title {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.cow-splotch-body {
+  margin-top: 0.4rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--color-ink) 78%, transparent);
+}
+
+/* Flat wash behind a character: a slow, small breathe - no blur, no opacity pulse. */
 @keyframes art-glow {
   0%, 100% { transform: translate(-50%, -50%) rotate(-3deg) scale(1); }
   50% { transform: translate(-50%, -50%) rotate(3deg) scale(1.05); }

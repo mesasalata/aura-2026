@@ -7,7 +7,7 @@ const CURVE = "M40 168 C90 166 130 164 170 158 C210 150 240 120 270 84 C300 48 3
 const AREA = `${CURVE} L384 184 L40 184 Z`;
 
 /**
- * SignalRevealGraph — the signal trace draws itself as you scroll. Clean stroke,
+ * SignalRevealGraph - the signal trace draws itself as you scroll. Clean stroke,
  * no glow. Area fills beneath; a marker lands where the trace crosses threshold.
  */
 export function SignalRevealGraph({
@@ -18,9 +18,9 @@ export function SignalRevealGraph({
   progress: MotionValue<number>;
 }) {
   const pathLength = useTransform(progress, [0, 1], [0, 1]);
-  const areaOpacity = useTransform(progress, [0.65, 1], [0, 1]);
-  const markerOpacity = useTransform(progress, [0.52, 0.64], [0, 1]);
-  const markerScale = useTransform(progress, [0.52, 0.66], [0.2, 1]);
+  const areaOpacity = useTransform(progress, [0, 0.65, 1], [0, 0, 1]);
+  const markerOpacity = useTransform(progress, [0, 0.52, 0.64, 1], [0, 0, 1, 1]);
+  const markerScale = useTransform(progress, [0, 0.52, 0.66, 1], [0.2, 0.2, 1, 1]);
 
   return (
     <svg

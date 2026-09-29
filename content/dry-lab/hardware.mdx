@@ -1,38 +1,40 @@
 <Section id="overview" title="Hardware overview" kicker="01">
 
-AURA's physical layer is a lateral-flow style strip and, for fluorescent reporters, a simple reader module. The goal is parlour-friendly: minimal parts, obvious readout, robust to temperature variation within reason.
+AURA’s physical layer is an **inline siphon** into a small sampling chamber, a **FET** whose gate carries the DNA catapult, and **reference electrodes** upstream of that chamber. The tool is meant to integrate into milking machines during construction, with minimal upkeep costs and expertise.
 
 </Section>
 
-<Section id="strip" title="Diagnostic strip" kicker="02">
+<Section id="siphon" title="Siphon & chamber" kicker="02">
 
-The strip has a sample well, capillary membrane, control line, and test line. Control line appearance is required for a valid test — same logic as commercial LFAs.
-
-<StripDemo result="positive" />
+During each milking a small sample of collected milk is siphoned into a chamber so the fluid passes over the biosensor surface. Monitoring is consistent - each cow, many times a day - which is how we get to the earliest possible flag.
 
 **Design choices.**
-- Control line always visible when flow works
-- Test line colour chosen for contrast under farm lighting
-- Housing protects membrane from handling damage
+- Lives in the milking line, not a separate lab errand
+- Small volume, short path, so the catapult sees fresh sample
+- Built in at construction rather than bolted on as extra ritual
+
+<Placeholder label="Chamber layout and flow sketch - pending" />
 
 </Section>
 
-<Section id="reader" title="Fluorescence reader" kicker="03">
+<Section id="fet" title="FET surface" kicker="03">
 
-For fluorescent reporters, a low-cost LED excitation and filtered photodiode module estimates signal intensity. The reader is optional if colorimetric output is sufficient.
+The field-effect transistor is the reader. DNA catapults sit on the gate; when miR-223 opens a catapult, charge moves away from the surface and current between source and drain ticks. Electrical-field changes are the output - no colour card, no fluorescence bench.
 
-<Placeholder label="Reader enclosure CAD and BOM — pending" />
-
-</Section>
-
-<Section id="env" title="Environmental robustness" kicker="04">
-
-Bench tests include modest temperature variation (e.g. 15–30 °C) because parlours are not climate-controlled labs. Results feed back into incubation time recommendations.
+<Placeholder label="FET stack and gate chemistry - pending" />
 
 </Section>
 
-<Section id="integration" title="Integration with workflow" kicker="05">
+<Section id="electrodes" title="Reference electrodes" kicker="04">
 
-Hardware design followed stakeholder input: test at milking, result in minutes, no laptop required for basic interpretation. A phone photo archive is optional for record-keeping, not required for use.
+Electrodes sit **before** the sampling chamber and register ionic concentration and electrochemical activity. That baseline calibrates the FET residual so highly ionic milk is less likely to raise a false flag.
+
+</Section>
+
+<Section id="integration" title="In the parlour" kicker="05">
+
+Hardware followed stakeholder input: sit in the line, cost less than the loss it prevents, return a readout before the tank is mixed. The parlour computer (not a laptop at the stall) holds the score and, when it stays high, a quiet alert on the farmer’s phone or the parlour display.
+
+The same siphon-and-FET idea can be retargeted to other bacterial strands or biomarkers for cheaper, more specific diagnostics.
 
 </Section>

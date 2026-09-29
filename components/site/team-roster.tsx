@@ -3,7 +3,7 @@ import { TEAM_MEMBERS } from "@/lib/content";
 
 const TRACKS = ["Wet Lab", "Dry Lab", "Engagement", "Design"] as const;
 
-/** People directory — grouped by track, not an article grid. */
+/** People directory - grouped by track, not an article grid. */
 export function TeamRoster() {
   return (
     <div className="space-y-14">

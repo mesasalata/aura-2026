@@ -51,7 +51,7 @@ export const NAV: NavGroup[] = [
   },
   {
     label: "Engagement",
-    intro: "The people AURA is built with — and how we stayed responsible.",
+    intro: "The people AURA is built with - and how we stayed responsible.",
     links: [
       { label: "Human Practices", href: "/human-practices", desc: "Stakeholders & how they shaped us", accent: "pink" },
       { label: "Integrated HP", href: "/integrated-human-practices", desc: "Feedback woven into design", accent: "coral" },
@@ -83,7 +83,7 @@ export function pageDesc(href: string): string | undefined {
   return undefined;
 }
 
-/** Nav label for a page — the short banner word. */
+/** Nav label for a page - the short banner word. */
 export function pageLabel(href: string): string | undefined {
   for (const g of NAV) for (const l of g.links) if (l.href === href) return l.label;
   return undefined;

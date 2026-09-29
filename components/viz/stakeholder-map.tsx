@@ -6,6 +6,7 @@ import { STAKEHOLDERS } from "@/lib/content";
 import { ACCENT_HEX } from "@/components/ui/badge";
 import { DropMark, FlaskMark } from "@/components/viz/marks";
 import { Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
+import { HandCaption } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 const INK = LINE;
@@ -166,7 +167,7 @@ function Threads({ active }: { active: string }) {
 /* ------------------------------------------------------------ the map */
 
 /**
- * StakeholderMap — the milk drop in the middle, the people around it as
+ * StakeholderMap - the milk drop in the middle, the people around it as
  * drawn props on cow-spot washes. Selecting one reveals what we heard and
  * how it changed the design, on a page of the picture-book.
  */
@@ -177,7 +178,8 @@ export function StakeholderMap() {
 
   return (
     <div data-stakeholder-map className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-12">
-      <div className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[400px]">
+      <div className="relative mx-auto aspect-square w-full min-w-0 max-w-[min(100%,280px)] sm:max-w-[320px] md:max-w-[400px]">
+        <HandCaption className="doodad-caption--asked">who we asked</HandCaption>
         <Threads active={active} />
 
         {/* centre: the drop */}
@@ -199,10 +201,18 @@ export function StakeholderMap() {
               onFocus={() => setActive(s.id)}
               aria-pressed={isActive}
               aria-label={s.role}
-              className="group absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 rounded-lg"
+              className={cn(
+                "group absolute flex max-w-[5.5rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 rounded-lg sm:max-w-none",
+                isActive && "z-10",
+              )}
               style={{ left: `${x}%`, top: `${y}%` }}
             >
-              <span className="relative grid h-16 w-16 place-items-center sm:h-[4.5rem] sm:w-[4.5rem]">
+              <span
+                className={cn(
+                  "relative grid h-14 w-14 place-items-center sm:h-[4.5rem] sm:w-[4.5rem]",
+                  isActive && "ring-2 ring-ink ring-offset-2 ring-offset-milk rounded-full",
+                )}
+              >
                 <Blob
                   shape={WASH[i]}
                   fill={hex}
@@ -212,14 +222,14 @@ export function StakeholderMap() {
                     isActive ? "scale-105 opacity-55" : "opacity-30",
                   )}
                 />
-                <span className={cn("relative transition-transform duration-300 ease-out group-hover:scale-105", isActive && "scale-105")}>
+                <span className={cn("relative transition-transform duration-300 ease-out group-hover:scale-105", isActive && "scale-110")}>
                   {GLYPHS[s.id]}
                 </span>
               </span>
               <span
                 className={cn(
-                  "whitespace-nowrap text-[0.7rem] font-semibold transition-colors duration-300 sm:text-xs",
-                  isActive ? "text-ink" : "text-ink-55",
+                  "max-w-full truncate text-center text-[0.65rem] font-semibold transition-colors duration-300 sm:text-xs",
+                  isActive ? "font-bold text-ink underline decoration-ink/40 underline-offset-2" : "text-ink-55",
                 )}
               >
                 {s.role}

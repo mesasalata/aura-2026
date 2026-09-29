@@ -34,7 +34,7 @@ const MANIFEST = path.join(OUT, "splash-manifest.json");
 const KLING = "fal-ai/kling-video/v2.5-turbo/pro/image-to-video";
 const MILK = "0xf6eee0"; // --color-milk, the section after the seam
 
-/* Ivory, white, cocoa only — tan/pink in the steering palette is what produced pink,
+/* Ivory, white, cocoa only - tan/pink in the steering palette is what produced pink,
  * banded buckets. The green swatch makes the white-trained style_id honour the screen. */
 const COLORS = [
   { r: 246, g: 238, b: 224 },
@@ -87,7 +87,7 @@ async function sheet(src, dest, { fps = 2, cols = 5, w = 384 } = {}) {
 async function stills(count = 4, start = 1, variant = "landscape") {
   await mkdir(REVIEW, { recursive: true });
   const styleId = await readStyleId();
-  if (!styleId) throw new Error("no cast-style-id.txt — run gen-cast.mjs lock first");
+  if (!styleId) throw new Error("no cast-style-id.txt - run gen-cast.mjs lock first");
   const meta = {};
   await Promise.all(
     Array.from({ length: count }, (_, i) => i + start).map(async (n) => {
@@ -103,7 +103,7 @@ async function stills(count = 4, start = 1, variant = "landscape") {
         await toPng(dest, 2048);
         meta[tag] = { url, key };
         const [r, g, b] = [0, 2, 4].map((i) => parseInt(key.slice(i, i + 2), 16));
-        const warn = g - Math.max(r, b) < 12 ? " — background is not green, do not pick" : "";
+        const warn = g - Math.max(r, b) < 12 ? " - background is not green, do not pick" : "";
         console.log(`${tag} ok (key ${key})${warn}`);
       } catch (e) {
         console.log(`${tag} failed: ${e.message.slice(0, 200)}`);
@@ -164,7 +164,7 @@ async function video(tag, seed, variant = "landscape") {
 async function matte(tag, variant = "landscape") {
   const manifest = await readManifest();
   const v = manifest[variant]?.videos?.[tag];
-  if (!v) throw new Error(`no video ${tag} for ${variant} — run video first`);
+  if (!v) throw new Error(`no video ${tag} for ${variant} - run video first`);
   const raw = path.join(REVIEW, v.raw);
   if (!existsSync(raw)) await download(v.url, raw);
 

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export type ChecklistItem = { text: string; done?: boolean };
 
-/** SafetyChecklist — a card of confirmed safety commitments. */
+/** SafetyChecklist - a card of confirmed safety commitments. */
 export function SafetyChecklist({
   title,
   items,

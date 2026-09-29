@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * Tilt — subtle pointer-reactive 3D tilt for cards. The card leans toward the
+ * Tilt - subtle pointer-reactive 3D tilt for cards. The card leans toward the
  * cursor and lifts a touch, with a soft spring so it feels physical rather than
  * snappy. Purely enhancement: on touch / reduced-motion it renders a plain div.
  */

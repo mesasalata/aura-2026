@@ -1,6 +1,6 @@
 import type { Reference } from "@/lib/content";
 
-/** ReferenceList — clean numbered citations. */
+/** ReferenceList - clean numbered citations. */
 export function ReferenceList({ references }: { references: Reference[] }) {
   return (
     <ol className="space-y-4">

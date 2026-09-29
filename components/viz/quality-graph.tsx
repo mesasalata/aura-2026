@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const LINE = "M36 36 L 360 168";
 
-/** Milk quality falls as somatic cells climb — the mockup's second graph. */
+/** Milk quality falls as somatic cells climb - the mockup's second graph. */
 export function QualityPlungeGraph({
   className,
   progress,
@@ -14,7 +14,7 @@ export function QualityPlungeGraph({
   progress: MotionValue<number>;
 }) {
   const pathLength = useTransform(progress, [0, 1], [0, 1]);
-  const markerOpacity = useTransform(progress, [0.7, 1], [0, 1]);
+  const markerOpacity = useTransform(progress, [0, 0.7, 1], [0, 0, 1]);
 
   return (
     <svg

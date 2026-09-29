@@ -2,8 +2,9 @@
 
 import { motion, useTransform, type MotionValue } from "motion/react";
 import { LINE } from "@/components/viz/sketch";
-import { ART } from "@/lib/art";
-import { asset, cn } from "@/lib/utils";
+import { DoodadFrame, HandCaption } from "@/components/viz/doodads";
+import { ART, artUrl } from "@/lib/art";
+import { cn } from "@/lib/utils";
 
 export const HERD_TOTAL = 24;
 /** 1 in 3 at any given time. */
@@ -18,7 +19,7 @@ export const HERD_STAGE_TWO = 13;
 export const HERD_FILL_IN = [0.1, 0.44, 0.58, 0.86];
 export const HERD_FILL_OUT = [0, HERD_STAGE_ONE, HERD_STAGE_ONE, HERD_STAGE_TWO];
 
-/* Cell indices in the order they get marked — scattered, never a row. */
+/* Cell indices in the order they get marked - scattered, never a row. */
 const MARK_ORDER = [14, 3, 21, 8, 17, 1, 11, 22, 5, 19, 9, 15, 0, 12, 23, 6, 18, 2, 10, 20, 4, 16, 7, 13];
 const RANK = MARK_ORDER.reduce<number[]>((acc, cell, rank) => ((acc[cell] = rank), acc), []);
 
@@ -57,17 +58,16 @@ function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) 
       {SPARKS.map((sp, i) => (
         <Spark key={i} {...sp} t={t} order={i} />
       ))}
-      {/* breathe animates `translate`, the flip uses `scale`, the mark bump uses `transform` — no overrides */}
+      {/* breathe animates `translate`, the flip uses `scale`, the mark bump uses `transform` - no overrides */}
       <motion.div
         style={{ scale, filter: glow, animationDelay: `${(index % 7) * -0.9}s` }}
         className={cn("relative h-full w-full animate-herd-breathe", FLIP[index] === 1 && "-scale-x-100")}
       >
-        { }
         <motion.img
-          src={asset(`/art/gen/${ART.cow.file}`)}
+          src={artUrl("cow")}
           alt=""
-          width={ART.cow.px}
-          height={ART.cow.px}
+          width={ART.cow.w}
+          height={ART.cow.h}
           draggable={false}
           style={sick ? { opacity: healthy } : undefined}
           className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain"
@@ -75,10 +75,10 @@ function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) 
         {sick && (
            
           <motion.img
-            src={asset(`/art/gen/${sick.file}`)}
+            src={artUrl("cowSick")}
             alt=""
-            width={sick.px}
-            height={sick.px}
+            width={sick.w}
+            height={sick.h}
             draggable={false}
             style={{ opacity: t }}
             className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain"
@@ -113,21 +113,24 @@ function Spark({ x, y, s, rot, pink, t, order }: (typeof SPARKS)[number] & { t: 
 }
 
 /**
- * HerdField — twenty-four cows on cream. As `progress` runs, cows flush pink
+ * HerdField - twenty-four cows on cream. As `progress` runs, cows flush pink
  * one at a time in a scattered order: eight for "1 in 3", then on to thirteen.
  */
 export function HerdField({ progress, className }: { progress: MotionValue<number>; className?: string }) {
   const fill = useTransform(progress, HERD_FILL_IN, HERD_FILL_OUT);
 
   return (
-    <div
+    <DoodadFrame
       role="img"
       aria-label={`A herd of ${HERD_TOTAL} cows; as you scroll, ${HERD_STAGE_ONE} and then ${HERD_STAGE_TWO} of them are marked as infected`}
-      className={cn("grid grid-cols-6 gap-x-1.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-2", className)}
+      className={cn("pb-5", className)}
     >
-      {Array.from({ length: HERD_TOTAL }, (_, i) => (
-        <HerdCow key={i} index={i} fill={fill} />
-      ))}
-    </div>
+      <div className="grid grid-cols-6 gap-x-1.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-2">
+        {Array.from({ length: HERD_TOTAL }, (_, i) => (
+          <HerdCow key={i} index={i} fill={fill} />
+        ))}
+      </div>
+      <HandCaption className="doodad-caption--herd">n = herd</HandCaption>
+    </DoodadFrame>
   );
 }

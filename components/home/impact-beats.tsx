@@ -18,6 +18,7 @@ import { CashBurst } from "@/components/home/cash-burst";
 import { CREAM50, MILK, WaveSeam } from "@/components/site/wave-seam";
 import { ACCENT_HEX } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import "@/app/doodad-home.css";
 
 /* ------------------------------------------------------------------ stage */
 
@@ -42,7 +43,7 @@ type BeatProps = {
  * the number, the picture and the wash separate in depth as you scroll.
  * `prefers-reduced-motion` renders the end state, unpinned.
  */
-function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length = "h-[230vh]", text, visual, visualClassName }: BeatProps) {
+function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length = "h-[150vh]", text, visual, visualClassName }: BeatProps) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -62,7 +63,7 @@ function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length =
       aria-label={kicker}
     >
       <div className={cn("top-0 h-svh overflow-hidden", reduce ? "relative" : "sticky")}>
-        {/* flat colour shape behind the picture — same family as the cow spots, not a blur */}
+        {/* flat colour shape behind the picture - same family as the cow spots, not a blur */}
         <motion.div
           aria-hidden
           style={{ y: washY }}
@@ -75,21 +76,23 @@ function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length =
         </motion.div>
 
         <motion.div style={{ opacity: enter }} className="relative mx-auto flex h-full w-full max-w-7xl flex-col px-5 pt-16 pb-6 sm:px-8 sm:pt-20 sm:pb-10">
-          <div className="grid flex-1 grid-rows-[minmax(0,1fr)_auto] items-center gap-4 max-lg:content-end lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
+          <div className="grid flex-1 grid-rows-[auto_minmax(0,1fr)] items-center gap-4 max-lg:content-start lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
+            <motion.div
+              style={{ y: textY, x: textX }}
+              className={cn("relative max-lg:pt-2", side === "left" ? "lg:order-1" : "lg:order-2 lg:justify-self-end")}
+            >
+              {text(progress)}
+            </motion.div>
+
             <motion.div
               style={{ y: visualY, scale: visualScale }}
               className={cn(
-                // below lg the picture sits above the copy and must leave it room
-                "relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[38svh] max-lg:self-end max-lg:[&>*]:max-h-full",
+                "relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[42svh] max-lg:self-end max-lg:[&>*]:max-h-full",
                 side === "left" ? "lg:order-2" : "lg:order-1",
                 visualClassName,
               )}
             >
               {visual(progress)}
-            </motion.div>
-
-            <motion.div style={{ y: textY, x: textX }} className={cn("relative", side === "left" ? "lg:order-1" : "lg:order-2 lg:justify-self-end")}>
-              {text(progress)}
             </motion.div>
           </div>
         </motion.div>
@@ -117,42 +120,8 @@ function Copy({ label, sub }: { label: string; sub: string }) {
 
 /* ------------------------------------------------------------------ beats */
 
-/** The economics of mastitis as pinned full-screen beats. */
-export function ImpactBeats() {
-  return (
-    <div className="relative">
-      <IntroBeat />
-
-      <Beat
-        index="01"
-        kicker="The bill"
-        side="left"
-        accent={ACCENT_HEX.coral}
-        wash="b"
-        text={(p) => <BillCopy progress={p} />}
-        visual={(p) => <PlungeChart progress={p} className="w-full max-w-176" />}
-      />
-
-      <WaveSeam from={MILK} to={CREAM50} />
-
-      <HerdBeat />
-
-      <WaveSeam from={CREAM50} to={MILK} />
-
-      <Beat
-        index="03"
-        kicker="Where the money goes"
-        side="left"
-        accent={ACCENT_HEX.signal}
-        wash="d"
-        text={(p) => <TreatmentCopy progress={p} />}
-        visual={(p) => <PailSplit progress={p} className="w-full max-w-152" />}
-      />
-    </div>
-  );
-}
-
-function IntroBeat() {
+/** Intro pin - “very loud bill”. */
+export function ImpactIntroBeat() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -201,16 +170,89 @@ function IntroBeat() {
   );
 }
 
+/** €30B plunge chart beat. */
+export function ImpactBillBeat() {
+  return (
+    <Beat
+      index="01"
+      kicker="The bill"
+      side="left"
+      accent={ACCENT_HEX.coral}
+      wash="b"
+      text={(p) => <BillCopy progress={p} />}
+      visual={(p) => <PlungeChart progress={p} className="w-full max-w-176" />}
+    />
+  );
+}
+
+/**
+ * The herd beat runs two chapters over one long pin: first every third cow
+ * flushes pink (1 in 3 at any time), then the marking continues to roughly
+ * half the herd (47–65% over a year).
+ */
+export function ImpactHerdBeat() {
+  return (
+    <Beat
+      index="02"
+      kicker="The herd"
+      side="right"
+      accent={ACCENT_HEX.pink}
+      tone="cream"
+      length="h-[420vh]"
+      text={(p) => <HerdCopy progress={p} />}
+      // 6×4 herd ≈ 3:2, so 40svh tall ⇒ ~60svh wide on small screens
+      visual={(p) => <HerdField progress={p} className="w-full max-w-200 max-lg:w-[min(100%,60svh)]" />}
+    />
+  );
+}
+
+/** &lt;15% treatment slice beat. */
+export function ImpactTreatmentBeat() {
+  return (
+    <Beat
+      index="03"
+      kicker="Where the money goes"
+      side="left"
+      accent={ACCENT_HEX.signal}
+      wash="d"
+      text={(p) => <TreatmentCopy progress={p} />}
+      visual={(p) => <PailSplit progress={p} className="w-full max-w-152" />}
+    />
+  );
+}
+
+/**
+ * Full economics chapter for the live homepage.
+ * `through="herd"` stops after the first three beats (intro + bill + herd).
+ */
+export function ImpactBeats({ through = "treatment" }: { through?: "herd" | "treatment" }) {
+  return (
+    <div className="relative">
+      <ImpactIntroBeat />
+      <ImpactBillBeat />
+      <WaveSeam from={MILK} to={CREAM50} />
+      <ImpactHerdBeat />
+      {through === "treatment" && (
+        <>
+          <WaveSeam from={CREAM50} to={MILK} />
+          <ImpactTreatmentBeat />
+        </>
+      )}
+    </div>
+  );
+}
+
 function BillCopy({ progress }: { progress: MotionValue<number> }) {
   const count = useTransform(progress, [0.12, 0.62], [0, 1]);
   return (
     <>
+      <p className="doodad-hand-kicker">the bill</p>
       <Big>
         <CountUp to={30} prefix="€" suffix="B" progress={count} />
       </Big>
       <Copy
         label="Lost every year"
-        sub="Estimated global economic burden of mastitis on the dairy sector — and most of it never shows up on a treatment invoice."
+        sub="Estimated global economic burden of mastitis on the dairy sector - and most of it never shows up on a treatment invoice."
       />
     </>
   );
@@ -225,30 +267,9 @@ function TreatmentCopy({ progress }: { progress: MotionValue<number> }) {
       </Big>
       <Copy
         label="Is the treatment itself"
-        sub="Direct treatment is a thin slice of the total. The rest hides in lost yield, discarded milk and cows culled early — which is why early detection pays."
+        sub="Direct treatment is a thin slice of the total. The rest hides in lost yield, discarded milk and cows culled early - which is why early detection pays."
       />
     </>
-  );
-}
-
-/**
- * The herd beat runs two chapters over one long pin: first every third cow
- * flushes pink (1 in 3 at any time), then the marking continues to roughly
- * half the herd (47–65% over a year).
- */
-function HerdBeat() {
-  return (
-    <Beat
-      index="02"
-      kicker="The herd"
-      side="right"
-      accent={ACCENT_HEX.pink}
-      tone="cream"
-      length="h-[420vh]"
-      text={(p) => <HerdCopy progress={p} />}
-      // 6×4 herd ≈ 3:2, so 40svh tall ⇒ ~60svh wide on small screens
-      visual={(p) => <HerdField progress={p} className="w-full max-w-200 max-lg:w-[min(100%,60svh)]" />}
-    />
   );
 }
 
@@ -273,7 +294,7 @@ function HerdCopy({ progress }: { progress: MotionValue<number> }) {
           <Big>1 in 3</Big>
           <Copy
             label="Cows affected at any time"
-            sub="Roughly one dairy cow in three is carrying mastitis right now — most of them without a single visible sign in the milk."
+            sub="Roughly one dairy cow in three is carrying mastitis right now - most of them without a single visible sign in the milk."
           />
         </motion.div>
 
@@ -283,7 +304,7 @@ function HerdCopy({ progress }: { progress: MotionValue<number> }) {
           </Big>
           <Copy
             label="Infected over a year"
-            sub="Reported herd-level incidence across dairy systems and regions. Same herd, longer window — the marking keeps going."
+            sub="Reported herd-level incidence across dairy systems and regions. Same herd, longer window - the marking keeps going."
           />
         </motion.div>
       </div>

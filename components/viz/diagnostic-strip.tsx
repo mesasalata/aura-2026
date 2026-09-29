@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
 /**
- * DiagnosticStrip — lateral-flow style strip. On view: sample applied →
+ * DiagnosticStrip - lateral-flow style strip. On view: sample applied →
  * capillary fluid travels across → control + test signal bands appear.
  */
 export function DiagnosticStrip({

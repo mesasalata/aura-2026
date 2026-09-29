@@ -1,4 +1,4 @@
-# Keynote-style launch video — runs AS-IS against the hosted demo.
+# Keynote-style launch video - runs AS-IS against the hosted demo.
 # Try it first:  clipwise record .clipwise/scenarios/keynote.yaml
 # Then replace the url + selectors with your own app.
 
@@ -21,7 +21,7 @@ output:
   # aspects: ["9:16"]        # also render a reels-format file in the same run
 
 scenes:
-  # footage take — recorded once; vignettes below quote it by step
+  # footage take - recorded once; vignettes below quote it by step
   - type: screen
     id: demo
     steps:
@@ -67,7 +67,7 @@ scenes:
     layout: hero
     num: "01"
     label: "Cinematic camera"
-    caption: "Recorded from a real app — *zero code changes*"
+    caption: "Recorded from a real app - *zero code changes*"
     push: { from: 1.02, to: 1.1 }
     start: { step: 0, offset: 0.15 }
     fx:
@@ -79,7 +79,7 @@ scenes:
     layout: crop
     num: "02"
     label: "Close-up"
-    caption: "Selector-measured crop — *no pixel guessing*"
+    caption: "Selector-measured crop - *no pixel guessing*"
     crop: { selector: "#chart-area", pad: 14 }
     push: { from: 1.04, to: 1 }
     start: { step: 3 }

@@ -23,7 +23,7 @@ export default function Page() {
       kicker="Engagement · Integrated HP"
       accent="coral"
       title="Feedback woven into design"
-      lede="Specific things we heard — and the specific design moves they caused."
+      lede="Specific things we heard - and the specific design moves they caused."
       current="/integrated-human-practices"
       toc={TOC}
     >

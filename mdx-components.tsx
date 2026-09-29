@@ -19,7 +19,7 @@ import {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
     h2: ({ children }) => (
-      <h2 className="mb-5 font-display text-ink display-2">{children}</h2>
+      <h2 className="mb-5 font-display text-pink-deep display-2">{children}</h2>
     ),
     h3: ({ children }) => (
       <h3 className="mb-3 font-display text-xl text-ink">{children}</h3>

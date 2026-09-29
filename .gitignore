@@ -49,3 +49,11 @@ next-env.d.ts
 
 # Fal candidates awaiting a human pick
 public/art/gen/review/
+
+# Blender sources - export .glb into public/art/, do not commit the .blend
+/assets/keep/cow.blend
+/assets/keep/cow.blend1
+/assets/keep/cow.blend2
+/assets/keep/udder.blend
+/assets/keep/udder.blend1
+/assets/keep/udder.blend2

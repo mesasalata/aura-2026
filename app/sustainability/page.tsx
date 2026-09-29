@@ -22,7 +22,7 @@ export default function Page() {
       kicker="Engagement · Sustainability"
       accent="bio"
       title="Welfare, environment & the SDGs"
-      lede="How AURA connects to animal health, farm resilience, and responsible antibiotic use — honestly scoped."
+      lede="How AURA connects to animal health, farm resilience, and responsible antibiotic use - honestly scoped."
       current="/sustainability"
       toc={TOC}
     >

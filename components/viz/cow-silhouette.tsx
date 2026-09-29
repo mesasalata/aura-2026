@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Abstract, editorial cow silhouette — a single flowing line, not a cartoon.
+ * Abstract, editorial cow silhouette - a single flowing line, not a cartoon.
  * Reads as a Holstein profile with a soft "aura" bloom over the udder region.
  */
 export function CowSilhouette({
@@ -21,7 +21,7 @@ export function CowSilhouette({
       {glow && (
         <circle cx="212" cy="150" r="34" fill="url(#cowAura)" className="animate-aura" />
       )}
-      {/* Body contour — one confident stroke */}
+      {/* Body contour - one confident stroke */}
       <path
         d="M40 96
            C36 78 48 70 60 72

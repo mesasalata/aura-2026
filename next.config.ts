@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
 
 /**
- * iGEM wikis are served from a team subpath (e.g. https://2025.igem.wiki/aura/).
+ * iGEM wikis are served from a team subpath (e.g. https://2026.igem.wiki/aura/).
  * Set NEXT_PUBLIC_BASE_PATH="/aura" at build time so all asset + route URLs resolve
  * correctly once deployed. Locally it defaults to "" so `next dev` works at /.
  */

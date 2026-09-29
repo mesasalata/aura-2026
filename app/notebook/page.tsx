@@ -19,7 +19,7 @@ export default function Page() {
       kicker="Wet Lab · Notebook"
       accent="bio"
       title="Lab & project log"
-      lede="Filterable timeline of what we did, saw, and decided — updated as the season progresses."
+      lede="Filterable timeline of what we did, saw, and decided - updated as the season progresses."
       current="/notebook"
       toc={TOC}
     >

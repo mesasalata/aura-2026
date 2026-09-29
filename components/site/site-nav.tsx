@@ -6,13 +6,20 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import { NAV } from "@/lib/nav";
 import { cn } from "@/lib/utils";
+import { BrushDash } from "@/components/viz/sketch";
 import { AuraLogo } from "./aura-logo";
 import { MobileNav } from "./mobile-nav";
 import { WikiNavCard } from "./wiki-nav-card";
+import "@/app/doodad-chrome.css";
+
+function panelId(label: string) {
+  return `nav-panel-${label.toLowerCase().replace(/\s+/g, "-")}`;
+}
 
 export function SiteNav() {
   const pathname = usePathname();
-  const [onDarkHero, setOnDarkHero] = useState(pathname === "/");
+  const isDarkHome = pathname === "/" || pathname.replace(/\/$/, "") === "/home-test";
+  const [onDarkHero, setOnDarkHero] = useState(isDarkHome);
   const [menuState, setMenuState] = useState<{ pathname: string; openGroup: string | null }>({
     pathname,
     openGroup: null,
@@ -24,12 +31,12 @@ export function SiteNav() {
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
-      setOnDarkHero(pathname === "/" && y < window.innerHeight * 0.9);
+      setOnDarkHero(isDarkHome && y < window.innerHeight * 0.9);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname]);
+  }, [pathname, isDarkHome]);
 
   return (
     <header
@@ -40,29 +47,51 @@ export function SiteNav() {
           : "border-b border-transparent bg-transparent",
       )}
       onMouseLeave={() => setOpenGroup(null)}
+      onBlur={(e) => {
+        const next = e.relatedTarget as Node | null;
+        if (next && e.currentTarget.contains(next)) return;
+        setOpenGroup(null);
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setOpenGroup(null);
+      }}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2.5 rounded-lg focus-visible:outline-none"
+          className="group flex items-center gap-2.5 rounded-lg"
           aria-label="AURA home"
         >
           <AuraLogo />
-          <span
-            className={cn(
-              "font-display text-2xl font-semibold tracking-tight transition-colors",
-              dark ? "text-milk" : "text-ink",
-            )}
-          >
-            AURA
+          <span className="flex flex-col gap-0.5">
+            <span
+              className={cn(
+                "nav-aura-wrap font-display text-2xl font-semibold tracking-tight transition-colors",
+                dark ? "text-milk" : "text-ink",
+              )}
+            >
+              AURA
+              <BrushDash
+                color={dark ? "rgba(246,238,224,0.42)" : "#5a3d33"}
+                className="absolute -bottom-0.5 left-0 h-2 w-[3.1rem] opacity-80 transition-opacity group-hover:opacity-100"
+              />
+            </span>
+            <span
+              className={cn(
+                "nav-wiki-kicker hidden opacity-100 sm:inline",
+                dark ? "text-milk/70" : "text-ink-40",
+              )}
+            >
+              team wiki
+            </span>
           </span>
           <span
             className={cn(
-              "hidden text-[0.7rem] sm:inline",
-              dark ? "text-milk/45" : "text-ink-40",
+              "hidden text-[0.7rem] lg:inline",
+              dark ? "text-milk/70" : "text-ink-40",
             )}
           >
-            iGEM 2025
+            iGEM 2026
           </span>
         </Link>
 
@@ -74,6 +103,7 @@ export function SiteNav() {
             return (
               <div key={group.label} onMouseEnter={() => setOpenGroup(group.label)}>
                 <button
+                  type="button"
                   className={cn(
                     "rounded-full px-3.5 py-2 text-sm font-medium transition-colors",
                     dark
@@ -86,6 +116,7 @@ export function SiteNav() {
                   )}
                   aria-expanded={isOpen}
                   aria-haspopup="true"
+                  aria-controls={panelId(group.label)}
                   onClick={() => setOpenGroup(isOpen ? null : group.label)}
                   onFocus={() => setOpenGroup(group.label)}
                 >
@@ -116,6 +147,7 @@ export function SiteNav() {
       <AnimatePresence>
         {openGroup && (
           <motion.div
+            id={panelId(openGroup)}
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}

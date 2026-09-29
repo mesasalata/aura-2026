@@ -12,6 +12,7 @@ import {
 import { BucketPour } from "@/components/viz/bucket-pour";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import "@/app/doodad-home.css";
 
 export function HomeHero() {
   const reduce = useReducedMotion();
@@ -34,8 +35,9 @@ export function HomeHero() {
 
 function CinematicField({ progress }: { progress: MotionValue<number> }) {
   /* Copy starts as one stack. It peels apart first; the pail grows after. */
-  const titleY = useTransform(progress, [0, 0.14, 0.34, 1], [0, 0, -580, -580]);
-  const descY = useTransform(progress, [0, 0.14, 0.34, 1], [0, 0, 580, 580]);
+  const peel = useTransform(progress, [0, 0.14, 0.34, 1], [0, 0, 1, 1]);
+  const titleY = useTransform(peel, (v) => `calc(-1 * clamp(9.5rem, 38vh, 36.25rem) * ${v})`);
+  const descY = useTransform(peel, (v) => `calc(clamp(9.5rem, 38vh, 36.25rem) * ${v})`);
   const textFade = useTransform(progress, [0.42, 0.56], [1, 0]);
   const scrollHint = useTransform(progress, [0, 0.08], [1, 0]);
 
@@ -57,9 +59,9 @@ function CinematicField({ progress }: { progress: MotionValue<number> }) {
         style={{ y: descY, opacity: textFade }}
         className="absolute inset-x-0 top-[28%] z-10 flex flex-col items-center px-6 pt-[clamp(7.2rem,16.5vw,11rem)] text-center sm:top-[26%]"
       >
-        <p className="hidden max-w-xl text-base leading-relaxed text-milk/70 text-pretty min-[640px]:block sm:text-lg">
-          Mastitis can begin before obvious symptoms appear. AURA explores a synthetic biology
-          approach to earlier detection.
+        <p className="max-w-xl px-1 text-sm leading-snug text-milk/70 text-pretty min-[640px]:px-0 min-[640px]:text-base min-[640px]:leading-relaxed sm:text-lg">
+          Mastitis can begin before obvious symptoms appear. AURA is an inline FET biosensor
+          that flags bta-miR-223 in milk - a quiet alert, not a courtroom diagnosis.
         </p>
         <div className="mt-6">
           <Button asChild variant="pink" size="lg">
@@ -92,8 +94,8 @@ function StaticHero() {
           <span className="block text-aura">Infection is not.</span>
         </h1>
         <p className="mt-7 max-w-xl text-lg leading-relaxed text-milk/70">
-          Mastitis can begin before obvious symptoms appear. AURA explores a synthetic biology
-          approach to earlier detection.
+          Mastitis can begin before obvious symptoms appear. AURA is an inline FET biosensor
+          that flags bta-miR-223 in milk - a quiet alert, not a courtroom diagnosis.
         </p>
         <div className="mt-9">
           <Button asChild variant="pink" size="lg">

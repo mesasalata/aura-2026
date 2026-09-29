@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { NAV } from "@/lib/nav";
 import { Container } from "@/components/ui/container";
-import { AuraMark } from "./aura-mark";
+import { PailMark } from "@/components/viz/marks";
 
 export function SiteFooter() {
   return (
@@ -10,23 +10,26 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_2fr]">
           <div>
             <Link href="/" className="flex items-center gap-2.5">
-              <AuraMark className="h-9 w-9" />
-              <span className="font-display text-3xl font-semibold text-milk">AURA</span>
+              <span className="font-display text-3xl font-semibold text-milk">AURA.</span>
             </Link>
             <p className="mt-4 max-w-sm font-display text-xl leading-snug text-milk/80">
               Milk is quiet. Infection is not.
             </p>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-milk/50">
-              A student-led iGEM 2025 project exploring a synthetic biology approach to earlier,
-              more accessible bovine mastitis detection. A diagnostic-support concept — not a
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-milk/70">
+              A student-led iGEM 2026 project: an inline FET biosensor for bta-miR-223 in milk,
+              built to flag subclinical bacterial mastitis. A note to the farmer - not a
               replacement for veterinary diagnosis.
             </p>
+            <Link href="/" className="footer-pail-home" aria-label="Back to home">
+              <PailMark className="h-9 w-9" fill={0.85} />
+            </Link>
+            <p className="footer-student-stamp">built by students</p>
           </div>
 
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-5">
             {NAV.map((group) => (
               <div key={group.label}>
-                <p className="text-sm text-milk/45">
+                <p className="kicker text-sm text-milk/70">
                   {group.label}
                 </p>
                 <ul className="mt-3 space-y-2">
@@ -46,9 +49,9 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-milk/10 pt-6 text-xs text-milk/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} AURA · iGEM 2025. Built by students.</p>
-          <p className="font-mono">
+        <div className="mt-14 flex flex-col gap-4 border-t border-milk/10 pt-6 text-xs text-milk/70 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} AURA · iGEM 2026</p>
+          <p className="kicker">
             Content on this wiki reflects a proof-of-concept in progress. Pending data is marked as such.
           </p>
         </div>

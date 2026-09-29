@@ -42,7 +42,7 @@ export const IMPACT_STATS: Stat[] = [
     suffix: "%",
     to: 15,
     label: "From treatment alone",
-    sub: "Direct treatment is a small slice of the total cost — most losses are hidden.",
+    sub: "Direct treatment is a small slice of the total cost - most losses are hidden.",
     accent: "signal",
   },
 ];
@@ -56,39 +56,39 @@ export type GlossaryTerm = {
 
 export const GLOSSARY: GlossaryTerm[] = [
   {
-    term: "DNA",
-    short: "The instruction set",
-    long: "The molecule that stores the instructions a cell uses to build proteins and run itself — like the source code of a living thing.",
+    term: "miR-223",
+    short: "The molecule in the pail",
+    long: "bta-miR-223 is a cow microRNA used to control bacterial inflammation. In subclinical mastitis it shows up in milk before the udder looks wrong - AURA’s target.",
+    accent: "pink",
+  },
+  {
+    term: "FET",
+    short: "A transistor that tastes charge",
+    long: "A field-effect transistor. When the DNA catapult opens, the local electrical field at the gate changes, and current between source and drain ticks.",
     accent: "signal",
   },
   {
-    term: "Plasmid",
-    short: "A USB drive for bacteria",
-    long: "A small, circular piece of DNA you can design, copy, and hand to bacteria so they run a new program.",
+    term: "DNA catapult",
+    short: "A hinge that opens on miRNA",
+    long: "A DNA fold on the FET surface with an invasion region complementary to miR-223. Binding opens the stem and moves charge away from the gate.",
     accent: "butter",
   },
   {
-    term: "Promoter",
-    short: "The on-switch",
-    long: "A DNA sequence that tells the cell when and how strongly to read the gene sitting downstream of it.",
+    term: "Reference electrode",
+    short: "The sample’s own baseline",
+    long: "Electrodes upstream of the chamber that read ionic concentration and electrochemical activity, so salty milk is less likely to raise a false flag.",
     accent: "bio",
-  },
-  {
-    term: "Reporter",
-    short: "The output light",
-    long: "A gene whose product is easy to see or measure (colour or fluorescence), so the cell can 'tell us' something happened.",
-    accent: "pink",
   },
   {
     term: "Biomarker",
     short: "A biological tell",
-    long: "A measurable molecule whose presence or level signals a biological state — here, early inflammation or infection in milk.",
+    long: "A measurable molecule whose presence or level signals a biological state - here, miR-223 as a sign of bacterial subclinical mastitis.",
     accent: "coral",
   },
   {
     term: "Biosensor",
     short: "Recognition → readout",
-    long: "An engineered system that recognises a specific molecule and converts that recognition into a signal a person can read.",
+    long: "An engineered system that recognises a specific molecule and converts that recognition into a signal a person can act on - here, FET current and a cow-level flag.",
     accent: "signal",
   },
 ];
@@ -108,7 +108,7 @@ export const STAKEHOLDERS: Stakeholder[] = [
     id: "farmer",
     role: "Dairy farmers",
     heard: "A test is only useful if it fits the milking routine and costs less than the loss it prevents. Trust is earned herd by herd.",
-    changed: "We reframed AURA as a fast, low-cost screen used at milking — not another lab errand — and prioritised a readout anyone can interpret.",
+    changed: "We put AURA in the milking line as an inline siphon - not another lab errand - and made the output a quiet flag, not a diagnosis.",
     concern: "False positives that pull healthy cows from the tank; who pays for the consumable.",
     accent: "butter",
   },
@@ -116,7 +116,7 @@ export const STAKEHOLDERS: Stakeholder[] = [
     id: "vet",
     role: "Veterinarians",
     heard: "Early signal is valuable, but a screen must not be mistaken for a diagnosis or a reason to reach for antibiotics.",
-    changed: "We positioned AURA as decision-support that flags risk earlier and points to confirmatory testing — never a replacement for clinical judgement.",
+    changed: "We positioned AURA as decision-support that flags risk earlier and points to confirmatory testing - never a replacement for clinical judgement.",
     concern: "Antimicrobial stewardship; distinguishing subclinical risk from clinical disease.",
     accent: "signal",
   },
@@ -218,7 +218,7 @@ export const REFERENCES: Reference[] = [
     authors: "iGEM Foundation.",
     title: "Safety and Security Policies & the Responsible Conduct guidelines.",
     source: "competition.igem.org/policies/safety",
-    year: "2025",
+    year: "2026",
   },
 ];
 
@@ -237,7 +237,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { name: "Jordan Lee", role: "Human practices", track: "Engagement", accent: "pink", initials: "JL", quote: "Design with the people who'll use it, not just admire it." },
   { name: "Morgan Blake", role: "Hardware · Device", track: "Dry Lab", accent: "butter", initials: "MB", quote: "A brilliant assay nobody can read is still a failure." },
   { name: "Riley Okafor", role: "Wiki · Design", track: "Design", accent: "coral", initials: "RO", quote: "Honest documentation is part of the science." },
-  { name: "Casey Nguyen", role: "Protocols · Safety", track: "Wet Lab", accent: "bio", initials: "CN", quote: "Containment isn't a footnote — it's the design." },
+  { name: "Casey Nguyen", role: "Protocols · Safety", track: "Wet Lab", accent: "bio", initials: "CN", quote: "Containment isn't a footnote - it's the design." },
 ];
 
 export type NotebookEntry = {
@@ -249,24 +249,24 @@ export type NotebookEntry = {
 };
 
 export const NOTEBOOK_ENTRIES: NotebookEntry[] = [
-  { date: "12 Jun", month: "Jun", track: "meeting", title: "Stakeholder kickoff", body: "First farmer and vet interviews — milking routine and false-positive concerns set early constraints." },
-  { date: "18 Jun", month: "Jun", track: "design", title: "Biomarker decision matrix", body: "Scored SCC proxies, acute-phase proteins, and enzymes on timing, specificity, and deployability." },
-  { date: "25 Jun", month: "Jun", track: "wet", title: "Reporter backbone assembly", body: "Cloned screening vector; gel confirms insert size — sequencing queued." },
-  { date: "02 Jul", month: "Jul", track: "modeling", title: "Dose–response model v1", body: "Estimated EC₅₀ targets and incubation window for parlour-friendly readout." },
-  { date: "09 Jul", month: "Jul", track: "dry", title: "Strip prototype v1", body: "Lateral-flow housing printed; control-line visibility tested with dye." },
-  { date: "16 Jul", month: "Jul", track: "hp", title: "Processor feedback session", body: "Tank-level framing added — signal must map to decisions processors already make." },
-  { date: "23 Jul", month: "Jul", track: "wet", title: "Binding assay design", body: "Spiked milk panel and irrelevant-protein controls defined; runs scheduled." },
-  { date: "30 Jul", month: "Jul", track: "design", title: "Cycle 4 integration sketch", body: "End-to-end workflow diagram: sample → incubate → read → interpret." },
+  { date: "12 Jun", month: "Jun", track: "meeting", title: "Stakeholder kickoff", body: "Farmers and vets: sit in the milking line, cost less than the loss, a readout before the tank is mixed. Culture and PCR ruled out as the everyday test." },
+  { date: "18 Jun", month: "Jun", track: "design", title: "Why miR-223", body: "bta-miR-223 scored above SCC proxies: earlier, and specific to bacterial inflammation." },
+  { date: "25 Jun", month: "Jun", track: "wet", title: "Catapult oligo design", body: "Invasion-region sequences complementary to miR-223 drafted; off-target controls queued." },
+  { date: "02 Jul", month: "Jul", track: "modeling", title: "Sample-wise baseline", body: "FET residual against that siphon’s reference electrodes - one spike is not a verdict." },
+  { date: "09 Jul", month: "Jul", track: "dry", title: "Siphon chamber v1", body: "Inline sampling path sized for a milking pulse; electrode bosses upstream of the FET." },
+  { date: "16 Jul", month: "Jul", track: "hp", title: "Flag, not verdict", body: "HP pushed the last mile: consecutive highs mark the cow; the farmer gets a quiet alert." },
+  { date: "23 Jul", month: "Jul", track: "wet", title: "Opening assay design", body: "miR-223 versus irrelevant RNA in milk matrix; current traces scheduled." },
+  { date: "30 Jul", month: "Jul", track: "design", title: "Cycle 5 integration sketch", body: "Siphon → catapult → FET → score → parlour flag." },
 ];
 
 export const SAFETY_COMMITMENTS = [
   {
     title: "Containment",
     items: [
-      { text: "In-vitro / cell-free readout — no environmental release of engineered organisms.", done: true },
+      { text: "In-vitro / cell-free readout - no environmental release of engineered organisms.", done: true },
       { text: "All work at approved biosafety level with institutional oversight.", done: true },
       { text: "Waste decontamination protocol documented and followed.", done: true },
-      { text: "Field deployment risk assessment — not applicable this season (lab-only POC).", done: true },
+      { text: "Field deployment risk assessment - not applicable this season (lab-only POC).", done: true },
     ],
   },
   {

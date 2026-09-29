@@ -4,7 +4,7 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Attributions",
-  description: "Who did what on AURA — team, advisors, institutions, and thanks.",
+  description: "Who did what on AURA - team, advisors, institutions, and thanks.",
 };
 
 const TOC = [
