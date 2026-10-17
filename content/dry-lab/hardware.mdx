@@ -1,40 +1,207 @@
-<Section id="overview" title="Hardware overview" kicker="01">
+<Section id="motivation" title="Motivation" kicker="01">
 
-AURA’s physical layer is an **inline siphon** into a small sampling chamber, a **FET** whose gate carries the DNA catapult, and **reference electrodes** upstream of that chamber. The tool is meant to integrate into milking machines during construction, with minimal upkeep costs and expertise.
+Our hardware design addresses these functions through two connected modules: a sampling assembly that controls liquid delivery and a sensing assembly that converts the response into electronic measurements. Together, these form the hardware concept for AURA.
 
-</Section>
-
-<Section id="siphon" title="Siphon & chamber" kicker="02">
-
-During each milking a small sample of collected milk is siphoned into a chamber so the fluid passes over the biosensor surface. Monitoring is consistent - each cow, many times a day - which is how we get to the earliest possible flag.
-
-**Design choices.**
-- Lives in the milking line, not a separate lab errand
-- Small volume, short path, so the catapult sees fresh sample
-- Built in at construction rather than bolted on as extra ritual
-
-<Placeholder label="Chamber layout and flow sketch - pending" />
+The design separates the main milk passage from the sampling pathway. A portion of liquid would enter a dedicated sensing chamber, while the main passage remains available for through-flow. Measurements would then be transmitted to the app, avoiding the need for an onboard screen.
 
 </Section>
 
-<Section id="fet" title="FET surface" kicker="03">
+<Section id="overview" title="System Overview" kicker="02">
 
-The field-effect transistor is the reader. DNA catapults sit on the gate; when miR-223 opens a catapult, charge moves away from the surface and current between source and drain ticks. Electrical-field changes are the output - no colour card, no fluorescence bench.
+The system is organised into four functional stages:
 
-<Placeholder label="FET stack and gate chemistry - pending" />
+1. Sample admission through a sliding-sleeve valve.
+2. Contact with the DNA-probe FET inside a sensing chamber.
+3. Electrical acquisition through a readout circuit and microcontroller.
+4. Data transfer to the app, followed by sample release and rinsing.
+
+Figure 1 shows the relationship between these stages. Blue connections represent liquid pathways, while teal connections represent electrical or data links.
+
+<WikiFigure
+  src="/images/Hardware%20Figure%201.png"
+  width="lg"
+  caption="Overall hardware architecture showing the main milk passage, sampling branch, sensing chamber, downstream pinch valve, waste pathway, and connection between the electronic reader and app."
+/>
 
 </Section>
 
-<Section id="electrodes" title="Reference electrodes" kicker="04">
+<Section id="sampling" title="Sampling Module" kicker="03">
 
-Electrodes sit **before** the sampling chamber and register ionic concentration and electrochemical activity. That baseline calibrates the FET residual so highly ionic milk is less likely to raise a false flag.
+### Design Objective
+
+The sampling module is designed to admit liquid into the sensing pathway without deliberately closing the main milk route. It combines a branched fitting with two control mechanisms: an internal sliding sleeve for sample admission and an external pinch valve for outlet control.
+
+This division gives each mechanism a specific task rather than requiring one valve to manage the entire fluid-handling sequence.
+
+### Mechanical Layout
+
+The fitting consists of a straight main passage and an angled side branch. Its overall length is approximately 100 mm from tip to tip. Barbed connectors fit inside silicone tubing to connect the assembly to the surrounding fluid pathway.
+
+The side branch leads toward the sensing chamber. A hollow sleeve inside the main fitting controls access to the branch entrance. Downstream of the chamber, a screw-operated pinch valve controls the flexible outlet tube.
+
+### Sliding-Sleeve Valve
+
+The sampling valve operates by translating a hollow internal sleeve along the main fitting.
+
+In the closed position, the sleeve wall covers the side-branch entrance. Liquid would continue through the central passage toward the main outlet.
+
+In the open position, the sleeve moves away from the branch entrance. The exposed opening allows liquid to enter the sampling pathway when a suitable pressure difference is present. Figure 2 illustrates these two positions.
+
+<WikiFigure
+  src="/images/Hardware%20Figure%203.png"
+  width="lg"
+  caption="Longitudinal cross-section showing the branch entrance covered and exposed by translation of the hollow sleeve. The main passage remains open in the intended arrangement."
+/>
+
+An external slider connection would move the sleeve between defined positions. The mechanical design would incorporate retention, travel limits, and sealing around the sleeve and actuator-access feature.
+
+### Outlet Pinch Valve
+
+The pinch valve controls flow through the silicone outlet tubing by external compression. It comprises a rigid holder, screw, pressing pad, and fixed opposing support.
+
+Tightening the screw advances the pad toward the tube. The tube flattens until its inner walls meet, closing the liquid pathway. Loosening the screw releases compression and allows the lumen to reopen.
+
+Figure 3 shows the valve perpendicular to the tube's length.
+
+<WikiFigure
+  src="/images/Hardware%20Figure%204.png"
+  width="lg"
+  caption="Screw-operated compression of flexible silicone tubing. The pressing pad closes the lumen against a fixed support and withdraws to permit reopening."
+/>
+
+The valve mechanism remains outside the fluid pathway. Its holder provides space for the tube to flatten sideways, while the smooth pad distributes the applied force.
+
+### Sample Transport and Rinsing
+
+The valves determine whether pathways are open; sample movement depends on the driving force and pressure conditions.
+
+Gravity feed is the initial delivery concept, with pump-driven flow or controlled suction as alternatives. During filling, the outlet provides a route for displaced liquid or air.
+
+A separate sampling pathway creates an opportunity to control flow into the chamber independently of the main line.
+
+After measurement, the sample would be directed to waste. A separate rinse connection would introduce compatible liquid to displace the previous sample from the chamber and tubing. This connection would be arranged to prevent rinse liquid or sensor-contacted sample from returning to the main milk collection.
+
+### CAD and Materials
+
+The mechanical assembly is designed in Fusion. Dimensioned drawings would document bore diameters, wall thicknesses, sleeve travel, tubing interfaces, and screw geometry.
+
+PLA is being considered for an initial geometric print. Selection of sample-contact materials would additionally account for cleaning, chemical compatibility, surface finish, and access to internal passages.
+
+The external pinch-valve holder and the wetted fitting have different material requirements because only the latter directly contacts the sample.
 
 </Section>
 
-<Section id="integration" title="In the parlour" kicker="05">
+<Section id="sensing" title="Sensing Module" kicker="04">
 
-Hardware followed stakeholder input: sit in the line, cost less than the loss it prevents, return a readout before the tank is mixed. The parlour computer (not a laptop at the stall) holds the score and, when it stays high, a quiet alert on the farmer’s phone or the parlour display.
+### Design Objective
 
-The same siphon-and-FET idea can be retargeted to other bacterial strands or biomarkers for cheaper, more specific diagnostics.
+The sensing module is designed to bring a controlled sample into contact with a DNA-probe FET and acquire an electrical response. It combines a fluidic chamber, protected chip connections, and an electronic reader.
+
+The chamber establishes the liquid–sensor interface, while the reader establishes electrical operating conditions and records the response.
+
+### Sensing Chamber
+
+The chamber contains an inlet, liquid cavity, outlet, and chip mount. Its fluid-contact window exposes the probe-functionalised sensing region while keeping external electrical contacts outside the wet cavity.
+
+Figure 4 shows the intended separation between liquid handling and electrical connections.
+
+<WikiFigure
+  src="/images/Hardware%20Figure%205.png"
+  width="lg"
+  caption="Schematic chamber–chip interface showing the liquid cavity, DNA-probe sensing region, seals, dry source and drain connections, and electronic reader. A reference electrode is included conditionally for liquid gating."
+/>
+
+The housing would support repeatable chip positioning. Seals around the fluid-contact window would confine the sample, while the inlet and outlet would guide liquid across the sensing area and allow displacement during filling and rinsing.
+
+For a liquid-gated implementation, a reference electrode would contact the solution and connect to the gate-bias circuit.
+
+### Electronic Architecture
+
+The electronics are organised into three hardware blocks:
+
+- DNA-probe FET.
+- Sensor readout circuit.
+- Microcontroller.
+
+A regulated supply powers the hardware. The microcontroller communicates measurements to the app, which performs processing, storage, and presentation. Figure 5 shows these relationships.
+
+<WikiFigure
+  src="/images/Hardware%20Figure%202.png"
+  width="lg"
+  caption="Functional readout architecture showing the FET measurement path, bias control, regulated supply, microcontroller, and app connection."
+/>
+
+### FET Interface
+
+The DNA probe provides molecular recognition through its intended interaction with complementary miR-223 RNA. The FET provides the electrical transduction interface.
+
+The sensing approach would investigate whether target binding near the active region produces a measurable change in transistor behaviour. The electrical response would be interpreted in the context of the operating conditions and target-recognition system, rather than as a direct identification of mastitis.
+
+### Readout Circuit
+
+The readout circuit establishes the FET's bias conditions and measures its electrical response.
+
+Figure 5 distinguishes these functions through two connections: the measurement path from the FET to the readout and the bias-control path back to the FET.
+
+The acquisition front end would condition the signal for digitisation. Its measurement range, gain, and filtering would be matched to the selected transistor and expected response.
+
+### Microcontroller and Power
+
+The microcontroller would coordinate acquisition, associate readings with timestamps, and communicate them to the app.
+
+Digitisation could use an internal ADC or additional conversion circuitry. The architecture leaves this implementation open rather than treating a separate external ADC as mandatory.
+
+A regulated supply would support the reader and controller. Sensitive measurement paths would be arranged separately from any future actuator-power wiring.
+
+</Section>
+
+<Section id="app" title="Hardware–App Communication" kicker="05">
+
+The app serves as the user-facing part of the system, so the sensing hardware does not require an onboard display.
+
+The data connection would carry sensor readings and associated measurement information. Its implementation would be selected according to the final device arrangement.
+
+The intended app functions include:
+
+- Displaying the sensor response over time.
+- Associating readings with sample identifiers.
+- Comparing measurements with the starting baseline.
+- Recording sample and rinse events.
+- Saving raw readings alongside processed outputs.
+- Presenting results with their measurement context.
+
+This separation keeps the hardware focused on acquisition and communication while the app handles interpretation and presentation.
+
+</Section>
+
+<Section id="operation" title="Operating Principle" kicker="06">
+
+The device would use a coordinated sample–measure–rinse sequence.
+
+### 1. Prepare
+
+A compatible measurement solution establishes the chamber's starting condition. The reader records the initial electrical signal.
+
+### 2. Admit the Sample
+
+The sliding sleeve exposes the sampling branch. With an appropriate driving force and outlet pathway, sample enters the chamber and displaces existing liquid or air.
+
+### 3. Stabilise
+
+Sample admission is closed, and the outlet is controlled according to the measurement procedure. Delivery stops before the chamber is isolated.
+
+### 4. Measure
+
+The readout circuit acquires the FET response. The microcontroller transfers readings to the app with timestamps and event information.
+
+### 5. Release and Rinse
+
+The outlet pathway opens to waste, and rinse liquid enters through the separate connection to displace the previous sample.
+
+### 6. Record and Store
+
+The reader records the post-rinse condition, and the app stores the measurement sequence and settings.
+
+Flushing the fluid pathway and restoring a target-bound probe surface are distinct operations. Any surface-regeneration procedure would depend on the selected sensing chemistry.
 
 </Section>

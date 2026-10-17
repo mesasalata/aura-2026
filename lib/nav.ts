@@ -22,8 +22,8 @@ export const NAV: NavGroup[] = [
     label: "Project",
     intro: "The problem, the science, and what AURA is designed to do.",
     links: [
-      { label: "Description", href: "/description", desc: "Abstract, inspiration & approach", accent: "signal" },
-      { label: "Background", href: "/background", desc: "Mastitis, the udder & the biology", accent: "coral" },
+      { label: "Description", href: "/description", desc: "What AURA is, miR-223, and the FET", accent: "signal" },
+      { label: "Background", href: "/background", desc: "The udder, SCC, and the economic impact", accent: "coral" },
       { label: "Engineering", href: "/engineering", desc: "Design–Build–Test–Learn cycles", accent: "butter" },
       { label: "Results", href: "/results", desc: "What we found (and what's pending)", accent: "bio" },
       { label: "Contribution", href: "/contribution", desc: "What we leave for future teams", accent: "pink" },
@@ -33,7 +33,7 @@ export const NAV: NavGroup[] = [
     label: "Wet Lab",
     intro: "Bench work: constructs, assays, parts and the daily record.",
     links: [
-      { label: "Experiments", href: "/experiments", desc: "Experimental plan & rationale", accent: "bio" },
+      { label: "Experiments", href: "/experiments", desc: "FAM/BHQ binding assay & results", accent: "bio" },
       { label: "Protocols", href: "/protocols", desc: "Reproducible bench methods", accent: "signal" },
       { label: "Parts", href: "/parts", desc: "BioBricks & basic/composite parts", accent: "butter" },
       { label: "Measurement", href: "/measurement", desc: "Calibration & characterisation", accent: "pink" },
@@ -45,7 +45,7 @@ export const NAV: NavGroup[] = [
     intro: "Modeling, the physical device, and supporting software.",
     links: [
       { label: "Model", href: "/model", desc: "Kinetics, sensitivity & thresholds", accent: "signal" },
-      { label: "Hardware", href: "/hardware", desc: "The AURA reader & diagnostic strip", accent: "butter" },
+      { label: "Hardware", href: "/hardware", desc: "Sampling assembly and sensing assembly", accent: "butter" },
       { label: "Software", href: "/software", desc: "Readout & analysis tooling", accent: "pink" },
     ],
   },
@@ -55,7 +55,7 @@ export const NAV: NavGroup[] = [
     links: [
       { label: "Human Practices", href: "/human-practices", desc: "Stakeholders & how they shaped us", accent: "pink" },
       { label: "Integrated HP", href: "/integrated-human-practices", desc: "Feedback woven into design", accent: "coral" },
-      { label: "Education", href: "/education", desc: "SynBio, explained without prereqs", accent: "butter" },
+      { label: "Education", href: "/education", desc: "Club, website, game, bake sale, and workshops", accent: "butter" },
       { label: "Sustainability", href: "/sustainability", desc: "Welfare, environment & the SDGs", accent: "bio" },
       { label: "Safety", href: "/safety", desc: "Containment & responsible use", accent: "coral" },
     ],
@@ -65,7 +65,7 @@ export const NAV: NavGroup[] = [
     intro: "Who we are and who helped.",
     links: [
       { label: "Members", href: "/team", desc: "The students behind AURA", accent: "signal" },
-      { label: "Attributions", href: "/attributions", desc: "Who did what, and thanks", accent: "pink" },
+      { label: "Attributions", href: "/attributions", desc: "Advisors and collaborators", accent: "pink" },
       { label: "References", href: "/references", desc: "Sources & further reading", accent: "ink" },
     ],
   },

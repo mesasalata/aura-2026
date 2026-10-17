@@ -11,7 +11,6 @@ export function SectionHeader({
   align = "left",
   onDark = false,
   className,
-  pip,
 }: {
   kicker?: string;
   title: React.ReactNode;
@@ -20,8 +19,6 @@ export function SectionHeader({
   align?: "left" | "center";
   onDark?: boolean;
   className?: string;
-  /** Optional hand-numbered pip - unused on the homepage. */
-  pip?: string;
 }) {
   return (
     <div
@@ -36,16 +33,10 @@ export function SectionHeader({
           className="kicker mb-3 flex items-center gap-2"
           style={{ color: ACCENT_HEX[accent] }}
         >
-          {pip ? (
-            <span className="booklet-pip" style={{ color: ACCENT_HEX[accent] }}>
-              {pip}
-            </span>
-          ) : (
-            <span
-              className="inline-block h-1.5 w-1.5 rounded-full"
-              style={{ background: ACCENT_HEX[accent] }}
-            />
-          )}
+          <span
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ background: ACCENT_HEX[accent] }}
+          />
           {kicker}
         </p>
       )}

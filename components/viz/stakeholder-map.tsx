@@ -6,7 +6,6 @@ import { STAKEHOLDERS } from "@/lib/content";
 import { ACCENT_HEX } from "@/components/ui/badge";
 import { DropMark, FlaskMark } from "@/components/viz/marks";
 import { Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
-import { HandCaption } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 const INK = LINE;
@@ -179,7 +178,7 @@ export function StakeholderMap() {
   return (
     <div data-stakeholder-map className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-12">
       <div className="relative mx-auto aspect-square w-full min-w-0 max-w-[min(100%,280px)] sm:max-w-[320px] md:max-w-[400px]">
-        <HandCaption className="doodad-caption--asked">who we asked</HandCaption>
+        <p className="kicker mb-3 text-ink-55">Who we asked</p>
         <Threads active={active} />
 
         {/* centre: the drop */}

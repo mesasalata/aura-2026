@@ -63,23 +63,6 @@ export function DropMark({ className, tint = "milk" }: { className?: string; tin
   );
 }
 
-export function CurdMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 90 70" className={cn("block overflow-visible", className)} aria-hidden>
-      <g filter={SOFT} strokeLinejoin="round">
-        <ellipse cx="45" cy="54" rx="30" ry="8" fill="var(--color-milk)" stroke={LINE} strokeWidth="1.8" />
-        <path
-          d="M18 44 C16 28 32 16 48 20 C62 10 78 22 74 38 C84 42 78 56 62 54 C52 62 28 60 18 44 Z"
-          fill="var(--color-pink-soft)"
-          stroke={LINE}
-          strokeWidth="2.2"
-        />
-        <ellipse cx="38" cy="34" rx="9" ry="5" fill={SHINE} fillOpacity="0.85" />
-      </g>
-    </svg>
-  );
-}
-
 export function FlaskMark({ className, liquid = "pink" }: { className?: string; liquid?: "pink" | "milk" }) {
   const fill = liquid === "pink" ? "var(--color-pink-soft)" : "var(--color-cream)";
   return (
@@ -100,47 +83,6 @@ export function FlaskMark({ className, liquid = "pink" }: { className?: string; 
         />
         <rect x="35" y="8" width="30" height="9" rx="3" fill="var(--color-cream)" stroke={LINE} strokeWidth="2" />
         <path d="M30 60 L 24 96" fill="none" stroke={SHINE} strokeWidth="4" />
-      </g>
-    </svg>
-  );
-}
-
-/** A sticker-cut green banknote - chunky clip-art, one wobble, two flats. */
-export function BillMark({ className, kind = 0 }: { className?: string; kind?: 0 | 1 | 2 }) {
-  const body =
-    kind === 1
-      ? "M 8 18 C 6 10, 18 6, 36 8 C 62 4, 90 8, 110 12 C 118 16, 116 50, 108 54 C 86 60, 50 58, 22 54 C 8 52, 6 28, 8 18 Z"
-      : kind === 2
-        ? "M 10 14 C 8 8, 22 4, 48 8 C 78 6, 104 10, 112 18 C 118 28, 114 50, 104 56 C 80 62, 40 58, 18 52 C 6 48, 6 22, 10 14 Z"
-        : "M 6 16 C 8 6, 28 8, 56 6 C 84 4, 108 10, 114 20 C 118 34, 112 52, 100 56 C 72 62, 36 58, 16 52 C 4 48, 4 26, 6 16 Z";
-  return (
-    <svg viewBox="0 0 120 64" className={cn("block overflow-visible", className)} aria-hidden>
-      <g filter={SOFT} strokeLinejoin="round" strokeLinecap="round">
-        <path d={body} fill="#5aaa5e" stroke={LINE} strokeWidth="2.8" />
-        <path d="M 16 14 L 16 50" fill="none" stroke="#3d7a44" strokeWidth="7" strokeLinecap="round" />
-        <path d="M 104 16 L 104 48" fill="none" stroke="#3d7a44" strokeWidth="7" strokeLinecap="round" />
-        <circle cx="60" cy="32" r="13" fill="#fffdf5" stroke={LINE} strokeWidth="2.4" />
-        <circle cx="60" cy="32" r="6" fill="#5aaa5e" stroke={LINE} strokeWidth="2" />
-        <ellipse cx="26" cy="20" rx="7" ry="3.2" fill={SHINE} transform="rotate(-20 26 20)" />
-      </g>
-    </svg>
-  );
-}
-
-export function CoinMark({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 72 72" className={cn("block overflow-visible", className)} aria-hidden>
-      <g filter={SOFT} strokeLinejoin="round">
-        <circle cx="36" cy="39" r="26" fill="#d9a53c" stroke={LINE} strokeWidth="2.2" />
-        <circle cx="36" cy="34" r="26" fill="var(--color-butter)" stroke={LINE} strokeWidth="2.2" />
-        <circle cx="36" cy="34" r="19" fill="none" stroke={LINE} strokeOpacity="0.3" strokeWidth="1.2" />
-        <path
-          d="M36 22 C38 28 47 37 47 44 C47 50 42 54 36 54 C30 54 25 50 25 44 C25 37 34 28 36 22 Z"
-          fill="var(--color-milk)"
-          stroke={LINE}
-          strokeWidth="1.8"
-        />
-        <ellipse cx="24" cy="22" rx="5" ry="3" fill={SHINE} transform="rotate(-35 24 22)" />
       </g>
     </svg>
   );

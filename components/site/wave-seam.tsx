@@ -12,6 +12,12 @@ export const SUNSET_SKY = "#ffd6a8";
 export const SUNSET_PEACH = "#f3d4b0";
 export const SUNSET_DUSK = "#c24e42";
 
+/** How the fixed nav reads a page tone (`lib/nav-tone.ts`). */
+function navTone(color: string) {
+  if (color === "transparent") return undefined;
+  return color === INK ? "dark" : "light";
+}
+
 /**
  * A drawn milk-edge sitting between two page tones. `from` is the colour
  * above the wave; `to` is the colour that floods in underneath it.
@@ -28,11 +34,12 @@ export function WaveSeam({
   return (
     <div
       aria-hidden
+      data-nav-tone={navTone(from)}
       className={cn("relative z-10 h-14 w-full overflow-hidden sm:h-[4.5rem]", className)}
       style={{ background: from }}
     >
       <svg viewBox="0 0 1440 80" preserveAspectRatio="none" className="block h-full w-full">
-        <path d={WAVE} fill={to} />
+        <path d={WAVE} fill={to} data-nav-tone={navTone(to)} />
       </svg>
       {/* Covers the subpixel gap SVG leaves at y=80 so the seam doesn't read as a border. */}
       <span className="absolute inset-x-0 bottom-0 h-[2px]" style={{ background: to }} />

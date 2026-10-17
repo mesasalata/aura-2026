@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import { WikiSection } from "@/components/site/wiki-layout";
+import { WikiFigure, WikiSection } from "@/components/site/wiki-layout";
 import { Callout, Placeholder } from "@/components/ui/callout";
 import { ScienceExplainer } from "@/components/ui/science-explainer";
 import { BiosensorDiagram } from "@/components/viz/biosensor-diagram";
@@ -15,6 +15,7 @@ import {
   StripDemo,
   TeamGrid,
 } from "@/components/mdx/blocks";
+import { AttributionList } from "@/components/site/attribution-people";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -51,6 +52,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     strong: ({ children }) => <strong className="font-medium text-ink">{children}</strong>,
     em: ({ children }) => <em className="text-ink">{children}</em>,
     Section: WikiSection,
+    WikiFigure,
     Callout,
     Placeholder,
     ScienceExplainer,
@@ -62,6 +64,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     StakeholderMap: StakeholderMapBlock,
     NotebookTimeline: NotebookBlock,
     TeamGrid,
+    AttributionList,
     GlossaryGrid,
     SafetyBlock,
     StripDemo,

@@ -4,16 +4,23 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Experiments",
-  description: "Experimental plan and rationale for AURA bench work across five DBTL cycles.",
+  description:
+    "FAM/BHQ proof-of-concept methods and results for catapult probes against a DNA analogue of miR-223.",
 };
 
 const TOC = [
-  { id: "overview", label: "Overview" },
-  { id: "goals", label: "Goals" },
-  { id: "assays", label: "Assay pipeline" },
-  { id: "controls", label: "Controls" },
-  { id: "samples", label: "Samples" },
-  { id: "timeline", label: "Timeline" },
+  { id: "methodology", label: "Methodology" },
+  { id: "procedure", label: "Procedure" },
+  { id: "refold", label: "Refold and QC" },
+  { id: "assay", label: "Assay setup" },
+  { id: "design", label: "Oligo design" },
+  { id: "preparation", label: "Preparation" },
+  { id: "timecourse", label: "Time course" },
+  { id: "comparison", label: "Probe comparison" },
+  { id: "dbtl", label: "DBTL" },
+  { id: "limitations", label: "Limitations" },
+  { id: "conclusion", label: "Conclusion" },
+  { id: "next", label: "Next steps" },
 ];
 
 export default function Page() {
@@ -21,8 +28,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Wet Lab · Experiments"
       accent="bio"
-      title="What we're testing and why"
-      lede="Assays mapped to engineering cycles - each experiment answers one question before the next design commit."
+      title="Which catapult probes bind"
+      lede="A FAM/BHQ proof of concept: probe candidates against a DNA analogue of miR-223, and which design opened the clearest."
       current="/experiments"
       toc={TOC}
     >

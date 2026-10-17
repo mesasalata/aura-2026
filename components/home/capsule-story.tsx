@@ -15,39 +15,37 @@ import { Blob, type BlobShape } from "@/components/viz/sketch";
 import { cn } from "@/lib/utils";
 
 /**
- * The "milk thing": four pink capsules staggered right/left on a milk page,
- * brown cow spots creeping in from the edges, and hand-drawn curly arrows
- * that draw themselves as you scroll from one capsule to the next.
+ * Four pink capsules staggered right/left on a milk page, brown cow spots
+ * creeping in from the edges, and hand-drawn curly arrows that draw
+ * themselves as you scroll from one capsule to the next.
+ *
+ * Unmounted from `/` for now. The homepage uses MastitisSummary in this slot.
  */
 
 const STEPS = [
   {
     n: "01",
     side: "right",
-    kicker: "In the pail",
     title: "Milk is quiet.",
-    body: "Mastitis usually starts subclinical. The milk still looks like cream while inflammation is already writing itself into the sample.",
+    body: "Mastitis usually starts subclinical. In cows with subclinical mastitis, bta-miR223 exists in milk samples and can indicate bacterial infection before any physiological changes occur.",
   },
   {
     n: "02",
     side: "left",
-    kicker: "On the farm",
     title: "You pay for what you cannot see.",
-    body: "Roughly one cow in three is affected. Most of the cost is lost yield, discarded milk and early culling, not the treatment invoice.",
+    body: "Around one-fifth of dairy cows may experience mastitis. Direct treatment is a thin slice of the total: the rest hides in lost yield, discarded milk and cows culled early.",
   },
   {
     n: "03",
     side: "right",
-    kicker: "In the milk line",
-    title: "AURA screens the flow.",
-    body: "An inline sensor is designed to check milk during milking, without turning every screen into a separate lab workflow.",
+    title: "AURA reads the milk.",
+    body: "A DNA catapult on an FET surface has an invasion region complementary to miR-223. When the miRNA associates, the stem opens, and the transistor reads that as a change in current between source and drain.",
   },
   {
     n: "04",
     side: "left",
-    kicker: "On the screen",
-    title: "A signal becomes an alert.",
-    body: "A BioFET detects a specific microRNA and sends an electronic signal to a phone or computer, flagging a cow for a closer check.",
+    title: "Each milking, a siphon.",
+    body: "A small sample of collected milk is siphoned to a sampling chamber on the milking line, checking each cow many times a day.",
   },
 ] as const;
 
@@ -70,7 +68,7 @@ export function CapsuleStory() {
       <Container className="relative">
         <div className="mx-auto max-w-4xl text-center">
           <h2 id="capsule-story" className="font-display display-1 text-ink text-balance">
-            From quiet milk to an early alert.
+            From a quiet pail to a current that ticks.
           </h2>
         </div>
 

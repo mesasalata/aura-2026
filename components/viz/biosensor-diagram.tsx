@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Blob, LINE, SHINE, SOFT_ID } from "@/components/viz/sketch";
-import { DoodadFrame, PaperCorner } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ *
@@ -511,8 +510,6 @@ export function BiosensorDiagram() {
   };
 
   return (
-    <DoodadFrame>
-      <PaperCorner className="doodad-corner--tr" />
     <div
       className="painted overflow-hidden p-5 sm:p-8"
       onMouseEnter={() => setPaused(true)}
@@ -581,6 +578,5 @@ export function BiosensorDiagram() {
         </div>
       </div>
     </div>
-    </DoodadFrame>
   );
 }

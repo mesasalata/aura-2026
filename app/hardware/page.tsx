@@ -4,15 +4,17 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Hardware",
-  description: "Inline siphon, FET gate with DNA catapult, and reference electrodes upstream of the chamber.",
+  description:
+    "A molecular biosensing system needs more than a recognition probe.",
 };
 
 const TOC = [
-  { id: "overview", label: "Overview" },
-  { id: "siphon", label: "Siphon" },
-  { id: "fet", label: "FET" },
-  { id: "electrodes", label: "Electrodes" },
-  { id: "integration", label: "Parlour" },
+  { id: "motivation", label: "Motivation" },
+  { id: "overview", label: "System Overview" },
+  { id: "sampling", label: "Sampling Module" },
+  { id: "sensing", label: "Sensing Module" },
+  { id: "app", label: "Hardware–App Communication" },
+  { id: "operation", label: "Operating Principle" },
 ];
 
 export default function Page() {
@@ -20,8 +22,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Dry Lab · Hardware"
       accent="butter"
-      title="Siphon, FET & electrodes"
-      lede="Hardware meant to live in the milking machine - a siphoned chamber, a transistor, and a baseline from the milk itself."
+      title="Motivation"
+      lede="A molecular biosensing system needs more than a recognition probe. It also needs a way to bring a sample into contact with the sensing interface, acquire the resulting signal, and deliver data to the user."
       current="/hardware"
       toc={TOC}
     >

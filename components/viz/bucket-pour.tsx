@@ -184,13 +184,13 @@ function Pool({ progress }: { progress: MotionValue<number> }) {
   return (
     <motion.div style={{ height }} className="absolute inset-x-0 bottom-0 z-1">
       <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="absolute inset-x-0 top-0 h-28 w-full sm:h-32">
-        <path fill="var(--color-milk)" d={MENISCUS} />
+        <path fill="var(--color-milk)" d={MENISCUS} data-nav-tone="light" />
       </svg>
       <motion.div
         style={{ opacity: splash, scale: splash }}
         className="absolute left-[50%] top-6 h-14 w-36 origin-center -translate-x-1/2 rounded-[100%] bg-cream"
       />
-      <div className="absolute inset-x-0 top-20 bottom-0 bg-milk sm:top-24" />
+      <div className="absolute inset-x-0 top-20 bottom-0 bg-milk sm:top-24" data-nav-tone="light" />
     </motion.div>
   );
 }

@@ -2,15 +2,14 @@
 
 import { motion, useTransform, type MotionValue } from "motion/react";
 import { LINE } from "@/components/viz/sketch";
-import { DoodadFrame, HandCaption } from "@/components/viz/doodads";
 import { ART, artUrl } from "@/lib/art";
 import { cn } from "@/lib/utils";
 
 export const HERD_TOTAL = 24;
-/** 1 in 3 at any given time. */
-export const HERD_STAGE_ONE = 8;
-/** ~55% over a year (47–65% reported range). */
-export const HERD_STAGE_TWO = 13;
+/** About 1 in 5 of the 24 cows. */
+export const HERD_STAGE_ONE = 5;
+/** About 70% of the herd, the top of the reported 40–70% range. */
+export const HERD_STAGE_TWO = 17;
 
 /**
  * Progress → how many cows have been marked. Two chapters with a hold between:
@@ -114,23 +113,22 @@ function Spark({ x, y, s, rot, pink, t, order }: (typeof SPARKS)[number] & { t: 
 
 /**
  * HerdField - twenty-four cows on cream. As `progress` runs, cows flush pink
- * one at a time in a scattered order: eight for "1 in 3", then on to thirteen.
+ * one at a time in a scattered order: five for about 1 in 5, then on to seventeen.
  */
 export function HerdField({ progress, className }: { progress: MotionValue<number>; className?: string }) {
   const fill = useTransform(progress, HERD_FILL_IN, HERD_FILL_OUT);
 
   return (
-    <DoodadFrame
+    <div
       role="img"
       aria-label={`A herd of ${HERD_TOTAL} cows; as you scroll, ${HERD_STAGE_ONE} and then ${HERD_STAGE_TWO} of them are marked as infected`}
-      className={cn("pb-5", className)}
+      className={cn("relative pb-5", className)}
     >
       <div className="grid grid-cols-6 gap-x-1.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-2">
         {Array.from({ length: HERD_TOTAL }, (_, i) => (
           <HerdCow key={i} index={i} fill={fill} />
         ))}
       </div>
-      <HandCaption className="doodad-caption--herd">n = herd</HandCaption>
-    </DoodadFrame>
+    </div>
   );
 }

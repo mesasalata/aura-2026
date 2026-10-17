@@ -9,7 +9,7 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { BLOB, Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
+import { Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ *
@@ -39,7 +39,7 @@ const STAGES: Stage[] = [
     index: "01",
     label: "Input",
     tag: "Milk sample loaded",
-    desc: "Each milking, a siphoned sip of milk enters the chamber. Fats, salts, and - if the cow is fighting bacteria - bta-miR-223 are all in here, invisible to the eye.",
+    desc: "During each milking session a small sample of the collected milk is siphoned to a smaller sampling chamber. In cows with subclinical mastitis, bta-miR223 exists in the milk.",
     accent: "var(--color-orange)",
     wash: "b",
     window: [0, 0.05, 0.21, 0.26],
@@ -56,8 +56,8 @@ const STAGES: Stage[] = [
   {
     index: "03",
     label: "Transduction",
-    tag: "Current ticks",
-    desc: "Opening the catapult moves charge away from the FET surface. The transistor reads that as a change in current between source and drain. Reference electrodes taste the milk first so salt does not raise a false flag.",
+    tag: "Current changes",
+    desc: "As the invasion region moves away from the biosensor surface, the local electrical field changes and the FET detects this as a change in electrical current between the source and the drain. Reference electrodes placed before the sampling chamber register ionic activity, helping to offset highly ionic conditions and reduce the probability of false results.",
     accent: "var(--color-butter)",
     wash: "d",
     window: [0.51, 0.56, 0.71, 0.76],
@@ -65,8 +65,8 @@ const STAGES: Stage[] = [
   {
     index: "04",
     label: "Output",
-    tag: "A flag, not a verdict",
-    desc: "A small on-farm model turns the residual current into a miR-223 load score. If it stays high across milkings, the parlour computer marks this cow - look closer, skip blanket antibiotics.",
+    tag: "Current changes",
+    desc: "As the invasion region moves away from the biosensor surface, the local electrical field changes, and the FET detects this as a change in electrical current between the source and the drain.",
     accent: "var(--color-pink)",
     wash: "a",
     window: [0.76, 0.81, 1, 1],
@@ -382,15 +382,15 @@ function ControlVial() {
 type Readout = { title: string; verdict: string; note: string; accent: string };
 
 const HEALTHY: Readout = {
-  title: "Healthy milk",
-  verdict: "No signal",
-  note: "miR-223 score stays with the sample’s own baseline - no flag.",
+  title: "Without the target",
+  verdict: "Catapult closed",
+  note: "Without the target miRNA, the catapult stays closed.",
   accent: "var(--color-bio)",
 };
 const INFECTED: Readout = {
-  title: "Infected milk",
-  verdict: "Signal fires",
-  note: "Score stays high across milkings - the parlour marks this cow.",
+  title: "With miR-223",
+  verdict: "Catapult opens",
+  note: "When the miRNA associates, the FET detects a change in current.",
   accent: "var(--color-pink)",
 };
 
@@ -423,7 +423,7 @@ function SignalVisual({ progress, className }: { progress: MotionValue<number>; 
   return (
     <div
       role="img"
-      aria-label="A milk sample in a biosensor vial. As you scroll it is loaded, the biomarker is recognised, the signal amplified, and the result set beside a healthy control: healthy milk stays pale with no signal, infected milk turns pink as the signal fires."
+      aria-label="A milk sample in a biosensor vial. As you scroll it is loaded, the DNA catapult binds miR-223 if it is present, and the sample is set beside a control without the target: without the target the catapult stays closed; with miR-223 the catapult opens and the FET current changes."
       className={cn("relative grid w-full grid-cols-2", className)}
     >
       <motion.div style={{ opacity: controlOpacity, x: controlX }} className="flex flex-col items-center px-3 sm:px-6">
@@ -491,12 +491,20 @@ function Wash({ stage, i, progress }: { stage: Stage; i: number; progress: Motio
  * One long pin, four chapters. Text sits left and the vial right on large
  * screens; below that the picture stacks above the copy. `prefers-reduced-
  * motion` renders the final readout, unpinned.
+ *
+ * `intro` is the “siphoned sip becomes a flag” pin.
  */
-export function SignalBeats() {
+export function SignalBeats({
+  intro = true,
+  caption,
+}: {
+  intro?: boolean;
+  caption?: string;
+} = {}) {
   return (
     <div className="relative">
-      <SignalIntro />
-      <SignalStage />
+      {intro && <SignalIntro />}
+      <SignalStage caption={caption} />
     </div>
   );
 }
@@ -516,7 +524,7 @@ function SignalIntro() {
     <section
       ref={ref}
       className={cn("relative bg-milk", reduce ? "min-h-svh" : "h-[150vh]")}
-      aria-label="How a sample becomes something you can read"
+      aria-label="How a siphoned sample reaches the FET"
     >
       <div className={cn("top-0 h-svh overflow-hidden", reduce ? "relative" : "sticky")}>
         <motion.div
@@ -530,36 +538,14 @@ function SignalIntro() {
           style={{ opacity: enter, y: textY }}
           className="relative mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-6 text-center"
         >
-          <div className="relative">
-            {/* Milk-ring stain - marks this as the assay chapter, like a mug sat on the notes. */}
-            <div className="doodad-milk-ring" aria-hidden>
-              <svg viewBox="0 0 100 100">
-                <path
-                  d={BLOB.ring}
-                  fill="none"
-                  stroke="#8a6a4a"
-                  strokeWidth="8"
-                  strokeOpacity="0.22"
-                  filter={`url(#${SOFT_ID})`}
-                />
-                <path
-                  d={BLOB.ring}
-                  fill="none"
-                  stroke="#5a3d33"
-                  strokeWidth="2.4"
-                  strokeOpacity="0.12"
-                  transform="translate(10 9) scale(0.8)"
-                  filter={`url(#${SOFT_ID})`}
-                />
-              </svg>
-            </div>
-            <p className="font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.06] tracking-tight text-ink text-balance">
-              How a siphoned sip becomes a flag
-            </p>
-          </div>
+          <p className="font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.06] tracking-tight text-ink text-balance">
+            How a siphoned sample reaches the FET
+          </p>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-70 text-pretty">
-            Each milking, milk washes a DNA catapult on an FET. miR-223 opens it; current ticks;
-            a small model decides whether to flag this cow.
+            During each milking session a small sample of milk is siphoned to a sampling chamber and
+            passes over the biosensor surface. When miR-223 associates with the DNA catapult, the
+            local electrical field changes and the FET detects a change in electrical current
+            between the source and the drain.
           </p>
         </motion.div>
       </div>
@@ -567,7 +553,7 @@ function SignalIntro() {
   );
 }
 
-function SignalStage() {
+function SignalStage({ caption }: { caption?: string }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -598,20 +584,21 @@ function SignalStage() {
         </motion.div>
 
         <motion.div style={{ opacity: enter }} className="relative mx-auto flex h-full w-full max-w-7xl flex-col px-5 pt-16 pb-16 sm:px-8 sm:pt-20 sm:pb-10">
-          <div className="grid flex-1 grid-rows-[minmax(0,1fr)_auto] items-center gap-4 max-lg:content-end lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
-            <motion.div
-              style={{ y: visualY, scale: visualScale }}
-              className="relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[36svh] max-lg:self-end max-lg:[&>*]:max-h-full lg:order-2"
-            >
-              <SignalVisual progress={progress} className="max-w-[38rem] max-lg:w-[min(100%,66svh)]" />
-            </motion.div>
-
-            <motion.div style={{ y: textY, x: textX }} className="relative lg:order-1">
+          <div className="grid flex-1 grid-rows-[auto_minmax(0,1fr)] items-center gap-4 max-lg:content-start lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
+            <motion.div style={{ y: textY, x: textX }} className="relative max-lg:pt-2 lg:order-1">
+              {caption && <p className="kicker mb-4 text-pink-deep">{caption}</p>}
               <div className="grid">
                 {STAGES.map((s, i) => (
                   <Chapter key={s.index} stage={s} i={i} progress={progress} />
                 ))}
               </div>
+            </motion.div>
+
+            <motion.div
+              style={{ y: visualY, scale: visualScale }}
+              className="relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[42svh] max-lg:self-end max-lg:[&>*]:max-h-full lg:order-2"
+            >
+              <SignalVisual progress={progress} className="max-w-[38rem] max-lg:w-[min(100%,66svh)]" />
             </motion.div>
           </div>
         </motion.div>

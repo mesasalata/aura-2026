@@ -11,14 +11,13 @@ import {
 } from "motion/react";
 import { CountUp } from "@/components/motion/count-up";
 import { PlungeChart } from "@/components/viz/plunge-chart";
-import { HerdField, HERD_TOTAL, HERD_FILL_IN, HERD_FILL_OUT } from "@/components/viz/herd-field";
+import { HerdField } from "@/components/viz/herd-field";
 import { PailSplit } from "@/components/viz/pail-split";
 import { Blob, type BlobShape } from "@/components/viz/sketch";
 import { CashBurst } from "@/components/home/cash-burst";
 import { CREAM50, MILK, WaveSeam } from "@/components/site/wave-seam";
 import { ACCENT_HEX } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import "@/app/doodad-home.css";
 
 /* ------------------------------------------------------------------ stage */
 
@@ -157,8 +156,10 @@ export function ImpactIntroBeat() {
               A quiet problem with a very loud bill
             </p>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ink-70 text-pretty">
-              Mastitis is one of the most economically significant diseases in dairy — and most of the
-              cost never shows up on a treatment invoice. Three numbers, one herd.
+              Mastitis is not only an animal health issue; it also creates significant economic
+              challenges for dairy farmers. Infected cows may produce less milk, milk quality can be
+              affected, and farmers may face additional costs associated with veterinary care and
+              treatment.
             </p>
           </div>
           <div className="relative hidden h-[70%] lg:block">
@@ -170,7 +171,7 @@ export function ImpactIntroBeat() {
   );
 }
 
-/** €30B plunge chart beat. */
+/** €35 billion plunge chart beat. */
 export function ImpactBillBeat() {
   return (
     <Beat
@@ -186,9 +187,8 @@ export function ImpactBillBeat() {
 }
 
 /**
- * The herd beat runs two chapters over one long pin: first every third cow
- * flushes pink (1 in 3 at any time), then the marking continues to roughly
- * half the herd (47–65% over a year).
+ * The herd beat runs two chapters over one long pin: first about one cow in
+ * five flushes pink, then the marking continues through the 40–70% incidence range.
  */
 export function ImpactHerdBeat() {
   return (
@@ -246,13 +246,13 @@ function BillCopy({ progress }: { progress: MotionValue<number> }) {
   const count = useTransform(progress, [0.12, 0.62], [0, 1]);
   return (
     <>
-      <p className="doodad-hand-kicker">the bill</p>
       <Big>
-        <CountUp to={30} prefix="€" suffix="B" progress={count} />
+        <CountUp to={35} prefix="€" progress={count} />
+        <span className="text-[0.38em]"> billion</span>
       </Big>
       <Copy
-        label="Lost every year"
-        sub="Estimated global economic burden of mastitis on the dairy sector - and most of it never shows up on a treatment invoice."
+        label="Estimated annual global losses"
+        sub="Mastitis is associated with substantial economic losses across the dairy industry worldwide."
       />
     </>
   );
@@ -267,7 +267,7 @@ function TreatmentCopy({ progress }: { progress: MotionValue<number> }) {
       </Big>
       <Copy
         label="Is the treatment itself"
-        sub="Direct treatment is a thin slice of the total. The rest hides in lost yield, discarded milk and cows culled early - which is why early detection pays."
+        sub="Direct treatment is a thin slice of the total. Earlier detection could give farmers more opportunities to investigate, but the actual benefits would depend on AURA's accuracy, practical usability, and eventual validation under real farming conditions."
       />
     </>
   );
@@ -283,37 +283,29 @@ function HerdCopy({ progress }: { progress: MotionValue<number> }) {
   const two = useTransform(progress, [0, 0.56, 0.64, 1], [reduce ? 1 : 0, reduce ? 1 : 0, 1, 1]);
   const twoY = useTransform(progress, [0.56, 0.64], [reduce ? 0 : 24, 0]);
   const countTwo = useTransform(progress, [0.6, 0.86], [0, 1]);
-  const marked = useTransform(progress, HERD_FILL_IN, HERD_FILL_OUT);
-  const markedText = useTransform(marked, (m) => String(Math.round(m)));
 
   return (
     <div className="relative">
-      {/* both chapters share one grid cell so the counter below never collides */}
+      {/* both chapters share one grid cell so the crossfade stays the same height */}
       <div className="grid">
         <motion.div style={{ opacity: one, y: oneY }} className={cn("[grid-area:1/1]", reduce && "invisible")} aria-hidden={reduce ? true : undefined}>
-          <Big>1 in 3</Big>
+          <Big>1 in 5</Big>
           <Copy
-            label="Cows affected at any time"
-            sub="Roughly one dairy cow in three is carrying mastitis right now - most of them without a single visible sign in the milk."
+            label="Dairy cows affected"
+            sub="Around one-fifth of dairy cows may experience mastitis over a given period, although estimates depend on the population and timeframe considered."
           />
         </motion.div>
 
         <motion.div style={{ opacity: two, y: twoY }} className="[grid-area:1/1]">
           <Big className="whitespace-nowrap text-[clamp(3.5rem,8.8vw,8rem)]">
-            47–<CountUp from={47} to={65} progress={countTwo} suffix="%" />
+            40–<CountUp from={40} to={70} progress={countTwo} suffix="%" />
           </Big>
           <Copy
-            label="Infected over a year"
-            sub="Reported herd-level incidence across dairy systems and regions. Same herd, longer window - the marking keeps going."
+            label="Reported herd-level incidence"
+            sub="Reported incidence varies considerably between farming systems, regions, and studies."
           />
         </motion.div>
       </div>
-
-      <p className="mt-6 flex items-center gap-2 text-sm text-ink-55" aria-live="off">
-        <Blob shape="c" fill="var(--color-pink)" className="h-3.5 w-3.5" />
-        <motion.span className="font-display text-base text-ink">{markedText}</motion.span>
-        <span>of {HERD_TOTAL} cows marked</span>
-      </p>
     </div>
   );
 }

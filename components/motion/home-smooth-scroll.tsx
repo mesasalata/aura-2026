@@ -16,7 +16,7 @@ function flickGain(delta: number) {
 
 /**
  * Interpolated wheel/trackpad scrolling, the kind used on cinematic homepages.
- * Mount only on `/home-test` so the live homepage and wiki pages keep native scrolling.
+ * Mount only on the homepage. Wiki pages keep native scrolling.
  */
 export function HomeSmoothScroll() {
   const reduce = useReducedMotion();

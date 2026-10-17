@@ -26,11 +26,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(`https://2026.igem.wiki${teamBase}`),
   title: {
-    default: "AURA - iGEM 2026 · Milk is quiet. Infection is not.",
+    default: "AURA - iGEM 2026",
     template: "%s · AURA - iGEM 2026",
   },
   description:
-    "AURA is an iGEM 2026 inline FET biosensor for bta-miR-223 in milk - a flag for subclinical bacterial mastitis, not a veterinary diagnosis.",
+    "AURA focuses on creating an easy to use diagnostic solution to help diagnosis subclinical mastitis: an inline FET biosensor for miRNA in milk, rather than a direct identification of mastitis.",
   keywords: [
     "iGEM 2026",
     "AURA",

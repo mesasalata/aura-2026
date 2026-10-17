@@ -1,99 +1,147 @@
-<Section id="overview" title="Engineering overview" kicker="01">
+<Section id="design-1" title="Design 1" kicker="01">
 
-We treated this as a farm tool first, a circuit second. Engineering is five Design–Build–Test–Learn cycles that start in the parlour: sit in the milking line, cost less than the loss they prevent, and return a flag anyone can act on before the tank is mixed.
+The catapult probe developed by Park *et al.* was originally designed to detect **miR-21**. Binding of the target miRNA causes a conformational change in the DNA structure, which can alter the surface potential detected by a field-effect transistor (FET). 1-s2.0-S1385894725006059-main
 
-That ruled out culture and PCR as the everyday test. The loops that remain are how we read **bta-miR-223** on a FET without a fluorescent workbench.
+For this project, the target was **miR-223**, a biomarker being investigated for mastitis detection. The original miR-21 recognition region therefore had to be adapted to recognize miR-223 while maintaining the overall catapult structure.
 
-<Callout variant="note" title="How to read this page">
-  Cycles describe intent, design rationale, and what we tested or plan to test. Where wet-lab data is still pending, we say so explicitly.
-</Callout>
+The sequences of miR-21 and miR-223 were compared, and the target-recognition region of the original catapult was replaced with a sequence complementary to miR-223. Two initial miR-223 designs were produced, including one designed to preserve the geometry of the original catapult as closely as possible.
 
-</Section>
+***[ADD FIGURE: diagram comparing the original miR-21 catapult with the adapted miR-223 catapult. Highlight the region that was replaced.]***
 
-<Section id="cycle-1" title="Cycle 1 - Target: miR-223" kicker="02">
-
-**Design.** Farmers and vets needed something earlier than a swollen udder and more specific than a generic inflammation count. Literature on host miRNAs in milk pointed at **bta-miR-223**, which rises to control bacterial inflammation before physiological changes show.
-
-**Build.** A decision matrix scored SCC, conductivity, culture, PCR, and miR-223 on timing, bacterial specificity, and whether the test could live in the line.
-
-**Test.** We compared published miR-223 windows against SCC kinetics from mastitis challenge studies.
-
-**Learn.** A hit on miR-223 can mean bacterial subclinical mastitis, not just “something’s off.” Cycle 2 asks how to catch that molecule on a surface.
+***[ADD TABLE OR SEQUENCES: original miR-21 target, miR-223 target, original catapult sequence and adapted miR-223 sequence.]***
 
 </Section>
 
-<Section id="cycle-2" title="Cycle 2 - DNA catapult" kicker="03">
+<Section id="build-1" title="Build 1" kicker="02">
 
-**Design.** A DNA catapult on the FET surface carries an invasion region complementary to the miR-223 strand. Association should open the stem: the negative backbone of the miRNA repels the invasion region from the complementary DNA stem.
+The adapted miR-223 catapult sequences were designed **in silico**. Their predicted secondary structures were then analyzed using **RNAfold**.
 
-**Build.** Design and immobilise catapult oligos with a defined invasion region; control sequences that should not open on off-target miRNAs.
+RNAfold was used to determine whether changing the target-recognition region disrupted the stem-loop structure required for the catapult mechanism.
 
-**Test.** Binding and opening in buffer, then in milk matrix, against miR-223 and irrelevant RNA.
-
-**Learn.** Milk is ionic and noisy. Opening still has to move charge far enough from the surface for the FET to notice - which is cycle 3.
-
-<Placeholder label="Catapult opening assays - data pending" />
+***[ADD: exact RNAfold settings used, if recorded - e.g. temperature and any other parameters you deliberately changed. Do not add conditions that were not actually used.]***
 
 </Section>
 
-<Section id="cycle-3" title="Cycle 3 - FET current" kicker="04">
+<Section id="test-1" title="Test 1" kicker="03">
 
-**Design.** No fluorescent workbench. When the invasion region moves away from the biosensor surface, the local electrical field changes. The FET reads that as current between source and drain.
+The predicted secondary structure of the adapted miR-223 catapult was compared with that of the original catapult design.
 
-**Build.** Couple catapults to a FET gate; define source–drain bias and sampling window per milking siphon.
+The RNAfold predictions showed that the adapted miR-223 sequence retained the intended **stem-loop/catapult architecture**, indicating that replacement of the target-recognition region did not prevent formation of the required structure.
 
-**Test.** Current traces with and without miR-223; spiked milk versus unspiked.
+***[ADD FIGURE: RNAfold prediction of original catapult.]***
 
-**Learn.** Highly ionic milk can swamp the surface field. Reference electrodes go upstream of the chamber so we can subtract the sample’s own salt.
+***[ADD FIGURE: RNAfold prediction of adapted miR-223 catapult. Put these side-by-side if possible.]***
 
-<div className="not-prose my-6 rounded-[var(--radius-card)] border border-ink/10 bg-ink p-6">
-  <BiosensorDiagram />
-</div>
+***[ADD DATA if available: predicted minimum free energy (MFE) or other RNAfold output for each design. If you did not record/use these values, do not invent them.]***
 
-</Section>
-
-<Section id="cycle-4" title="Cycle 4 - Inline siphon & electrodes" kicker="05">
-
-**Design.** During each milking, siphon a small sample into a chamber that washes the FET. Place reference electrodes before the chamber to register ionic concentration and electrochemical activity, then calibrate the FET residual.
-
-**Build.** Chamber and electrode layout meant to integrate into milking machines at construction, with minimal upkeep.
-
-**Test.** Flow, fouling, and electrode baselines on milk-like matrices; temperature variation in a parlour range.
-
-**Learn.** Hardware and wet-lab ran together: the siphon sets how long the catapult has to work, and the electrodes set what “zero” means for that cow that milking.
+At this stage, the results provided **computational evidence for the structural feasibility of the adapted design**, rather than experimental confirmation of miR-223 binding.
 
 </Section>
 
-<Section id="cycle-5" title="Cycle 5 - Flag, not verdict" kicker="06">
+<Section id="learn-1" title="Learn 1" kicker="04">
 
-**Design.** After each reading, compare FET current to the sample’s own electrode baseline. A small on-farm model turns the residual into a miR-223 load score. One noisy spike is not a verdict.
+The RNAfold predictions suggested that the miR-21 recognition region could be replaced with a miR-223 recognition sequence **without disrupting the intended catapult structure**. A complete redesign of the probe was therefore unnecessary.
 
-**Build.** Threshold logic: if the score stays high across consecutive sessions, the parlour computer marks the animal and sends a quiet alert to the farmer’s phone or the parlour display.
+However, the next objective was not only to detect miR-223, but eventually to **remove the bound target so that the sensor could be reset and reused**. Strong base-pairing between miR-223 and the probe could make this removal more difficult.
 
-**Test.** Simulated milking series - noisy singles versus persistent highs - with veterinary input on what is actionable.
+The next design cycle therefore focused on **modifying selected base-paired regions of the probe**. The aim was to make the target easier to remove while maintaining the structural change required for detection.
 
-**Learn.** Human Practices kept the last mile honest: look at this cow, consider confirmatory testing, skip blanket treatment of the herd.
-
-<Callout variant="safety" title="Scope reminder">
-  AURA is diagnostic-support, not diagnostic. The message is a flag, not a courtroom diagnosis.
-</Callout>
+***[ADD SMALL ARROW/DIAGRAM: “Cycle 1 result → catapult structure retained → Cycle 2: reduce base-pairing to improve target removability.”]***
 
 </Section>
 
-<Section id="dbtl" title="The DBTL wheel" kicker="07">
+<Section id="design-2" title="Design 2" kicker="05">
 
-<div className="not-prose -mx-4 sm:-mx-8">
-  <DbtlWheel />
-</div>
+Following Cycle 1, the adapted miR-223 catapult was predicted to retain the intended stem-loop structure. The next engineering goal was to make the sensor **reusable**.
+
+After detection, miR-223 would need to be removed from the catapult so that the probe could return to its original state. Strong base-pairing between the target and probe could make this removal difficult. Several variants were therefore designed with changes to selected base-paired regions, with the aim of making future target removal easier **without preventing the probe from responding to miR-223**.
+
+The variants selected for experimental testing were:
+
+- the baseline **miR223CatapultDesign_v2**;
+- a probe with **1 bp replaced in the invasion region**;
+- a probe with the **stem shortened by 2 bp**; and
+- a probe with the **3′ end shortened by 2 bp**.
+
+***[ADD FIGURE: show the four probe structures/sequences side-by-side and highlight exactly which base pairs were changed in each.]***
+
+***[ADD 1–2 SENTENCES explaining why each specific region was chosen for modification, if this was recorded by the team.]***
 
 </Section>
 
-<Section id="pipeline" title="From cow to flag" kicker="08">
+<Section id="build-2" title="Build 2" kicker="06">
 
-<div className="not-prose my-4">
-  <FarmToLabPipeline />
-</div>
+To experimentally compare the designs, the probes were synthesized with a **BHQ-1 quencher** and **6-FAM fluorophore** positioned at opposite ends of the catapult sequence.
 
-Every cycle touches this line: siphon, catapult, FET, electrodes, score, flag. Keeping it in view stops us from polishing one block while another becomes the bottleneck.
+In the closed state, the fluorophore and quencher remain close together, producing low fluorescence. Opening of the probe separates them, allowing fluorescence to increase. This provided a simple way to test whether the modified catapult designs could still respond to the target before integration with the FET.
+
+A synthetic **DNA analogue of miR-223** was used as the target in this first experimental comparison to reduce experimental complexity. The catapult probes were tested at a final concentration of **100 nM** in **1× PBS supplemented with 5 mM MgCl₂**, with fluorescence monitored for **120 minutes at 30.3°C**.
+
+***[ADD FIGURE: simple diagram showing closed FAM–BHQ probe → target binds → probe opens → fluorescence increases.]***
+
+***[ADD TABLE: exact probe and target sequences. You already have these data.]***
+
+</Section>
+
+<Section id="test-2" title="Test 2" kicker="07">
+
+Each catapult variant was exposed to the synthetic miR-223 DNA target and its fluorescence response was measured over 120 minutes.
+
+The fluorescence measurements showed clear differences between the probe designs. Performance was compared using the signal-to-noise ratio (SNR).
+
+<table>
+  <thead>
+    <tr>
+      <th>Catapult design</th>
+      <th>SNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Baseline miR-223 v2</td>
+      <td>6.73</td>
+    </tr>
+    <tr>
+      <td>Stem 2 bp shorter</td>
+      <td>11.81</td>
+    </tr>
+    <tr>
+      <td>Invasion region 1 bp replaced</td>
+      <td>15.59</td>
+    </tr>
+    <tr>
+      <td>3′ end 2 bp shorter</td>
+      <td><strong>17.96</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+The **3′-end 2-bp-shorter probe produced the highest SNR of 17.96**, compared with 6.73 for the baseline miR-223 design. This represented approximately a **2.7-fold increase in SNR**.
+
+***[ADD GRAPH: SNR of the four miR-223 probe variants. This is probably the most important figure in this cycle.]***
+
+***[ADD GRAPH: fluorescence vs time for the different probe variants, if the curves are clear enough to compare.]***
+
+***[ADD ERROR BARS / replicate information if available. Your results table already contains mean fluorescence and SD for some conditions.]***
+
+The results demonstrated that reducing or altering base-pairing in selected regions did **not prevent the catapult from responding to the target**. In fact, several modified designs produced a stronger signal relative to background than the baseline probe.
+
+Importantly, this experiment tested **detection performance**, not target removal itself. Whether the shortened design actually makes miR-223 easier to remove was therefore left for a later engineering cycle.
+
+</Section>
+
+<Section id="learn-2" title="Learn 2" kicker="08">
+
+The experiment showed that modifications intended to support future sensor regeneration could be introduced **without losing the catapult's ability to respond to the target**.
+
+Among the tested variants, the **3′-end 2-bp-shorter design** produced the strongest signal relative to background and was therefore selected as the lead architecture for continued development.
+
+This result was particularly useful because shortening the probe had initially been introduced to make future target removal more feasible, yet the modification also maintained - and under these assay conditions improved - the measurable fluorescence response.
+
+However, two major questions remained. The experiment had used a **synthetic DNA analogue rather than actual miR-223 RNA**, and the assay conditions did not yet represent the intended operating conditions of the final milk sensor.
+
+The next engineering cycle therefore carried the **3′-end 2-bp-shorter probe** forward to determine whether it could function with actual miR-223 and under conditions closer to those expected during mastitis testing.
+
+***[ADD SMALL FLOW DIAGRAM: “Best variant = 3′ end 2 bp shorter → selected for Cycle 3 → test with actual miR-223 / relevant temperature.”]***
 
 </Section>

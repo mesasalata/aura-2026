@@ -3,14 +3,13 @@
 import { useCallback, useRef, useState } from "react";
 import { motion, useScroll, useTransform, useMotionValueEvent, useReducedMotion } from "motion/react";
 import { Blob, LINE, SOFT_ID } from "@/components/viz/sketch";
-import { RubberStamp } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 const PHASES = [
-  { key: "design", letter: "D", label: "Design", accent: "var(--color-signal)", blurb: "Farm tool first: sit in the line, read miR-223, send a flag - not a diagnosis." },
-  { key: "build", letter: "B", label: "Build", accent: "var(--color-butter)", blurb: "DNA catapult on a FET gate, siphon chamber, electrodes upstream." },
-  { key: "test", letter: "T", label: "Test", accent: "var(--color-bio)", blurb: "Opening, current traces, and electrode baselines in milk matrix." },
-  { key: "learn", letter: "L", label: "Learn", accent: "var(--color-pink)", blurb: "Ionic milk needs a baseline. One spike is not a verdict." },
+  { key: "design", letter: "D", label: "Design", accent: "var(--color-signal)", blurb: "Several variants of the original miR-223 catapult probe, by modifying specific structural regions." },
+  { key: "build", letter: "B", label: "Build", accent: "var(--color-butter)", blurb: "Oligonucleotides synthesized with a BHQ-1 quencher and 6-FAM fluorophore, at standardized working concentrations." },
+  { key: "test", letter: "T", label: "Test", accent: "var(--color-bio)", blurb: "Each probe was tested against synthetic DNA target analogues using time-course fluorescence measurements." },
+  { key: "learn", letter: "L", label: "Learn", accent: "var(--color-pink)", blurb: "Probe structure had a major effect. The original miR-223 v2 probe produced an SNR of 6.73; the 3′ end-shortened probe reached 17.96." },
 ];
 
 const SIZE = 300;
@@ -109,14 +108,13 @@ export function DbtlWheel({ className }: { className?: string }) {
         <div className="relative max-w-2xl text-center">
           <span className="kicker text-butter">Engineering</span>
           <p className="mt-3 text-sm leading-relaxed text-ink-70 sm:text-base">
-            We treated this as a farm tool first: each loop starts in the parlour and ends with a
-            flag the farmer can use - or a reason to change the design.
+            These experiments formed an iterative engineering cycle. The 3′ end 2 bp shorter probe
+            was identified as the lead architecture for continued development.
           </p>
         </div>
 
         <div className="relative flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
           <motion.div style={{ y: wheelY }} className="relative h-[300px] w-[300px] shrink-0">
-            <RubberStamp className="doodad-stamp--cycle">cycle</RubberStamp>
             <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="absolute inset-0 h-full w-full overflow-visible" aria-hidden>
               <g filter={`url(#${SOFT_ID})`}>
                 {/* pencil loop */}

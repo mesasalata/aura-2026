@@ -1,51 +1,724 @@
-<Section id="overview" title="Experimental plan" kicker="01">
+<Section id="methodology" title="Methodology" kicker="01">
 
-Experiments follow AURA's five DBTL cycles. Each assay answers one question before we commit to the next design: does miR-223 bind the catapult, does the FET tick, can the siphon sit in the line. This page is the map; protocols and the notebook hold the detail.
+This experiment was designed to test the efficacy of different probe candidates at binding to the target miRNA. Rather than using FET sensor technology, we used BHQ-1 (Black Hole Quencher) and a FAM-6 fluorophore to create a proof of concept without designing the entire system. Both attachments were placed at either end of the catapult sequence, so when it is closed we get no signal, but when it opens a signal will be produced as the BHQ is separated from the fluorophore. Alongside this, we also replaced the miRNA 223 with a strand of ssDNA with the same sequence, thus eliminating a layer of complexity. We did this because DNA is more stable than RNA.
 
-<Callout variant="note" title="Status">
-  Some runs are scheduled or in progress. Results land on the Results page as data arrives.
+### Reaction conditions
+
+Catapult probes were diluted to a **200 nM working concentration**, corresponding to a **100 nM final probe concentration** in the assay.
+
+Reactions were performed in **1× PBS supplemented with 5 mM MgCl₂**.
+
+MgCl₂ was included to support stabilization of the probe secondary structure and reduce unwanted opening of the hairpin in the absence of target.
+
+Final reaction volumes were either **20 µL or 40 µL per well**.
+
+Fluorescence was measured for **120 minutes at 30.3°C**.
+
+</Section>
+
+<Section id="procedure" title="Procedure" kicker="02">
+
+### Setup: RNase-free workspace
+
+1. Wipe benchtop, pipettes, and tube racks with RNase AWAY, then rinse with nuclease-free water. Let air dry.
+2. Use filter tips throughout. Wear gloves; change after touching shared surfaces.
+3. Label all tubes before filling. Wrap every FAM-labelled tube in foil immediately.
+4. Keep a dedicated DNA-only zone, with no shared pipettes between beacon and target tubes.
+
+### Resuspension of oligos
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Oligo</th>
+      <th>Resuspension solution</th>
+      <th>Volume</th>
+      <th>Target stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hairpin beacon (FAM/BHQ, 100 nmol)</td>
+      <td>RNase-free water</td>
+      <td><strong>1,000 µL</strong></td>
+      <td>100 µM</td>
+    </tr>
+    <tr>
+      <td>Target DNA miR-223 (25 nmol)</td>
+      <td>RNase-free water</td>
+      <td><strong>250 µL</strong></td>
+      <td>100 µM</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+1. Centrifuge the shipping tube at 500×g for 30 s.
+2. Add RNase-free water slowly against the tube wall.
+3. Vortex 10 s, then:
+   1. Incubate at 37 °C for 5 min.
+   2. Vortex 10 s.
+4. Aliquot 10 µL into amber tubes. Store at −20 °C.
+5. Make 10 µM working stocks: 10 µL of 100 µM stock + 90 µL RNase-free water.
+
+### Binding buffer preparation
+
+Total [Cl⁻] = 20 mM (from 2 × 10 mM MgCl₂).
+
+1. Add RNase-free water.
+2. Add MgCl₂.
+3. Add Tween-20 last.
+4. Vortex 10 s.
+5. Sterile filter at 0.22 µm. Store at 4 °C.
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Stock</th>
+      <th>Volume</th>
+      <th>Final conc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>RNase-free water</td>
+      <td></td>
+      <td>9.89 mL</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>MgCl₂</td>
+      <td>1 M</td>
+      <td>100 µL</td>
+      <td>10 mM</td>
+    </tr>
+    <tr>
+      <td>Tween-20</td>
+      <td>10%</td>
+      <td>10 µL</td>
+      <td>0.01%</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+### Resuspend and quantify oligonucleotides
+
+**Resuspension volume formula:** V<sub>resuspend</sub> (μL) = nmol delivered × 10
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Oligo</th>
+      <th>nmol delivered</th>
+      <th>Buffer</th>
+      <th>Target stock vol</th>
+      <th>Target stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Hairpin beacon (FAM/BHQ)</td>
+      <td>100 nmol</td>
+      <td>TE pH 8.0</td>
+      <td><strong>1,000 µL</strong></td>
+      <td><strong>100 µM</strong></td>
+    </tr>
+    <tr>
+      <td>Target DNA (miR-223 analogue)</td>
+      <td>25 nmol</td>
+      <td>10 mM Tris pH 7.5, no EDTA</td>
+      <td><strong>250 µL</strong></td>
+      <td><strong>100 µM</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+**For each oligo:**
+
+1. Centrifuge the sealed shipping tube at 500×g for 30 s before opening.
+2. Add the calculated buffer volume slowly against the tube wall.
+3. Vortex 10 s, then:
+   1. Incubate at 37 °C for 5 min.
+   2. Vortex 10 s again.
+4. Aliquot 10 µL single-use portions into amber tubes. Store at −20 °C.
+5. Make 10 µM working stocks: 10 µL of 100 µM stock + 90 µL matching buffer.
+
+</Section>
+
+<Section id="refold" title="Refold the hairpin beacon" kicker="03">
+
+**Volume planning for one 384-well plate:**
+
+384 wells × 20 µL × 1.2 overage = **9,216 µL of 200 nM beacon working stock**.
+
+Refold a concentrated batch (1,200 µL at 1 µM) and dilute 1:5 on the day:
+
+- 240 µL of 10 µM beacon working stock + 960 µL of 1× binding buffer → 1,200 µL at 1 µM
+- On assay day: dilute the 1 µM refolded stock 1:5 in 1× binding buffer to make 200 nM
+
+**Note:** 384-well plates use 40 µL total per well (20 µL beacon + 20 µL target), not 100 µL. All 2× stocks and volume calculations below reflect this.
+
+**Refolding steps:**
+
+1. Add 960 µL of 1× binding buffer to a low-binding 1.5 mL amber tube.
+2. Add 240 µL of 10 µM beacon working stock.
+3. Mix by gentle inversion 10×.
+4. **Thermocycler:**
+   1. 95 °C × 5 min
+   2. Ramp to 25 °C at 0.1 °C/s (~11.7 min)
+   3. Hold 25 °C × 5 min
+   4. Hold 4 °C indefinitely
+5. **Heat block (fallback):**
+   1. 95 °C × 5 min
+   2. Turn off the block
+   3. Cool passively on the bench
+6. Wrap in foil. Use within 24 h if stored at 4 °C, or aliquot and freeze at −20 °C.
+
+### Beacon quality control
+
+Run before every binding experiment. Prepare the following in a 384-well black flat-bottom plate.
+
+Each well = **40 µL total**. 3×.
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Well</th>
+      <th>Contents</th>
+      <th>Recipe (40 µL total)</th>
+      <th>Measures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A: F_buffer</td>
+      <td>Buffer only</td>
+      <td>40 µL 1× buffer</td>
+      <td>Instrument background</td>
+    </tr>
+    <tr>
+      <td>B: F_closed</td>
+      <td>100 nM beacon, hairpin closed</td>
+      <td>4 µL of 1 µM refolded beacon + 36 µL buffer</td>
+      <td>OFF-state background</td>
+    </tr>
+    <tr>
+      <td>C: F_open</td>
+      <td>100 nM beacon + 500 nM opener</td>
+      <td>4 µL of 1 µM beacon + 2 µL of 10 µM opener + 34 µL buffer; equilibrate 2 h at 37 °C</td>
+      <td>F_max reference</td>
+    </tr>
+    <tr>
+      <td>D: F_thermal</td>
+      <td>100 nM beacon, heat-denatured</td>
+      <td>4 µL of 1 µM beacon + 36 µL buffer; heat sealed plate 95 °C × 5 min; read immediately at assay temp</td>
+      <td>Label integrity check</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+**Plate reader settings for QC:**
+
+- Excitation 485 nm / emission 520 nm
+- Gain auto-set on well C to 80% of the detector range
+
+Calculate and pass/fail:
+
+<Placeholder label="QC pass/fail calculation. Figure not in the source paste (Screenshot 2026-06-05 at 20.55.13.png)" />
+
+</Section>
+
+<Section id="assay" title="Assay setup" kicker="04">
+
+### Per-well recipe
+
+40 µL total, 384-well plate.
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Volume</th>
+      <th>Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2× beacon</td>
+      <td>20 µL</td>
+      <td>200 nM</td>
+    </tr>
+    <tr>
+      <td>2× target DNA</td>
+      <td>20 µL</td>
+      <td>1,000 nM</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>40 µL</strong></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+Compare S/B at each temperature. The highest S/B and lowest CV is the optimal temp.
+
+<Callout variant="lab" title="S/B equation">
+  <div className="text-base text-ink">
+    S/B = (F<sub>obs</sub> − F<sub>buffer</sub>) / (F<sub>closed</sub> − F<sub>buffer</sub>)
+  </div>
 </Callout>
 
+### At EPFL: load the 384-well plate
+
+All wells = **40 µL total**. Load in this order:
+
+1. Prepare each well with micro-pipetting according to the table below.
+2. Seal the plate with optical adhesive film.
+3. Centrifuge the sealed plate at 200×g for 30 s to remove bubbles.
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Wells</th>
+      <th>Contents</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A1–A3</td>
+      <td>Buffer only (40 µL)</td>
+      <td>F_buffer</td>
+    </tr>
+    <tr>
+      <td>B1–B3</td>
+      <td>20 µL beacon + 20 µL buffer</td>
+      <td>F_closed</td>
+    </tr>
+    <tr>
+      <td>C1–C3</td>
+      <td>20 µL beacon + 20 µL opener (1,000 nM)</td>
+      <td>F_open: equilibrate 2 h first</td>
+    </tr>
+    <tr>
+      <td>D1–D3</td>
+      <td>20 µL beacon + 20 µL target (1,000 nM)</td>
+      <td><strong>25 °C experimental</strong></td>
+    </tr>
+    <tr>
+      <td>E1–E3</td>
+      <td>20 µL beacon + 20 µL target (1,000 nM)</td>
+      <td><strong>30 °C experimental</strong></td>
+    </tr>
+    <tr>
+      <td>F1–F3</td>
+      <td>20 µL beacon + 20 µL target (1,000 nM)</td>
+      <td><strong>37 °C experimental</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+### Plate reader settings (384-well)
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Setting</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Excitation</td>
+      <td>485 nm (BW 20 nm)</td>
+    </tr>
+    <tr>
+      <td>Emission</td>
+      <td>520 nm (BW 20 nm)</td>
+    </tr>
+    <tr>
+      <td>Temperature</td>
+      <td>25 / 30 / 37 °C (one per trial)</td>
+    </tr>
+    <tr>
+      <td>Read mode</td>
+      <td>Bottom-read</td>
+    </tr>
+    <tr>
+      <td>Gain</td>
+      <td>Locked to the value from QC well C (F_open); do not auto-optimize between reads</td>
+    </tr>
+    <tr>
+      <td>Flashes per well</td>
+      <td>10–25</td>
+    </tr>
+    <tr>
+      <td>Kinetic interval</td>
+      <td>Every 30 s for 2 h</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 </Section>
 
-<Section id="goals" title="Goals" kicker="02">
+<Section id="design" title="Oligonucleotide design" kicker="05">
 
-1. Confirm that bta-miR-223 can be detected in milk matrix
-2. Characterise DNA-catapult opening against miR-223 versus irrelevant RNA
-3. Measure FET current change when the catapult opens
-4. Validate reference electrodes against salty milk so salt does not raise a false flag
-5. Compare the on-farm load score against SCC / culture references where samples allow
+### Table 1. Oligonucleotides used in the assay
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Function</th>
+      <th>Sequence (5′ to 3′)</th>
+      <th>Modification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>miR21_DNA</td>
+      <td>miR-21 DNA target</td>
+      <td className="text-xs">TAG CTT ATC AGA CTG ATG TTG A</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>miR223_DNA</td>
+      <td>miR-223 DNA target</td>
+      <td className="text-xs">TGT CAG TTT GTC AAA TAC CCC A</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>miR223_DNA_longAnalogue</td>
+      <td>Extended miR-223 DNA target</td>
+      <td className="text-xs">GAC GCG TGT CAG TTT GTC AAA TAC CCC A</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <td>originalmiR21CatapultDesign</td>
+      <td>miR-21 catapult probe</td>
+      <td className="text-xs">TCA ACA TCA GTC TGA TAA GCT ACA GAG ACT GAT GTT GA</td>
+      <td>5′ BHQ-1, 3′ 6-FAM</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2</td>
+      <td>Baseline miR-223 probe</td>
+      <td className="text-xs">TGG GGT ATT TGA CAA ACT GAC ACG CGT CAA ATA CCC CA</td>
+      <td>5′ BHQ-1, 3′ 6-FAM</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3primEndOfInvasionRegion1bpReplaced</td>
+      <td>Invasion-region modified probe</td>
+      <td className="text-xs">TGG GGT ATT TGA CAA ACT GAC TCG CGT CAA ATA CCC CA</td>
+      <td>5′ BHQ-1, 3′ 6-FAM</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_stem2bpShorter</td>
+      <td>Stem-shortened probe</td>
+      <td className="text-xs">GGG TAT TTG ACA AAC TGA CAC GCG TCA AAT ACC C</td>
+      <td>5′ BHQ-1, 3′ 6-FAM</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3primEnd2bpShorter</td>
+      <td>3′ end-shortened probe</td>
+      <td className="text-xs">TGG GGT ATT TGA CAA ACT GAC ACG CTG TCA AAT ACC C</td>
+      <td>5′ BHQ-1, 3′ 6-FAM</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+The miR-223 probe was modified in several ways to investigate how small structural changes influenced fluorescence response and background signal.
+
+The tested modifications included:
+
+- replacement of one nucleotide within the invasion region;
+- shortening of the stem by 2 bp;
+- shortening of the 3′ end by 2 bp.
 
 </Section>
 
-<Section id="assays" title="Assay pipeline" kicker="03">
+<Section id="preparation" title="Oligonucleotide preparation" kicker="06">
 
-| Phase | Assay | Question |
-| --- | --- | --- |
-| 1 | Literature + spiking design | Is the miR-223 window realistic in milk? |
-| 2 | Catapult opening screen | Does recognition work in milk? |
-| 3 | FET current traces | Does the transistor report? |
-| 4 | Electrode baseline | Does this sample's own salt cancel out? |
-| 5 | Consecutive-session flag | Is one spike a verdict, or do we wait? |
+Following resuspension, the concentration of each oligonucleotide was determined.
+
+### Table 2. Oligonucleotide concentrations following resuspension
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Final OD</th>
+      <th>Concentration (ng/µL)</th>
+      <th>Calculated molarity (µM)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>miR21_DNA</td>
+      <td>5.5</td>
+      <td>655.00</td>
+      <td>96.83</td>
+    </tr>
+    <tr>
+      <td>miR223_DNA</td>
+      <td>4.5</td>
+      <td>655.53</td>
+      <td>98.29</td>
+    </tr>
+    <tr>
+      <td>miR223_DNA_longAnalogue</td>
+      <td>5.7</td>
+      <td>230.42</td>
+      <td>26.95</td>
+    </tr>
+    <tr>
+      <td>originalmiR21CatapultDesign</td>
+      <td>24.6</td>
+      <td>1,311.46</td>
+      <td>102.19</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2</td>
+      <td>30.4</td>
+      <td>1,464.50</td>
+      <td>114.60</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3′InvRepl</td>
+      <td>26.0</td>
+      <td>1,153.81</td>
+      <td>90.35</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_stemShort</td>
+      <td>33.0</td>
+      <td>1,683.83</td>
+      <td>145.86</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3′Short</td>
+      <td>26.2</td>
+      <td>891.71</td>
+      <td>71.44</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+These concentrations were used to prepare standardized working solutions for subsequent fluorescence assays.
 
 </Section>
 
-<Section id="controls" title="Controls" kicker="04">
+<Section id="timecourse" title="Time-course fluorescence" kicker="07">
 
-Every experiment includes positive controls (known miR-223 spike), negative controls (unspiked milk, irrelevant RNA), and matrix blanks. FET runs always include the upstream reference electrodes so the residual is against that sample, not a generic zero.
+Fluorescence measurements were collected over a 120-minute incubation period.
+
+A consistent pattern that appeared was a steep initial increase, then a slower climb until the end of the incubation period.
+
+An example is well C2, which increased from **13,811 RFU** at 0 minutes to **14,450 RFU** within the first 10 minutes. The signal continued to increase more gradually throughout the remainder of the experiment, reaching **16,671 RFU** after 120 minutes.
+
+### Table 3. Example fluorescence changes over 120 minutes
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Well</th>
+      <th>Initial fluorescence</th>
+      <th>Final fluorescence</th>
+      <th>Δ fluorescence</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>B2</td>
+      <td>2,743</td>
+      <td>2,675</td>
+      <td>−68</td>
+    </tr>
+    <tr>
+      <td>C2</td>
+      <td>13,811</td>
+      <td>16,671</td>
+      <td>+2,860</td>
+    </tr>
+    <tr>
+      <td>F2</td>
+      <td>18,710</td>
+      <td>19,192</td>
+      <td>+482</td>
+    </tr>
+    <tr>
+      <td>L2</td>
+      <td>24,255</td>
+      <td>25,106</td>
+      <td>+851</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+The fluorescence observed in well C2 remained relatively high throughout the experiment, with minor fluctuations over time. These variations may reflect fluorophore photobleaching, instrument variability, or baseline drift. Despite these fluctuations, the consistently elevated fluorescence signal supports successful probe activation upon binding to the complementary target sequence, demonstrating the effectiveness of the reporter system.
 
 </Section>
 
-<Section id="samples" title="Samples" kicker="05">
+<Section id="comparison" title="Comparison of catapult probe designs" kicker="08">
 
-Development uses spiked milk panels prepared under documented conditions. Any comparison to field samples requires veterinary oversight and is exploratory only - not a clinical validation study.
+To compare probe performance, the fluorescence response of each probe architecture was assessed relative to the background signal.
 
-<Placeholder label="Sample panel metadata table - pending" />
+The resulting signal-to-noise ratio demonstrated substantial differences between probe designs. This measures how clearly the biological system responds to the specific input without getting disrupted by accidental cellular background activity.
+
+### Table 4. Signal-to-noise ratio of catapult probe variants
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Catapult probe design</th>
+      <th>SNR</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>originalmiR21CatapultDesign</td>
+      <td>6.41</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2</td>
+      <td>6.73</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_stem2bpShorter</td>
+      <td>11.81</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3primEndOfInvasionRegion1bpReplaced</td>
+      <td>15.59</td>
+    </tr>
+    <tr>
+      <td>miR223CatapultDesign_v2_3primEnd2bpShorter</td>
+      <td><strong>17.96</strong></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+As can be seen, the 3′ 2 bp shorter catapult had the highest SNR of 17.96.
+
+In comparison, the baseline miR-223 v2 design produced an SNR of 6.73. The optimized 3′-shortened design therefore produced approximately a **2.7-fold higher SNR** than the original design.
+
+The invasion-region modification also substantially increased assay performance, producing an SNR of 15.59.
+
+The stem-shortened variant showed an intermediate improvement, with an SNR of 11.81.
+
+### Signal and background measurements
+
+The strongest-performing probe also produced the highest mean fluorescence signal.
+
+### Table 5. Mean fluorescence measurements
+
+<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<table className="w-full text-left text-sm">
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>Mean fluorescence</th>
+      <th>Standard deviation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>miR223 v2 3′ end 2 bp shorter</td>
+      <td>22,130</td>
+      <td>491</td>
+    </tr>
+    <tr>
+      <td>Baseline miR223 v2</td>
+      <td>16,716</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <td>Water control</td>
+      <td>208</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+The relatively low signal observed in the water control confirmed that background fluorescence remained substantially below the target-associated signal under the tested conditions.
+
+### Fluorescence intensity: water control vs. miR-223 detection
+
+Graph of mean fluorescence after 120 minutes at approximately 30°C.
+
+<Placeholder label="Mean fluorescence after 120 min at ~30°C. Water control vs miR-223 detection (image.png)" />
+
+Comparison of background fluorescence in the water control with target-associated fluorescence from selected miR-223 reporter constructs. The water control exhibited minimal fluorescence (208 RFU), while target-containing samples produced substantially higher signals (19,135–22,130 RFU). These results demonstrate a clear distinction between background fluorescence and reporter-associated signals under the experimental conditions.
+
+For all three probes, the fluorescence remained mostly steady with a slight increase over time.
+
+<Placeholder label="Time-course traces for the three probes (image.png)" />
 
 </Section>
 
-<Section id="timeline" title="Timeline" kicker="06">
+<Section id="dbtl" title="Design–Build–Test–Learn" kicker="09">
 
-Assays follow the engineering cycles: catapult opening before FET traces, FET traces before siphon integration, siphon before the consecutive-session flag. Parallel dry-lab modeling informs which conditions to test first, reducing wasted bench time.
+These experiments formed an iterative engineering cycle.
+
+**Design.** We designed several variants of the original miR-223 catapult probe by modifying specific structural regions.
+
+**Build.** The oligonucleotides were synthesized with a BHQ-1 quencher and 6-FAM fluorophore and prepared at standardized working concentrations.
+
+**Test.** Each probe was tested against synthetic DNA target analogues using time-course fluorescence measurements.
+
+**Learn.** Probe structure had a major effect on assay performance. The original miR-223 v2 probe produced an SNR of 6.73, while the optimized 3′ end-shortened probe reached an SNR of 17.96.
+
+This result informed our subsequent design decisions and identified the **3′ end 2 bp shorter probe** as the lead architecture for continued development.
+
+</Section>
+
+<Section id="limitations" title="Limitations" kicker="10">
+
+Although the results demonstrate successful optimization of the fluorescent probe system, several limitations remain.
+
+First, these experiments were performed using **synthetic DNA analogues rather than native miRNA molecules**. The assay must therefore be validated using RNA targets before conclusions can be made regarding direct miRNA detection.
+
+Second, the experiments were conducted under controlled buffer conditions. Milk is a complex biological matrix containing proteins, lipids, ions, nucleases, and other molecules that may affect probe folding and fluorescence.
+
+</Section>
+
+<Section id="conclusion" title="Conclusion" kicker="11">
+
+Our results demonstrate that relatively small changes to the catapult-probe architecture can strongly influence assay performance.
+
+The **3′ end 2 bp shorter** design consistently produced the strongest signal relative to background, suggesting that shortening this region improved the accessibility or displacement behavior of the probe.
+
+One possible explanation is that shortening the 3′ region reduces the energetic barrier required for target-mediated strand displacement. However, this mechanism was not measured directly and therefore remains a hypothesis requiring further experimental validation.
+
+The 3′ end 2 bp shorter not only proved to be the most successful probe, it did so by a relatively large margin, and with an SNR of 17.96, it had an approximately **2.7-fold improvement in SNR** compared to the baseline probe.
+
+</Section>
+
+<Section id="next" title="Next steps" kicker="12">
+
+Now that we have the best catapult design, we need to run some tests to determine its viability for our planned use case. We need to determine if it is possible to remove the miRNA from the catapult strand: being able to clean the system would mean that it can be reused after a positive test, drastically reducing the cost of the diagnostic.
 
 </Section>

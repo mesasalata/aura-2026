@@ -11,29 +11,30 @@ export type Stat = {
   accent: "pink" | "signal" | "butter" | "coral" | "bio";
 };
 
+/** Homepage figures. The first three match the background page. The treatment slice is not in that paste. */
 export const IMPACT_STATS: Stat[] = [
   {
-    value: "€30B",
+    value: "€35 billion",
     prefix: "€",
-    suffix: "B",
-    to: 30,
-    label: "Annual industry losses",
-    sub: "Estimated global economic burden of mastitis on the dairy sector each year.",
+    suffix: " billion",
+    to: 35,
+    label: "Estimated annual global losses",
+    sub: "Mastitis is associated with substantial economic losses across the dairy industry worldwide.",
     accent: "coral",
   },
   {
-    value: "1 in 3",
-    to: 3,
-    label: "Cows affected",
-    sub: "Roughly one-third of dairy cows experience mastitis over a given period.",
+    value: "Approximately 1 in 5",
+    to: 5,
+    label: "Dairy cows affected",
+    sub: "Around one-fifth of dairy cows may experience mastitis over a given period, although estimates depend on the population and timeframe considered.",
     accent: "pink",
   },
   {
-    value: "47–65%",
+    value: "40–70%",
     suffix: "%",
-    to: 65,
-    label: "Annual infection rate",
-    sub: "Reported herd-level incidence ranges widely across systems and regions.",
+    to: 70,
+    label: "Reported herd-level incidence",
+    sub: "Reported incidence varies considerably between farming systems, regions, and studies.",
     accent: "butter",
   },
   {
@@ -42,7 +43,7 @@ export const IMPACT_STATS: Stat[] = [
     suffix: "%",
     to: 15,
     label: "From treatment alone",
-    sub: "Direct treatment is a small slice of the total cost - most losses are hidden.",
+    sub: "Direct treatment is a thin slice of the total. Earlier detection could give farmers more opportunities to investigate, but the actual benefits would depend on AURA's accuracy, practical usability, and eventual validation under real farming conditions.",
     accent: "signal",
   },
 ];
@@ -238,6 +239,113 @@ export const TEAM_MEMBERS: TeamMember[] = [
   { name: "Morgan Blake", role: "Hardware · Device", track: "Dry Lab", accent: "butter", initials: "MB", quote: "A brilliant assay nobody can read is still a failure." },
   { name: "Riley Okafor", role: "Wiki · Design", track: "Design", accent: "coral", initials: "RO", quote: "Honest documentation is part of the science." },
   { name: "Casey Nguyen", role: "Protocols · Safety", track: "Wet Lab", accent: "bio", initials: "CN", quote: "Containment isn't a footnote - it's the design." },
+];
+
+export type AttributionPerson = {
+  name: string;
+  initials: string;
+  /** Public path under /people, or null when no public portrait was found. */
+  photo: string | null;
+};
+
+export type AttributionEntry = {
+  id: string;
+  group: "advisors" | "collaborators";
+  people: AttributionPerson[];
+  kind: string;
+  role: string;
+  contributions: { title: string; body: string }[];
+};
+
+export const ATTRIBUTION_ENTRIES: AttributionEntry[] = [
+  {
+    id: "pitt-meyer",
+    group: "advisors",
+    people: [{ name: "Pitt Meyer", initials: "PM", photo: "/people/pitt-meyer.jpg" }],
+    kind: "Academic",
+    role: "External advisor",
+    contributions: [
+      {
+        title: "Analysis",
+        body: "Guided us to analyse our prepare and evaluate experimental results. Brainstormed with us to devise new methodology.",
+      },
+      {
+        title: "Conceptualisation",
+        body: "Helped us assess our initial project design and simulate our DNA hairpin on specific software.",
+      },
+    ],
+  },
+  {
+    id: "nako-nakatsuka",
+    group: "advisors",
+    people: [{ name: "Nako Nakatsuka", initials: "NN", photo: "/people/nako-nakatsuka.jpg" }],
+    kind: "Academic",
+    role: "External advisor",
+    contributions: [
+      {
+        title: "Conceptualisation",
+        body: "Offered initial insight to how the diverse applications of BioFET sensors and how to adapt them to different situations.",
+      },
+      {
+        title: "Troubleshooting",
+        body: "Discussed and analysed our potential problems with our preliminary DNA models and how we should optimise our probes.",
+      },
+    ],
+  },
+  {
+    id: "amandine-baumert",
+    group: "advisors",
+    people: [{ name: "Amandine Baumert", initials: "AB", photo: "/people/amandine-baumert.jpg" }],
+    kind: "Academic",
+    role: "External advisor",
+    contributions: [
+      {
+        title: "Market analysis",
+        body: "Helped us understand how mastitis is currently diagnosed and identify the limitations of PCR and laboratory testing, including cost and treatment delays.",
+      },
+      {
+        title: "Product development",
+        body: "Helped us realise that our diagnostic would be more useful for veterinarians and medium-sized farms, and encouraged us to focus on identifying specific bacterial strains such as *Staphylococcus aureus*.",
+      },
+    ],
+  },
+  {
+    id: "alicia-romano",
+    group: "advisors",
+    people: [{ name: "Alicia Romano", initials: "AR", photo: "/people/alicia-romano.jpg" }],
+    kind: "Academic",
+    role: "External advisor",
+    contributions: [
+      {
+        title: "Analysis",
+        body: "Explained the importance of distinguishing between different bacterial causes of mastitis in order to select appropriate treatments and prevent the spread of infection.",
+      },
+      {
+        title: "Conceptualisation",
+        body: "Encouraged us to develop a differential diagnostic capable of identifying specific bacteria or distinguishing between contagious and environmental infections.",
+      },
+    ],
+  },
+  {
+    id: "reatch",
+    group: "collaborators",
+    people: [
+      { name: "Dea Mariette Müller", initials: "DM", photo: "/people/dea-mariette-muller.jpg" },
+      { name: "Hannah Schoch", initials: "HS", photo: "/people/hannah-schoch.jpg" },
+    ],
+    kind: "Other",
+    role: "External collaborators",
+    contributions: [
+      {
+        title: "Outreach",
+        body: "Helped us identify ways to communicate synthetic biology clearly to the wider public and increase awareness beyond our school community.",
+      },
+      {
+        title: "Communication",
+        body: "Collaborated with us through Reatch's journal and blog platforms, allowing us to publish an introductory article about synthetic biology and reach a wider audience in Switzerland.",
+      },
+    ],
+  },
 ];
 
 export type NotebookEntry = {

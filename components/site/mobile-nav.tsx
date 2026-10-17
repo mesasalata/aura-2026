@@ -15,38 +15,40 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-export function MobileNav({ onDark = false }: { onDark?: boolean }) {
+const TRIGGER = "inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden";
+
+/** The menu button's look without the button, for the nav's on-dark copy. */
+export function MobileNavMark({ className }: { className?: string }) {
+  return (
+    <span className={cn(TRIGGER, className)}>
+      <Menu className="h-5 w-5" />
+    </span>
+  );
+}
+
+export function MobileNav() {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button
-          className={cn(
-            "inline-flex h-10 w-10 items-center justify-center rounded-full lg:hidden",
-            onDark ? "border border-milk/30 text-milk" : "border border-ink/15 text-ink",
-          )}
-          aria-label="Open menu"
-        >
+        <button className={cn(TRIGGER, "border-ink/15 text-ink")} aria-label="Open menu">
           <Menu className="h-5 w-5" />
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-[70] bg-ink/40 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out" />
-        <Dialog.Content className="mobile-nav-sheet fixed inset-y-0 right-0 z-[80] flex w-[88%] max-w-sm flex-col shadow-2xl focus:outline-none">
+        <Dialog.Content className="fixed inset-y-0 right-0 z-[80] flex w-[88%] max-w-sm flex-col bg-milk shadow-2xl focus:outline-none">
           <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 rounded-lg"
+              className="flex items-center gap-2 rounded-lg focus-visible:outline-none"
             >
               <AuraLogo className="h-8" />
               <span className="font-display text-xl font-semibold">AURA</span>
             </Link>
             <Dialog.Title className="sr-only">Navigation</Dialog.Title>
-            <Dialog.Description className="sr-only">
-              Primary wiki sections and pages.
-            </Dialog.Description>
             <Dialog.Close asChild>
               <button className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/15" aria-label="Close menu">
                 <X className="h-5 w-5" />
@@ -54,7 +56,7 @@ export function MobileNav({ onDark = false }: { onDark?: boolean }) {
             </Dialog.Close>
           </div>
 
-          <div className="mobile-nav-scroll flex-1 overflow-y-auto py-4 pr-6">
+          <div className="flex-1 overflow-y-auto px-6 py-4">
             <Accordion type="multiple" defaultValue={[NAV[0].label]}>
               {NAV.map((group) => (
                 <AccordionItem key={group.label} value={group.label}>
@@ -86,7 +88,7 @@ export function MobileNav({ onDark = false }: { onDark?: boolean }) {
               onClick={() => setOpen(false)}
               className="flex h-12 w-full items-center justify-center rounded-full bg-ink font-medium text-milk"
             >
-              Explore the Project
+              Read the description
             </Link>
           </div>
         </Dialog.Content>

@@ -15,12 +15,13 @@ import { WAVE } from "@/components/site/wave-seam";
 import { SectionHeader } from "@/components/site/section-header";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { StakeholderMap } from "@/components/viz/stakeholder-map";
+import { FarmToLabPipeline } from "@/components/viz/farm-to-lab";
+import { HOME_SECTIONS } from "@/components/home/sections";
 import { cn } from "@/lib/utils";
 
 /**
  * Sunset, then a milk tide with a drawn wave crest wipes over it.
- * The farms beat lives on that milk - same pin, no page cut.
+ * The milking-line beat lives on that milk - same pin, no page cut.
  */
 
 function useSpan(progress: MotionValue<number>, input: number[], output: number[]) {
@@ -36,6 +37,8 @@ function useSpan(progress: MotionValue<number>, input: number[], output: number[
   }
   return useTransform(progress, i, o);
 }
+
+const PARLOUR = HOME_SECTIONS[4];
 
 export function ParlourBeat() {
   const reduce = useReducedMotion();
@@ -65,7 +68,7 @@ export function ParlourBeat() {
   const duskIn = useSpan(progress, [0.14, 0.3], [reduce ? 0 : 0, 1]);
   const duskOut = useSpan(progress, [0.54, 0.68], [1, 0]);
   const duskOpacity = useTransform([duskIn, duskOut], ([a, b]) => Number(a) * Number(b));
-  const duskFill = useTransform(progress, [0, 0.18, 0.5, 1], ["#e8a078", "#e8a078", "#c24e42", "#c24e42"]);
+  const duskFill = useTransform(progress, [0.18, 0.5], ["#e8a078", "#c24e42"]);
   const duskBg = useTransform(duskFill, (c) => `linear-gradient(180deg, transparent 0%, ${c} 42%, ${c} 100%)`);
 
   const tideH = useTransform(progress, [0.54, 0.78], [reduce ? 100 : 0, 100]);
@@ -176,18 +179,14 @@ export function ParlourBeat() {
             className="relative z-10 flex h-full items-center overflow-y-auto py-20"
           >
             <Container className="w-full">
-              <SectionHeader
-                accent="pink"
-                title="Designed with farms, not just labs"
-                lede="We spoke with farmers, vets, processors, regulators and consumers - and let what we heard change the design."
-              />
+              <SectionHeader accent="butter" title={PARLOUR.title} lede={PARLOUR.body} />
               <div className="mt-8">
-                <StakeholderMap />
+                <FarmToLabPipeline />
               </div>
               <div className="mt-8">
                 <Button asChild variant="pink">
-                  <Link href="/human-practices">
-                    How they shaped AURA <ArrowRight className="h-4 w-4" />
+                  <Link href="/description">
+                    Read the description <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
               </div>

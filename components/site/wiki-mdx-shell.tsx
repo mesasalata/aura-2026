@@ -1,3 +1,4 @@
+import { CopyStatus } from "@/components/site/copy-status";
 import { PageHero } from "@/components/site/page-hero";
 import { WikiLayout } from "@/components/site/wiki-layout";
 import type { TocItem } from "@/components/site/page-toc";
@@ -31,10 +32,12 @@ export function WikiMdxShell({
         name={pageLabel(current)}
         title={title}
         lede={lede}
+        page={current}
         scene={sceneFor(current)}
+        notice={<CopyStatus route={current} />}
       />
       <WikiLayout toc={toc} current={current} scene={sceneFor(current)}>
-        <div className="space-y-4 [&>section]:scroll-mt-28">{children}</div>
+        <div className="space-y-4 [&>section]:scroll-mt-24">{children}</div>
       </WikiLayout>
     </>
   );

@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { LINE as PEN, SHINE, SOFT_ID } from "@/components/viz/sketch";
-import { Asterisk, DoodadFrame, HandCaption } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 // A falling trace with a few dead-cat bounces. Slightly uneven steps so it reads drawn, not plotted.
@@ -22,11 +21,8 @@ export function PlungeChart({ className, progress }: { className?: string; progr
   const markerScale = useTransform(progress, [0, 0.6, 0.7, 1], [start, start, 1, 1]);
 
   return (
-    <DoodadFrame className={className}>
-      <HandCaption className="doodad-caption--est">
-        <Asterisk className="doodad-asterisk--inline" />
-        est.
-      </HandCaption>
+    <div className={cn("relative", className)}>
+      <p className="kicker mb-2 text-ink-55">(Estimated)</p>
     <svg viewBox="0 0 168 136" className="w-full overflow-visible text-ink" aria-hidden>
       <defs>
         <linearGradient id="plungeWash" x1="0" y1="0" x2="0" y2="1">
@@ -74,6 +70,6 @@ export function PlungeChart({ className, progress }: { className?: string; progr
         <ellipse cx="151" cy="120" rx="1.6" ry="3" fill={SHINE} transform="rotate(14 151 120)" />
       </motion.g>
     </svg>
-    </DoodadFrame>
+    </div>
   );
 }

@@ -3,12 +3,9 @@
 import { Container } from "@/components/ui/container";
 import type { Accent } from "@/components/ui/badge";
 import { Art } from "@/components/viz/art";
-import { DropMark, FlaskMark, PailMark } from "@/components/viz/marks";
 import { Blob } from "@/components/viz/sketch";
-import { HERO_CAST, HERO_PROP, type ArtScene } from "@/lib/art";
+import { heroArtId, heroCastFor, type ArtScene } from "@/lib/art";
 import { MILK, WaveSeam } from "@/components/site/wave-seam";
-import { Tape } from "@/components/viz/doodads";
-import "@/app/doodad-article.css";
 
 /**
  * Illustrated page banner - ink sky, milk type, cream hide only under the fold.
@@ -19,7 +16,9 @@ export function PageHero({
   name,
   title,
   lede,
+  page,
   scene = "project",
+  notice,
 }: {
   kicker: string;
   /** Short banner word. Falls back to `title`. */
@@ -27,16 +26,20 @@ export function PageHero({
   title: React.ReactNode;
   lede?: string;
   accent?: Accent;
+  /** Route for this banner, e.g. `/education`. Picks `HERO_CAST`, not the nav section. */
+  page?: string;
   scene?: ArtScene;
+  /** Copy-completion line. Rendered above the kicker, under the nav. */
+  notice?: React.ReactNode;
 }) {
   const word = name ?? (typeof title === "string" ? title : kicker);
   const sub = name && typeof title === "string" && title !== name ? title : undefined;
-  const prop = HERO_PROP[scene];
-  const lead = HERO_CAST[scene][0];
+  const lead = heroCastFor(page);
+  const artId = heroArtId(lead);
 
   return (
     <div className="overflow-x-clip">
-      <section className="relative overflow-hidden bg-ink pt-20">
+      <section className="relative overflow-hidden bg-ink pt-20" data-nav-tone="dark">
         <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
           <Blob
             shape="d"
@@ -50,9 +53,29 @@ export function PageHero({
           />
         </div>
 
+        <div
+          className={`pointer-events-none absolute right-[8%] top-[26%] z-10 ${artId ? "hidden sm:block" : ""}`}
+          aria-hidden={artId ? true : undefined}
+        >
+          {artId ? (
+            <Art id={artId} size={188} motion={lead.motion ?? "breathe"} glow={lead.glow} decorative={false} alt={lead.alt} />
+          ) : (
+            <p className="max-w-[14rem] text-right font-display leading-snug text-milk">
+              <span className="block text-lg font-medium">{lead.id}</span>
+              <span className="mt-1 block text-sm font-normal text-milk/80">{lead.alt}</span>
+            </p>
+          )}
+        </div>
+
+        {notice ? (
+          <Container size="wide" className="relative z-10 pt-2">
+            {notice}
+          </Container>
+        ) : null}
+
         <Container
           size="wide"
-          className="relative z-10 flex min-h-[17rem] flex-col justify-end pb-28 pt-10 sm:min-h-[20rem] sm:pb-20"
+          className="relative z-10 flex min-h-[17rem] flex-col justify-end pb-16 pt-6 sm:min-h-[20rem] sm:pb-20"
         >
           <p className="kicker text-pink-soft">{kicker}</p>
           <h1 className="mt-3 max-w-4xl font-display text-milk display-hero">{word}</h1>
@@ -73,13 +96,13 @@ export function PageHero({
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40" aria-hidden>
           <Blob
             shape="b"
-            fill="var(--color-cream)"
-            className="absolute -left-[8%] bottom-6 h-40 w-[30rem] sm:h-48 sm:w-[36rem]"
+            fill="var(--color-pink)"
+            className="absolute -left-[8%] bottom-6 h-40 w-[30rem] sm:h-48 sm:w-[36rem] opacity-30"
           />
           <Blob
             shape="a"
-            fill="var(--color-milk)"
-            className="absolute left-[22%] bottom-5 h-36 w-[26rem] sm:h-44 sm:w-[32rem]"
+            fill="var(--color-signal)"
+            className="absolute left-[22%] bottom-5 h-36 w-[26rem] sm:h-44 sm:w-[32rem] opacity-10"
           />
           <Blob
             shape="d"
@@ -89,20 +112,6 @@ export function PageHero({
         </div>
 
         <WaveSeam from="transparent" to={MILK} className="relative z-10" />
-
-        <div className="booklet-hero-prop pointer-events-none absolute z-20" aria-hidden>
-          <Tape className="booklet-tape-a hidden sm:block" />
-          <Tape className="booklet-tape-b hidden sm:block" />
-          {lead ? (
-            <Art id={lead.id} size={188} motion="breathe" glow={lead.glow} />
-          ) : prop === "pail" ? (
-            <PailMark className="h-44 w-auto lg:h-52" />
-          ) : prop === "flask" ? (
-            <FlaskMark className="h-40 w-auto lg:h-48" liquid="pink" />
-          ) : prop === "drop" ? (
-            <DropMark className="h-36 w-auto lg:h-44" tint="pink" />
-          ) : null}
-        </div>
       </section>
     </div>
   );

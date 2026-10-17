@@ -53,11 +53,12 @@ These came from the team in session. They override older code.
 | **GreatBay = graphical cohesion, not layout** | Same illustrated world everywhere. Pages are ours / 21st.dev, not a GreatBay clone. |
 | **Keep current colour theory** | Milk / cream / ink + pink + cyan. Do not import GreatBay green/orange. |
 | Look like **winning wikis**, not a poster | Judges remember GreatBay / GEMS / Lambert more than generic dark UI |
-| **Progress bar is required** | Always-on scroll progress at the top |
-| **Thin nav** | Groups only. No extra chrome, no dumped sitemap in the header |
+| **Progress bar is required** | Always-on scroll progress at the top, 12px tall. The milk-edge pour stays, and its leading edge stays on the cow's center. A two-frame cow (`cow-walk-1`, `cow-walk-2`, one frame at a time) walks from the left of the screen to the right, sitting slightly below the rail. The walk plays only while the page is scrolling |
+| **Thin nav** | Groups only. No extra chrome, no dumped sitemap in the header. At rest the bar is clear over the page (no blur), and its type turns from milk to ink exactly where the page turns from dark to light. An open group is one milk plate behind the links that fades, shifts, and grows open over 250ms on `--ease-out-soft` |
 | Homepage from the Procreate mock + **generated graphics**, not decorative SVGs | SVGs only if they must animate (graphs, pour geometry) |
 | Image gen via **Fal / Recraft**, then rembg cutouts | Keep sprites modular so they can move |
 | **Modular sprites**, never baked landscape banners as heroes | One locked painting behind type looks cheap and cannot animate |
+| **One hero sprite id per page** | `HERO_CAST` in `lib/art.ts` is keyed by route (`description`, `education`, …), plus `default`. The id is the image title even before the file exists; a missing file is shown as that id and its alt description, in text |
 | **Bucket, not udder** | Udder reads icky. Pour source is a pail |
 | Pour = **one stream that fills the frame**, like a short video | Cute raining droplets failed. Unreadable. |
 | **Minimal** | Too much unseeable detail (cells, stamps, 7-piece dioramas, coin showers) kills the beat |
@@ -66,8 +67,9 @@ These came from the team in session. They override older code.
 | Diagrams should be **interactive** and sit on the page, not in chrome frames | Biosensor already steps; don’t bury it in painted stamps |
 | Article shell: **chapter rail + one paper card + numbered figures + read-next** | Our current professional reading layout - not a GreatBay clone |
 | Lorem is fine on unfinished science pages | Honesty > fake results. Mark pending data. |
-| Mastitis economics copy stays | Quiet disease, loud bill. €30B / 1 in 3 / hidden cost |
+| Mastitis economics copy stays | Quiet disease, loud bill. Homepage bill and herd figures match the background paste: €35 billion, about 1 in 5, 40–70%. The uncited treatment slice (under 15%) stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count |
 | Mascot language: lab-coat cow - **not cluttered** | One character at a time on inner heroes |
+| **Homepage form follows `old-migrate/`** | Sequence: pour hero → mastitis summary (`cowSick` sprite; CapsuleStory unmounted for now) → impact beats (including the under-15% slice) → current tools → idea → milk-to-signal → DBTL → parlour. Facts stay the live homepage’s: €35 billion / 1 in 5 / 40–70%, FET catapult (not a colour readout), siphon-in-the-line. Do not bring back 1-in-3 or “pink means look closer.” Homepage sentences that name science or results must agree with the team-written wiki pages. The DBTL wheel is the experiments Design/Build/Test/Learn paste (fluorescence / SNR), not a FET-in-milk loop. Farm-to-lab ends at readings to the app and does not fill the description’s model INSERT. Current-tools names only methods those pages name: SCC, PCR and laboratory testing, and the limit of a pathogen-specific test. The treatment beat keeps the under-15% slice and does not claim that early detection pays. |
 
 ### Things that already broke once
 
@@ -106,6 +108,7 @@ Do not restyle to GreatBay. Tokens live in `app/globals.css`.
 - **Pink + quiet teal** are the two brand signals. Pink = infection / aura. Teal = readout / sensor only. They should never fight for the same sentence. Do not use electric cyan.
 - Orange, butter, coral, bio are **softeners**, not a second theme. A page that suddenly goes lime-and-terracotta is GreatBay, not us.
 - Dark sections flip to ink. Selection uses signal. Focus ring is `signal-deep`.
+- The document root (`html`) is ink, the same as `section-dark`. Overscroll on mobile and Firefox shows that colour. The page surface stays milk on `body`.
 - Contrast: ink on milk, milk on ink. Never pink text on cream at small sizes.
 
 ### Type
@@ -118,7 +121,7 @@ Do not restyle to GreatBay. Tokens live in `app/globals.css`.
 ### Surfaces
 
 - Default page is milk. Articles sit on **one cream paper card** (`article-paper`), not a stack of cards.
-- Dark only for the homepage open and the “our idea” beat.
+- Ink for the homepage open, every inner-page hero, and the footer. A homepage story beat may also sit on ink.
 - Irregular “painted” frames are optional and easy to overuse. Prefer empty milk and type.
 
 ### Art rules (this is the GreatBay lesson)
@@ -180,17 +183,17 @@ Layout, type hierarchy, and motion cost stay in the 21st.dev / AURA sections bel
 
 ### Homepage
 
-- Sticky cinematic hero (tall pin, ~200–250vh) → milk handoff → story beats.
-- Beats, in order: signal hiding → cost → current tools → idea → milk-to-signal → DBTL → pasture → HP.
+- Sticky cinematic hero (tall pin, ~260vh, matching `old-migrate/`) → milk handoff → story beats.
+- Beats, in order: mastitis summary (`cowSick`) → cost → current tools → idea → milk-to-signal → DBTL → parlour (siphon in the line). CapsuleStory is kept but unmounted.
 - Each beat is **one idea**. If you need a sticker, use one.
 
 Map to the 21st.dev “reader questions” (wiki version, not SaaS):
 
 1. **Hero** - what this is, why keep scrolling  
 2. **Problem** - the signal is hiding; the bill is loud  
-3. **Failed tools** - SCC, CMT, culture; shown, not listed  
+3. **Failed tools** - SCC, PCR and laboratory testing, pathogen-specific limits; shown, not listed  
 4. **Idea / demo** - the biosensor doing the thing (interactive)  
-5. **Evidence** - stats that are checkable (€30B, 1 in 3)  
+5. **Evidence** - stats that are checkable (€35 billion, about 1 in 5, 40–70%)  
 6. **How we work** - DBTL, not a feature bento of fluff  
 7. **Next** - read the project pages (one action, repeated)
 
@@ -207,14 +210,20 @@ Skip logo walls, fake testimonials, pricing tables, countdown timers.
 
 - Left rail: pink pill on the active H2. Sticky. Hidden below `lg`.
 - Paper: numbered pink H2s (`01`, `02`…), figures with captions, callouts for “how to read / pending data”.
+- Photo captions are unnumbered. `WikiFigure` uses one short sentence as both the visible caption and the image alt. That sentence says what is happening. Leave out clothing, incidental hands, and lists of objects. If the frame has no activity worth stating, do not use the image.
 - Read-next at the end. Optional small reader-cow on the next card - not a collage.
 - Progress bar on every page.
 - **One H1.** Article title is the H1. Section titles are H2. Catalogue components must not ship a second H1.
+- Completion line: one colored sentence at the top of the article banner, under the nav and above the kicker. Green when `done`, butter when `in-progress`, coral when `todo`. Wording comes from the Wiki pages tables in `assets/keep/copy-provenance.md`. No second list, no badge, no box.
 
 ### Nav
 
 `lib/nav.ts` groups: Project · Wet Lab · Dry Lab · Engagement · Team.  
-That is enough. Do not add a second nav, a floating encyclopedia, or footer dumps of every link above the fold.
+That is enough. Do not add a second nav, a floating encyclopedia, or footer dumps of every link above the fold.  
+At rest the bar has no plate and no blur. Blur is not used anywhere else on the site, so the bar does not use it either. The bar is a milk wash (70%) over light surfaces and an ink wash (25%) over dark ones. The type is drawn twice, ink and milk. The milk copy is clipped to the part of the bar over a dark surface, so the colour changes on the page edge itself, whether that edge is straight, a wave seam, or the pour's meniscus. The washes are cut on the same line. The ink row is the one that takes pointer and focus; the milk copy is `inert` paint. If blur comes back, turn it off while `navToneClips` reports `split` (an edge inside the bar): blur smears the edge across the line where the type turns.  
+`lib/nav-tone.ts` reads the surfaces. `.section-dark` and `data-nav-tone="dark"` are dark, `data-nav-tone="light"` paints light back over them, later elements paint over earlier ones, and unmarked page is light. On an SVG `<path>` (with `preserveAspectRatio="none"`) the cut follows the drawn top edge down to the bottom of its `<svg>`. A new full-bleed dark surface needs `section-dark` or `data-nav-tone="dark"`; a seam or pool that eats into it needs `data-nav-tone="light"`. `WaveSeam` marks itself from its colours.  
+The desktop group panel is a child of one milk plate. When a group opens, the plate fades in over the bar and shifts as a single surface, then grows open over 250ms on `--ease-out-soft`. The milk type fades out with it. The links stay put on top. While it is open the plate is solid milk and the type is ink.  
+On the homepage, the nav “Read the description” button uses the hero button’s pink style without its glow, at the nav’s earlier size (`text-sm`, `h-9`, `px-5`). It stays faded out while that hero button is on screen, and fades in once the hero button has left the viewport. The fade is opacity over 300ms on `--ease-out-soft`, written as a plain opacity transition so Firefox does not snap it when `pointer-events` changes with the opacity.
 
 ---
 
@@ -227,7 +236,7 @@ These are **general design rules**, not “install this hero.” Source notes: [
 1. **The hero has one job:** make the next scroll feel worth it. Name what this is. One supporting line. Evidence in the frame (the pour, not a stock shot).
 2. **Fewer blocks, filled honestly.** A menu of nine SaaS sections is not a checklist. Three honest beats beat nine half-filled ones.
 3. **One action, repeated.** Hero, middle, and footer ask for the same thing (keep reading / open Description). Two equal buttons split the response.
-4. **Specificity.** “€30B / year, most of it hidden in yield” beats “mastitis is a big problem.” If a number cannot be checked, do not put it in the hero.
+4. **Specificity.** “€35 billion a year” beats “mastitis is a big problem.” If a number cannot be checked, do not put it in the hero.
 5. **Demo beats description.** The biosensor, readout, and pour must *do the thing*. A 20-second loop of the idea beats two minutes of caption.
 6. **Split layouts:** message first, picture second in the markup. A phone must not see decoration before a word. Do not `order` your way out of a bad source order.
 7. **Nothing after the close except the footer / read-next.** Extra sections after the ask are a pause, not a finish.
@@ -239,7 +248,7 @@ These are **general design rules**, not “install this hero.” Source notes: [
 |---|---|---|
 | Free | CSS transitions, keyframes, `transform` / `opacity`, `prefers-reduced-motion`, native `animation-timeline` | Almost everything |
 | Cheap | One small library doing one job (Motion, already in the repo) | The pour, pins, interruptible sequences |
-| Expensive | A second runtime (GSAP + Lenis + a 3D engine) | Do not. We already have Motion. |
+| Expensive | A second runtime (GSAP + a 3D engine) | Do not. Motion is the animation library. Lenis is homepage scroll only. |
 
 - Animate `transform` and `opacity`. Never `top`, `height`, `box-shadow`, or `background-position` on scroll.
 - `prefers-reduced-motion`: render the **end state**, not a shorter duration.
@@ -269,7 +278,7 @@ After any assemble: view source, search `<h1>`, check the bundle.
 2. Scroll owns time. `useScroll` on a pinned section; every transform that must hold includes a **terminal keyframe at progress 1** (`[…, 1] → […, v]`).
 3. Handoffs match surfaces. End of pour = `--color-milk`. Next section starts on milk. No dark ring, no grey vignette leftover.
 4. `prefers-reduced-motion`: static hero, no pour, no infinite loops.
-5. Do not add Lenis / locomotive / extra smooth-scroll libraries on top of native + Motion. They fight the pin.
+5. The homepage uses Lenis so the pour stays smooth under wheel and trackpad. Other pages stay on native scroll. Do not add a second smoother.
 6. Interactive diagrams (biosensor steps, stakeholder tabs, DBTL wheel) **change the picture**, not just a caption.
 
 ### Pour spec (current intent)
@@ -287,10 +296,11 @@ The pour should feel closer to an **Apple product film** than to a Codrops parti
 
 ## 8. Copy rules
 
-- Diagnostic-support concept. **Not** a diagnosis, not a cure, not a replacement for vets.
-- Mark pending wet-lab results. Do not imply outcomes.
-- Economics stay concrete: global burden ~€30B/year; ~1 in 3 cows; most cost is yield / culling / discarded milk, not the treatment invoice.
+- Diagnostic-support concept. **Not** a diagnosis, not a cure, not a replacement for vets. Hardware: the electrical response is interpreted in context, rather than as a direct identification of mastitis.
+- Mark pending wet-lab results. Do not imply outcomes. The wet-lab work on `/` is the FAM/BHQ probe screen in buffer against a DNA analogue, not current traces in milk.
+- Homepage bill and herd figures match the background paste: €35 billion a year, about 1 in 5 cows, herd-level incidence 40–70%. The uncited “under 15% is treatment” slice stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count. Do not write that early detection pays; the background paste caveats benefits on accuracy, usability, and validation.
 - Voice: clear, a bit cinematic, professional. Not cute-for-its-own-sake. Not “revolutionise.”
+- When homepage copy names science or results, use the team-written pages (`description`, `background`, `engineering`, `experiments`, `hardware`, and the attribution PCR note). Do not fill INSERT blocks.
 
 ---
 
@@ -374,7 +384,7 @@ Use for **timing and restraint**. Recolour nothing. Do not import chrome.
 |---|---|
 | Motion (what we use) | [motion.dev](https://motion.dev/) |
 | GSAP ScrollTrigger (read, don’t add) | [gsap.com/docs/v3/Plugins/ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/) |
-| Lenis (do **not** add unless we drop Motion pins) | [github.com/darkroomengineering/lenis](https://github.com/darkroomengineering/lenis) |
+| Lenis (homepage scroll only) | [github.com/darkroomengineering/lenis](https://github.com/darkroomengineering/lenis) |
 
 ---
 
@@ -395,6 +405,7 @@ Key files:
 | `components/viz/bucket-pour.tsx` | The pour |
 | `components/site/page-hero.tsx` | Inner title + one character |
 | `components/site/wiki-layout.tsx` | Rail + paper + read-next |
+| `components/site/site-nav.tsx` + `lib/nav-tone.ts` | Clear nav, type split along dark/light page edges |
 | `lib/art.ts` | Sprite catalog + scene casts |
 | `lib/nav.ts` | IA |
 | `app/globals.css` | Tokens + pour/paper utilities |
@@ -427,6 +438,7 @@ Regen: one pail, one faceless drop, one curd, pink flask, milk flask, one coin.
 
 - **Once:** the pour (scroll-scrubbed film, not a CSS column).
 - **Idle:** breathe / sway / flask glow, 4–8s, a few pixels. Turn `Art` presets back on. No spin, tumble, walk, pointer-chase on articles.
+- `Art` idle presets (breathe, float, bob, sway) are CSS keyframes on an inner wrapper, not Motion props. Motion rewrites the inline transform every frame, the sprite repaints, and Chrome and Firefox snap the bitmap to whole pixels, so the scale looks stepped. Keyframes run on the compositor and scale smoothly. Firefox still snaps an axis-aligned transform to whole pixels, so the moving presets add `rotate(0.01deg)`; measured in headless Firefox 157, that took the sprite from 15 of 24 distinct frames to 24 of 24 and cut its drift from the eased curve about 7×.
 - **Scroll:** signal beat is one composition (cow flushes pink), not three labeled disasters.
 - **Kill:** `PastureScene`, `DriftingMilk`, `MilkRain`, 40-cow grids, Lucide as science pictures, sprite drop-shadows.
 

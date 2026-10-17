@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { asset } from "@/lib/utils";
 
 const SPRING = { stiffness: 120, damping: 30, restDelta: 0.001 };
 
-/** Bar thickness - 8px slimmer than the first pass. */
-const BAR_H = 24;
+/** Half the previous 24px rail. */
+const BAR_H = 12;
 /** Leading-edge strip. About one-third the previous amplitude. */
 const WAVE_W = 11;
 /**
@@ -39,15 +40,36 @@ function milkEdgePath(width: number, height: number, periods: number) {
 
 const WAVE_PATH = milkEdgePath(WAVE_W, SVG_H, LOOPS);
 
+/** Walk frames. The art faces left; the bar grows right, so the sprite is flipped. */
+const COW_FRAMES = ["/art/images/cow-walk-1.png", "/art/images/cow-walk-2.png"] as const;
+const COW_H = 46;
+const COW_W = Math.round(COW_H * (2420 / 1815));
+/** Opaque pixels sit inset from the PNG edges. After the horizontal flip these swap sides. */
+const COW_TAIL = 0.0992 * COW_W;
+const COW_NOSE = (1 - 0.1326) * COW_W;
+/** How far the nose runs past the pink leading edge, until the screen edge stops it. */
+const COW_OVERHANG = 18;
+/** Distance from the sprite's left edge to the opaque cow's middle, after the flip. */
+const COW_CENTER = (COW_TAIL + COW_NOSE) / 2;
+const COW_SHIFT = COW_NOSE - COW_OVERHANG;
+
 /** Pink milk rail under the nav. Straight on three sides; the leading edge ripples. */
 export function ScrollProgress() {
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, SPRING);
-  const width = useTransform(progress, (v) =>
-    v <= 0 ? "0px" : `max(${WAVE_W}px, ${v * 100}%)`,
+  const width = useTransform(
+    progress,
+    (v) =>
+      `clamp(${-COW_TAIL + COW_CENTER}px, calc(${v * 100}% - ${COW_SHIFT - COW_CENTER}px), calc(100% - ${COW_NOSE - COW_CENTER}px))`,
+  );
+  const cowLeft = useTransform(
+    progress,
+    (v) =>
+      `clamp(${-COW_TAIL}px, calc(${v * 100}% - ${COW_SHIFT}px), calc(100% - ${COW_NOSE}px))`,
   );
   const [now, setNow] = useState(0);
+  const [walking, setWalking] = useState(false);
 
   useEffect(() => {
     let last = -1;
@@ -58,6 +80,27 @@ export function ScrollProgress() {
       setNow(next);
     });
   }, [scrollYProgress]);
+
+  useEffect(() => {
+    if (reduce) return;
+    let timer = 0;
+    let moving = false;
+    const unsub = scrollYProgress.on("change", () => {
+      if (!moving) {
+        moving = true;
+        setWalking(true);
+      }
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        moving = false;
+        setWalking(false);
+      }, 140);
+    });
+    return () => {
+      window.clearTimeout(timer);
+      unsub();
+    };
+  }, [reduce, scrollYProgress]);
 
   const ticks = ["0%", "50%", "100%"] as const;
 
@@ -74,20 +117,41 @@ export function ScrollProgress() {
       {ticks.map((at) => (
         <span key={at} className="progress-tick" style={{ left: at }} />
       ))}
-      <motion.div style={{ width }} className="relative h-full overflow-hidden">
-        <div
-          className="absolute inset-y-0 left-0 bg-pink"
-          style={{ right: WAVE_W - 1 }}
-        />
-        <svg
-          viewBox={`0 0 ${WAVE_W} ${SVG_H}`}
-          preserveAspectRatio="none"
-          className={reduce ? "absolute top-0 right-0 block" : "milk-edge absolute top-0 right-0 block"}
-          style={{ width: WAVE_W, height: SVG_H }}
-          aria-hidden
-        >
-          <path d={WAVE_PATH} className="fill-pink" />
-        </svg>
+      <motion.div style={{ width }} className="relative h-full">
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-y-0 left-0 bg-pink"
+            style={{ right: WAVE_W - 1 }}
+          />
+          <svg
+            viewBox={`0 0 ${WAVE_W} ${SVG_H}`}
+            preserveAspectRatio="none"
+            className={reduce ? "absolute top-0 right-0 block" : "milk-edge absolute top-0 right-0 block"}
+            style={{ width: WAVE_W, height: SVG_H }}
+            aria-hidden
+          >
+            <path d={WAVE_PATH} className="fill-pink" />
+          </svg>
+        </div>
+      </motion.div>
+      <motion.div
+        aria-hidden
+        style={{ left: cowLeft, width: COW_W, height: COW_H, bottom: -14, transform: "scaleX(-1)" }}
+        className={walking ? "pointer-events-none absolute z-10" : "cow-walk-paused pointer-events-none absolute z-10"}
+      >
+        {COW_FRAMES.map((src, i) => (
+          <img
+            key={src}
+            src={asset(src)}
+            alt=""
+            draggable={false}
+            className={
+              reduce && i === 1
+                ? "absolute inset-0 hidden h-full w-full object-contain"
+                : `cow-walk-${i === 0 ? "a" : "b"} absolute inset-0 h-full w-full object-contain`
+            }
+          />
+        ))}
       </motion.div>
     </div>
   );

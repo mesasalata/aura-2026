@@ -2,14 +2,15 @@
 
 import { motion, useTransform, type MotionValue } from "motion/react";
 import { LINE, SHINE, SOFT_ID } from "@/components/viz/sketch";
-import { DoodadFrame, Tape } from "@/components/viz/doodads";
+import { Tape } from "@/components/viz/doodads";
 import { cn } from "@/lib/utils";
 
 /**
  * PailSplit - where a euro lost to mastitis goes, drawn as a milk pail that
- * fills from the bottom as you scroll. The costs nobody invoices (culling,
- * discarded milk, lost yield) are the milk; the treatment bill is the thin
- * pink skin on top. Same ink-and-flat-fill hand as the hero pail.
+ * fills from the bottom as you scroll. Treatment is the thin pink skin on top
+ * (the under-15% homepage keep). The milk layers are an illustrative split of
+ * the rest, labelled from the background paste. Same ink-and-flat-fill hand as
+ * the hero pail.
  */
 
 const INK = LINE;
@@ -18,10 +19,10 @@ type Layer = { key: string; label: string; note: string; share: number; fill: st
 
 /* bottom → top */
 const LAYERS: Layer[] = [
-  { key: "cull", label: "Early culling", note: "cows that leave the herd", share: 0.18, fill: "#cdbca3" },
-  { key: "discard", label: "Discarded milk", note: "withheld during treatment", share: 0.22, fill: "#e0d3bd" },
-  { key: "yield", label: "Lost yield", note: "milk the cow stops giving", share: 0.45, fill: "#f1e8d6" },
-  { key: "treat", label: "Treatment", note: "the invoice you see", share: 0.15, fill: "var(--color-pink-soft)" },
+  { key: "other", label: "Other costs", note: "beyond the treatment invoice", share: 0.18, fill: "#cdbca3" },
+  { key: "quality", label: "Milk quality", note: "can be affected", share: 0.22, fill: "#e0d3bd" },
+  { key: "yield", label: "Lost yield", note: "infected cows may produce less milk", share: 0.45, fill: "#f1e8d6" },
+  { key: "treat", label: "Treatment", note: "veterinary care and treatment", share: 0.15, fill: "var(--color-pink-soft)" },
 ];
 
 /* pail geometry in a 0 0 460 320 box; interior runs from the rim to the base */
@@ -75,13 +76,12 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
   const offsets = LAYERS.map((_, i) => LAYERS.slice(0, i).reduce((s, l) => s + l.share, 0));
 
   return (
-    <DoodadFrame className={cn("pt-3", className)}>
-      <Tape className="doodad-tape--pail" />
+    <div className={cn("relative pt-3", className)}>
     <svg
       viewBox="0 0 460 336"
       className="block h-auto w-full overflow-visible"
       role="img"
-      aria-label="Of every euro lost to mastitis, roughly 15% is treatment; the rest is lost yield (45%), discarded milk (22%) and early culling (18%). Illustrative split."
+      aria-label="Illustrative split of mastitis costs. Treatment is the thin slice on top, under 15%. The rest is drawn as lost yield, milk quality, and other costs."
     >
       <defs>
         <clipPath id="pail-split-interior">
@@ -92,9 +92,7 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
       <g filter={`url(#${SOFT_ID})`} strokeLinejoin="round" strokeLinecap="round">
         {/* bail */}
         <path d="M 62 82 C 58 12, 218 12, 214 82" fill="none" stroke={INK} strokeWidth="2.6" />
-        <rect x="126" y="10" width="24" height="9" rx="3" fill="var(--color-cream)" stroke={INK} strokeWidth="2" />
-        <circle cx="62" cy="83" r="4" fill="var(--color-cream)" stroke={INK} strokeWidth="1.8" />
-        <circle cx="214" cy="83" r="4" fill="var(--color-cream)" stroke={INK} strokeWidth="1.8" />
+        {/*<rect x="126" y="10" width="24" height="9" rx="3" fill="var(--color-cream)" stroke={INK} strokeWidth="2" /> */}
 
         {/* empty pail: milk-white tin with two bands; the liquid paints over it like a cutaway */}
         <path d={BODY} fill="var(--color-milk)" />
@@ -123,6 +121,9 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
         <path d="M 60 86 C 80 70, 196 70, 216 86" fill="none" stroke={INK} strokeWidth="2.6" />
         {/* ground shadow */}
         <path d="M 78 302 C 100 310, 176 310, 200 302" fill="none" stroke={INK} strokeOpacity="0.18" strokeWidth="3" />
+        
+        <circle cx="62" cy="83" r="4" fill="var(--color-cream)" stroke={INK} strokeWidth="1.8" />
+        <circle cx="214" cy="83" r="4" fill="var(--color-cream)" stroke={INK} strokeWidth="1.8" />
       </g>
 
       {LAYERS.map((l, i) => (
@@ -133,6 +134,6 @@ export function PailSplit({ progress, className }: { progress: MotionValue<numbe
         of every euro lost · illustrative split
       </text>
     </svg>
-    </DoodadFrame>
+    </div>
   );
 }

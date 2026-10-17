@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import { Art } from "@/components/viz/art";
 import { DropMark, FlaskMark } from "@/components/viz/marks";
 import { Blob, LINE, SOFT_ID } from "@/components/viz/sketch";
-import { DoodadFrame, Staple } from "@/components/viz/doodads";
 
 const INK = LINE;
 
@@ -23,19 +22,17 @@ function DataGlyph() {
 type PipelineStep = { label: string; sub: string; accent: string; glyph: React.ReactNode };
 
 const STEPS: PipelineStep[] = [
-  { label: "Cow", sub: "Welfare first", accent: "var(--color-pink)", glyph: <Art id="cow" size={44} motion="none" /> },
-  { label: "Siphon", sub: "Each milking", accent: "var(--color-orange)", glyph: <DropMark className="h-9 w-auto" /> },
+  { label: "Cow", sub: "Each milking session", accent: "var(--color-pink)", glyph: <Art id="cow" size={44} motion="none" /> },
+  { label: "Siphon", sub: "Sample to the chamber", accent: "var(--color-orange)", glyph: <DropMark className="h-9 w-auto" /> },
   { label: "Catapult", sub: "miR-223 opens it", accent: "var(--color-signal)", glyph: <FlaskMark className="h-10 w-auto" liquid="pink" /> },
-  { label: "FET", sub: "Current ticks", accent: "var(--color-butter)", glyph: <Art id="biofet" size={52} motion="none" /> },
-  { label: "Score", sub: "This cow, this milking", accent: "var(--color-pink)", glyph: <DataGlyph /> },
-  { label: "Flag", sub: "Look closer", accent: "var(--color-bio)", glyph: <Art id="phoneAlert" size={48} motion="none" /> },
+  { label: "FET", sub: "Change in current", accent: "var(--color-butter)", glyph: <Art id="biofet" size={52} motion="none" /> },
+  { label: "Reader", sub: "Electrical acquisition", accent: "var(--color-pink)", glyph: <DataGlyph /> },
+  { label: "App", sub: "Readings to the app", accent: "var(--color-bio)", glyph: <Art id="phoneAlert" size={48} motion="none" decorative={false} alt="The app that receives the sensor readings" /> },
 ];
 
 /** FarmToLabPipeline - cow → milk → biosensor → readout → data → decision, drawn. */
 export function FarmToLabPipeline() {
   return (
-    <DoodadFrame>
-      <Staple className="doodad-staple--strip" />
     <div className="flex flex-wrap items-start justify-center gap-x-2 gap-y-6 sm:gap-x-1">
       {STEPS.map((s, i) => (
         <motion.div
@@ -64,6 +61,5 @@ export function FarmToLabPipeline() {
         </motion.div>
       ))}
     </div>
-    </DoodadFrame>
   );
 }

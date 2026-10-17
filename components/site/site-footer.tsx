@@ -16,9 +16,10 @@ export function SiteFooter() {
               Milk is quiet. Infection is not.
             </p>
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-milk/70">
-              A student-led iGEM 2026 project: an inline FET biosensor for bta-miR-223 in milk,
-              built to flag subclinical bacterial mastitis. A note to the farmer - not a
-              replacement for veterinary diagnosis.
+              A student-led iGEM 2026 project: an inline biosensor which uses FET biotechnology to
+              detect the up-regulation of miRNA specific to subclinical mastitis. The electrical
+              response would be interpreted in context, rather than as a direct identification of
+              mastitis.
             </p>
             <Link href="/" className="footer-pail-home" aria-label="Back to home">
               <PailMark className="h-9 w-9" fill={0.85} />

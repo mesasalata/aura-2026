@@ -4,15 +4,20 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Education",
-  description: "Synthetic biology and mastitis explained without prerequisites.",
+  description:
+    "Synthetic Biology Club, a learning website, a card game, and workshops for students from about age 8 through 17.",
 };
 
 const TOC = [
-  { id: "overview", label: "Overview" },
-  { id: "glossary", label: "Glossary" },
-  { id: "biosensor", label: "Biosensors" },
-  { id: "mastitis", label: "Mastitis" },
-  { id: "events", label: "Events" },
+  { id: "overview", label: "What we taught" },
+  { id: "club", label: "SynBio club" },
+  { id: "website", label: "Website" },
+  { id: "isl", label: "ISL workshop" },
+  { id: "game", label: "Card game" },
+  { id: "bake-sale", label: "Bake sale" },
+  { id: "juniors", label: "Juniors" },
+  { id: "bookfete", label: "Bookfête" },
+  { id: "workshop", label: "Junior workshop" },
 ];
 
 export default function Page() {
@@ -20,8 +25,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Engagement · Education"
       accent="butter"
-      title="SynBio, explained plainly"
-      lede="Glossary, analogies, and outreach materials for people new to synthetic biology."
+      title="Synthetic biology, taught in the open"
+      lede="A weekly club at Le Rosey, a public learning site, a card game, and workshops for students from about age 8 through 17."
       current="/education"
       toc={TOC}
     >

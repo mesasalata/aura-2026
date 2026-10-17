@@ -4,15 +4,13 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Attributions",
-  description: "Who did what on AURA - team, advisors, institutions, and thanks.",
+  description: "External advisors and collaborators who shaped AURA.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "team", label: "Team" },
   { id: "advisors", label: "Advisors" },
-  { id: "institutions", label: "Institutions" },
-  { id: "thanks", label: "Thanks" },
+  { id: "collaborators", label: "Collaborators" },
 ];
 
 export default function Page() {
@@ -20,8 +18,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Team · Attributions"
       accent="pink"
-      title="Who did what"
-      lede="Credits for team contributions, advisors, funders, and everyone who helped."
+      title="Who helped"
+      lede="External advisors and collaborators and what they contributed."
       current="/attributions"
       toc={TOC}
     >

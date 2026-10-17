@@ -2,16 +2,15 @@
 
 import { useReducedMotion, useTransform, type MotionValue } from "motion/react";
 import { motion } from "motion/react";
-import { artUrl, type ArtId } from "@/lib/art";
+import { artUrl } from "@/lib/art";
 import { cn } from "@/lib/utils";
 
 /**
- * Recraft notes on the flanks. Scroll brings them in and fades them;
+ * Hand-drawn notes on the flanks. Scroll brings them in and fades them;
  * a looping flutter keeps the paper flopping so they never sit still.
- * Bills remain on gen/ — no images/ equivalent yet (see ART.bill1…3).
  */
 
-const BILLS = (["bill1", "bill2", "bill3"] as const satisfies ArtId[]).map(artUrl);
+const BILL = artUrl("bill");
 
 type Note = {
   x0: number;
@@ -33,7 +32,7 @@ function notesFor(side: -1 | 1): Note[] {
     size: 48 + (i % 3) * 8,
     delay: (i % 3) * 0.03,
     flutter: 2.1 + (i % 5) * 0.35,
-    src: BILLS[i % BILLS.length],
+    src: BILL,
   }));
 }
 
