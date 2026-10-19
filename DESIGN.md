@@ -70,6 +70,8 @@ These came from the team in session. They override older code.
 | Mastitis economics copy stays | Quiet disease, loud bill. Homepage bill and herd figures match the background paste: €35 billion, about 1 in 5, 40–70%. The uncited treatment slice (under 15%) stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count |
 | Mascot language: lab-coat cow - **not cluttered** | One character at a time on inner heroes |
 | **Homepage form follows `old-migrate/`** | Sequence: pour hero → mastitis summary (`cowSick` sprite; CapsuleStory unmounted for now) → impact beats (including the under-15% slice) → current tools → idea → milk-to-signal → DBTL → parlour. Facts stay the live homepage’s: €35 billion / 1 in 5 / 40–70%, FET catapult (not a colour readout), siphon-in-the-line. Do not bring back 1-in-3 or “pink means look closer.” Homepage sentences that name science or results must agree with the team-written wiki pages. The DBTL wheel is the experiments Design/Build/Test/Learn paste (fluorescence / SNR), not a FET-in-milk loop. Farm-to-lab ends at readings to the app and does not fill the description’s model INSERT. Current-tools names only methods those pages name: SCC, PCR and laboratory testing, and the limit of a pathogen-specific test. The treatment beat keeps the under-15% slice and does not claim that early detection pays. |
+| **Chrome is drawn, type stays set** | Buttons, cards, article paper, and chips share an uneven radius, a cocoa pen (`--pen`, the sketch line), and a short offset shadow. Paper surfaces get a faint tooth. The nav bar, progress rail, and hero stay straight. Display type stays Space Grotesk. No handwritten face. |
+| **The 40–70% chapter has the bloom** | On the herd pin, each marked cow still grows a pink colony in its own cell. The floor `InfectionBloom` stays quiet through “1 in 5” and grows in from the corners only while the chapter reads 40–70%. |
 
 ### Things that already broke once
 
@@ -122,7 +124,7 @@ Do not restyle to GreatBay. Tokens live in `app/globals.css`.
 
 - Default page is milk. Articles sit on **one cream paper card** (`article-paper`), not a stack of cards.
 - Ink for the homepage open, every inner-page hero, and the footer. A homepage story beat may also sit on ink.
-- Irregular “painted” frames are optional and easy to overuse. Prefer empty milk and type.
+- Buttons, cards, the article sheet, and chips use one drawn chrome: uneven radius, cocoa pen, short offset. Paper surfaces carry a faint tooth. The nav bar, progress rail, and hero stay straight, and the type stays Space Grotesk and Inter.
 
 ### Art rules (this is the GreatBay lesson)
 

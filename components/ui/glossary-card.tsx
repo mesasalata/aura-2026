@@ -16,7 +16,7 @@ export function GlossaryCard({ term }: { term: GlossaryTerm }) {
     <button
       onClick={() => setOpen((o) => !o)}
       aria-expanded={open}
-      className="group w-full rounded-2xl border border-ink/10 bg-milk/70 p-5 text-left transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-ink/5"
+      className="hand group w-full border-ink/15 bg-milk/70 p-5 text-left transition-transform hover:-translate-y-0.5"
     >
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -30,7 +30,7 @@ export function GlossaryCard({ term }: { term: GlossaryTerm }) {
           <p className="mt-0.5 text-sm font-medium text-ink-70">{term.short}</p>
         </div>
         <span
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-ink/15"
+          className="hand-icon flex h-8 w-8 shrink-0 items-center justify-center border-ink/20"
           style={{ color: hex }}
         >
           <Plus className={cn("h-4 w-4 transition-transform", open && "rotate-45")} />

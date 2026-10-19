@@ -51,7 +51,7 @@ export function WikiFigure({
         alt={caption}
         draggable={false}
         className={cn(
-          "mx-auto select-none rounded-xl",
+          "radius-hand mx-auto select-none",
           width === "sm" && "w-2/5 min-w-52",
           width === "md" && "w-3/5 min-w-64",
           width === "lg" && "w-4/5",
@@ -76,7 +76,7 @@ export function ReadNext({ current }: { current: string }) {
       {prev && prev.href !== "/" ? (
         <Link
           href={prev.href}
-          className="group rounded-2xl border border-ink/10 bg-milk p-5 transition-all hover:-translate-y-0.5 hover:border-pink/40 hover:shadow-lg hover:shadow-pink/10"
+          className="hand group border-ink/15 bg-milk p-5 transition-transform hover:-translate-y-0.5 hover:border-pink/40"
         >
           <span className="kicker flex items-center gap-1.5 text-ink-40">
             <ArrowLeft className="h-3.5 w-3.5" /> Previous
@@ -94,7 +94,7 @@ export function ReadNext({ current }: { current: string }) {
       {next && (
         <Link
           href={next.href}
-          className="group relative overflow-hidden rounded-2xl border border-pink/25 bg-pink/5 p-5 transition-all hover:-translate-y-0.5 hover:border-pink/50 hover:shadow-lg hover:shadow-pink/15"
+          className="hand group relative border-pink/30 bg-pink/5 p-5 transition-transform hover:-translate-y-0.5 hover:border-pink/50"
         >
           <span className="kicker flex items-center gap-1.5 text-pink-deep/70">
             Read next <ArrowRight className="h-3.5 w-3.5" />
@@ -130,8 +130,7 @@ export function WikiLayout({
         <div className="relative min-w-0">
           <div
             className={cn(
-              "article-paper relative rounded-2xl bg-cream px-7 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16",
-              "shadow-[0_4px_24px_-8px_color-mix(in_srgb,var(--color-ink)_18%,transparent)]",
+              "article-paper relative bg-cream px-7 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16",
               "[&_h2]:font-display [&_h2]:text-pink-deep",
             )}
           >

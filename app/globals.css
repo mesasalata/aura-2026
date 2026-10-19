@@ -51,6 +51,10 @@
 :root {
   --background: var(--color-milk);
   --foreground: var(--color-ink);
+  /* Cocoa pen from the sketch kit. UI strokes use this, not a hairline. */
+  --pen: #5a3d33;
+  /* Speckle, not rings. A repeating radial gradient draws contour lines. */
+  --paper-tooth: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.24 0 0 0 0 0.2 0 0 0 0.22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   color-scheme: light;
 }
 
@@ -305,6 +309,13 @@ body {
 }
 .animate-herd-breathe { animation: herd-breathe 5.6s ease-in-out infinite; }
 
+/* Infection colonies: `--t` is how far the infection has got (0–1), `--d` when each circle starts to grow. */
+.colony circle {
+  transform-box: fill-box;
+  transform-origin: center;
+  scale: clamp(0, calc((var(--t, 0) - var(--d, 0)) / 0.38), 1);
+}
+
 @keyframes milk-fall {
   0% { transform: translate3d(0, -14vh, 0); }
   100% { transform: translate3d(var(--drift, 0px), 112vh, 0); }
@@ -456,19 +467,60 @@ body {
 .animate-art-bob { animation: art-bob 4.2s ease-in-out infinite; }
 .animate-art-sway { animation: art-sway 6.2s ease-in-out infinite; }
 
+/*
+  Drawn chrome. Uneven corners and a cocoa pen, shared with the sketch kit.
+  Full-bleed bars (nav, progress, hero) stay straight. Type stays the sans pair.
+  These sit in `components` so a colour utility can still recolour a stroke.
+*/
+@layer components {
+  .radius-hand {
+    border-radius: 1.05rem 1.6rem 0.88rem 1.42rem;
+  }
+  .hand-icon {
+    border-radius: 46% 56% 42% 54% / 54% 44% 58% 46%;
+    border-width: 1.5px;
+    border-style: solid;
+  }
+  .hand-chip {
+    border-radius: 0.95rem 1.2rem 0.8rem 1.1rem / 0.85rem 1.05rem 0.75rem 1rem;
+    border-width: 1.5px;
+    border-style: solid;
+  }
+  .hand-pill {
+    border-radius: 1.65rem 2.05rem 1.4rem 1.9rem / 1.05rem 1.35rem 0.95rem 1.25rem;
+    border-width: 1.75px;
+    border-style: solid;
+    border-color: var(--pen);
+    box-shadow:
+      2.5px 3px 0 0 color-mix(in srgb, var(--pen) 42%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 35%, transparent);
+  }
+  .hand {
+    border-radius: 1.05rem 1.6rem 0.88rem 1.42rem;
+    border-width: 1.75px;
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--pen) 55%, transparent);
+    box-shadow: 3px 4px 0 0 color-mix(in srgb, var(--pen) 14%, transparent);
+    background-image: var(--paper-tooth);
+    background-size: 180px 180px;
+    background-repeat: repeat;
+  }
+}
+
 /* Picture-book page: irregular paper, ink edge, a little grain. */
 .painted {
   position: relative;
   background-color: var(--color-cream);
   background-image:
+    var(--paper-tooth),
     radial-gradient(circle at 18% 8%, color-mix(in srgb, var(--color-pink) 7%, transparent), transparent 42%),
-    radial-gradient(circle at 92% 88%, color-mix(in srgb, var(--color-signal) 6%, transparent), transparent 38%),
-    repeating-radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--color-ink) 4%, transparent) 0 1px, transparent 1px 3px);
-  border-radius: 18px 24px 16px 22px;
+    radial-gradient(circle at 92% 88%, color-mix(in srgb, var(--color-signal) 6%, transparent), transparent 38%);
+  background-size: 180px 180px, auto, auto;
+  background-repeat: repeat, no-repeat, no-repeat;
+  border-radius: 1.15rem 1.75rem 0.95rem 1.55rem;
   box-shadow:
-    2px 3px 0 0 color-mix(in srgb, var(--color-ink) 7%, transparent),
-    0 0 0 2px color-mix(in srgb, var(--color-ink) 16%, transparent),
-    0 16px 36px -18px color-mix(in srgb, var(--color-ink) 18%, transparent);
+    3px 4px 0 0 color-mix(in srgb, var(--pen) 16%, transparent),
+    0 0 0 1.75px color-mix(in srgb, var(--pen) 28%, transparent);
 }
 
 .no-scrollbar {
@@ -478,9 +530,15 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 
 .article-paper {
+  border-radius: 1.35rem 2.2rem 1.05rem 1.95rem;
+  border: 1.75px solid color-mix(in srgb, var(--pen) 32%, transparent);
+  box-shadow: 4px 5px 0 0 color-mix(in srgb, var(--pen) 10%, transparent);
   background-image:
+    var(--paper-tooth),
     radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-pink) 8%, transparent), transparent 36%),
     radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--color-signal) 7%, transparent), transparent 32%);
+  background-size: 180px 180px, auto, auto;
+  background-repeat: repeat, no-repeat, no-repeat;
 }
 
 /* HTML tables inside articles (MDX raw tables skip the component map). */

@@ -59,7 +59,7 @@ export function SafetyBlock() {
 
 export function StripDemo({ result = "positive" }: { result?: "positive" | "negative" }) {
   return (
-    <div className="not-prose my-6 rounded-[var(--radius-card)] border border-ink/10 bg-ink p-6">
+    <div className="hand not-prose my-6 border-milk/20 bg-ink p-6">
       <DiagnosticStrip result={result} />
     </div>
   );

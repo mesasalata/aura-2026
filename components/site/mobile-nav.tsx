@@ -15,7 +15,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 
-const TRIGGER = "inline-flex h-10 w-10 items-center justify-center rounded-full border lg:hidden";
+const TRIGGER = "hand-icon inline-flex h-10 w-10 items-center justify-center lg:hidden";
 
 /** The menu button's look without the button, for the nav's on-dark copy. */
 export function MobileNavMark({ className }: { className?: string }) {
@@ -50,7 +50,7 @@ export function MobileNav() {
             </Link>
             <Dialog.Title className="sr-only">Navigation</Dialog.Title>
             <Dialog.Close asChild>
-              <button className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink/15" aria-label="Close menu">
+              <button className="hand-icon inline-flex h-10 w-10 items-center justify-center border-ink/20" aria-label="Close menu">
                 <X className="h-5 w-5" />
               </button>
             </Dialog.Close>
@@ -86,7 +86,7 @@ export function MobileNav() {
             <Link
               href="/description"
               onClick={() => setOpen(false)}
-              className="flex h-12 w-full items-center justify-center rounded-full bg-ink font-medium text-milk"
+              className="hand-pill flex h-12 w-full items-center justify-center bg-ink font-medium text-milk"
             >
               Read the description
             </Link>

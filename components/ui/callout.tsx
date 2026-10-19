@@ -22,7 +22,7 @@ export function Callout({
   const s = styles[variant];
   const Icon = s.icon;
   return (
-    <div className={cn("rounded-2xl border p-5", s.ring, className)}>
+    <div className={cn("hand p-5", s.ring, className)}>
       <div className="flex gap-3">
         <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", s.accent)} aria-hidden />
         <div className="space-y-1.5">
@@ -39,7 +39,7 @@ export function Callout({
 /** Explicit "data pending" placeholder box, per the brief. */
 export function Placeholder({ label }: { label: string }) {
   return (
-    <div className="flex min-h-32 items-center justify-center rounded-2xl border border-dashed border-ink/25 bg-ink/[0.02] p-6 text-center">
+    <div className="hand flex min-h-32 items-center justify-center border-dashed border-ink/25 bg-ink/[0.02] p-6 text-center">
       <div className="space-y-1">
         <p className="font-mono text-[0.68rem] uppercase tracking-widest text-ink-40">
           Placeholder

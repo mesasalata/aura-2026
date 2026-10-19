@@ -14,7 +14,7 @@ export function SafetyChecklist({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-[var(--radius-card)] border border-ink/10 bg-milk/60 p-6", className)}>
+    <div className={cn("hand border-ink/15 bg-milk/60 p-6", className)}>
       <h3 className="font-display text-xl text-ink">{title}</h3>
       <ul className="mt-4 space-y-3">
         {items.map((item, i) => (

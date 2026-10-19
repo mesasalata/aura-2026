@@ -36,7 +36,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     li: ({ children }) => <li className="leading-relaxed">{children}</li>,
     table: ({ children }) => (
-      <div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+      <div className="hand not-prose my-4 overflow-x-auto border-ink/15">
         <table className="w-full text-left text-sm">{children}</table>
       </div>
     ),

@@ -38,7 +38,7 @@ function Portrait({ person }: { person: AttributionPerson }) {
 function AttributionCard({ entry }: { entry: AttributionEntry }) {
   const names = entry.people.map((p) => p.name).join(" and ");
   return (
-    <article className="rounded-[var(--radius-card)] border border-ink/10 bg-milk px-5 py-6 sm:px-6">
+    <article className="hand border-ink/15 bg-milk px-5 py-6 sm:px-6">
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           {entry.people.map((person) => (

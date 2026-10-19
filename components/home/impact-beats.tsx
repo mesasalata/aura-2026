@@ -11,7 +11,7 @@ import {
 } from "motion/react";
 import { CountUp } from "@/components/motion/count-up";
 import { PlungeChart } from "@/components/viz/plunge-chart";
-import { HerdField } from "@/components/viz/herd-field";
+import { HerdBloom, HerdField } from "@/components/viz/herd-field";
 import { PailSplit } from "@/components/viz/pail-split";
 import { Blob, type BlobShape } from "@/components/viz/sketch";
 import { CashBurst } from "@/components/home/cash-burst";
@@ -34,6 +34,8 @@ type BeatProps = {
   text: (p: MotionValue<number>) => React.ReactNode;
   visual: (p: MotionValue<number>) => React.ReactNode;
   visualClassName?: string;
+  /** Full-frame layer behind the type and the picture. */
+  backdrop?: (p: MotionValue<number>) => React.ReactNode;
 };
 
 /**
@@ -42,7 +44,7 @@ type BeatProps = {
  * the number, the picture and the wash separate in depth as you scroll.
  * `prefers-reduced-motion` renders the end state, unpinned.
  */
-function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length = "h-[150vh]", text, visual, visualClassName }: BeatProps) {
+function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length = "h-[150vh]", text, visual, visualClassName, backdrop }: BeatProps) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
@@ -73,6 +75,7 @@ function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length =
         >
           <Blob shape={wash} fill={accent} className="h-full w-full opacity-[0.11]" />
         </motion.div>
+        {backdrop?.(progress)}
 
         <motion.div style={{ opacity: enter }} className="relative mx-auto flex h-full w-full max-w-7xl flex-col px-5 pt-16 pb-6 sm:px-8 sm:pt-20 sm:pb-10">
           <div className="grid flex-1 grid-rows-[auto_minmax(0,1fr)] items-center gap-4 max-lg:content-start lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
@@ -200,6 +203,7 @@ export function ImpactHerdBeat() {
       tone="cream"
       length="h-[420vh]"
       text={(p) => <HerdCopy progress={p} />}
+      backdrop={(p) => <HerdBloom progress={p} />}
       // 6×4 herd ≈ 3:2, so 40svh tall ⇒ ~60svh wide on small screens
       visual={(p) => <HerdField progress={p} className="w-full max-w-200 max-lg:w-[min(100%,60svh)]" />}
     />

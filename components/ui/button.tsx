@@ -4,21 +4,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap",
+  "inline-flex items-center justify-center gap-2 font-medium transition-[background-color,color,filter,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap",
   {
     variants: {
       variant: {
-        primary:
-          "bg-ink text-milk hover:bg-ink-2 hover:-translate-y-0.5 shadow-lg shadow-ink/20",
-        signal:
-          "bg-signal text-ink hover:brightness-110 hover:-translate-y-0.5 font-semibold shadow-lg shadow-signal/25",
-        pink:
-          "bg-pink text-ink hover:brightness-110 hover:-translate-y-0.5 font-semibold shadow-lg shadow-pink/25",
-        outline:
-          "border border-ink/25 text-ink hover:border-ink hover:bg-ink hover:text-milk",
-        ghost: "text-ink hover:bg-ink/5",
-        onDark:
-          "border border-milk/25 text-milk hover:bg-milk hover:text-ink backdrop-blur-sm",
+        primary: "hand-pill bg-ink text-milk hover:bg-ink-2",
+        signal: "hand-pill bg-signal text-ink hover:brightness-110 font-semibold",
+        pink: "hand-pill bg-pink text-ink hover:brightness-110 font-semibold",
+        outline: "hand-pill bg-milk/40 text-ink hover:bg-ink hover:text-milk",
+        ghost: "radius-hand text-ink hover:bg-ink/5",
+        onDark: "hand-pill border-milk/45 text-milk hover:bg-milk hover:text-ink",
       },
       size: {
         sm: "h-9 px-4 text-sm",

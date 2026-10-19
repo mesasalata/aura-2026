@@ -24,7 +24,7 @@ const WORDMARK = "font-display text-2xl font-semibold tracking-tight";
 const EDITION = "hidden text-[0.7rem] sm:inline";
 const GROUPS = "hidden items-center gap-1 lg:flex";
 const GROUP = "rounded-full px-3.5 py-2 text-sm font-medium";
-const CTA = "px-5 shadow-none max-sm:hidden";
+const CTA = "px-5 max-sm:hidden";
 
 export function SiteNav() {
   const pathname = usePathname();

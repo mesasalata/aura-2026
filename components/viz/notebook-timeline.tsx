@@ -50,7 +50,7 @@ export function NotebookTimeline({ entries }: { entries: NotebookEntry[] }) {
               aria-selected={isActive}
               onClick={() => setFilter(f.key)}
               className={cn(
-                "rounded-full border px-4 py-1.5 text-sm font-medium transition-all",
+                "hand-chip px-4 py-1.5 text-sm font-medium transition-colors",
                 isActive
                   ? "border-ink bg-ink text-milk"
                   : "border-ink/15 text-ink-70 hover:border-ink/40",
@@ -85,7 +85,7 @@ export function NotebookTimeline({ entries }: { entries: NotebookEntry[] }) {
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="font-mono text-xs text-ink-40">{e.date}</span>
                   <span
-                    className="rounded-full px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest"
+                    className="hand-chip border-transparent px-2.5 py-0.5 font-mono text-[0.6rem] uppercase tracking-widest"
                     style={{ background: `color-mix(in srgb, ${meta.color} 16%, transparent)`, color: "var(--color-ink)" }}
                   >
                     {meta.label}

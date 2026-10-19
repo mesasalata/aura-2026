@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useTransform, type MotionValue } from "motion/react";
-import { LINE } from "@/components/viz/sketch";
+import { COLONY_TONE, InfectionBloom, type ColonyDot } from "@/components/viz/infection-bloom";
 import { ART, artUrl } from "@/lib/art";
 import { cn } from "@/lib/utils";
 
@@ -26,27 +26,67 @@ const RANK = MARK_ORDER.reduce<number[]>((acc, cell, rank) => ((acc[cell] = rank
 const FLIP = [0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0];
 const NUDGE = [2, -3, 1, -2, 3, 0, -1, 2, -3, 1, 0, -2, 3, -1, 2, 0, -2, 1, 3, -3, 0, 2, -1, 1];
 const SIZE = [0.96, 1.02, 0.94, 1, 1.04, 0.97, 1.01, 0.95, 1.03, 0.98, 1, 0.96, 1.02, 0.99, 0.95, 1.03, 0.97, 1.01, 0.94, 1, 1.02, 0.98, 0.96, 1.04];
+const TURN = [0, 140, 250, 60, 310, 190, 90, 220, 20, 280, 160, 330, 110, 40, 200, 300, 70, 170, 260, 10, 230, 120, 350, 80];
 
-/* Where the sparkles sit around a marked cow (percent of the cell) and how big they are. */
-const SPARKS = [
-  { x: 8, y: 18, s: 1, rot: 10, pink: true },
-  { x: 90, y: 12, s: 0.7, rot: -20, pink: false },
-  { x: 96, y: 62, s: 0.85, rot: 25, pink: true },
-  { x: 4, y: 74, s: 0.6, rot: -8, pink: false },
+/*
+ * One infection colony, in cell units (the cell is 0–100). It stays inside its
+ * own cell so healthy cows keep clean cream around them; sick neighbours touch
+ * and merge. Solid tints, so overlaps join into one patch instead of darkening.
+ * `d` is how far into the cow's own marking each circle starts to grow.
+ */
+const COLONY: ColonyDot[] = [
+  { x: 50, y: 55, r: 35.5, tone: 0, d: 0 },
+  { x: 28, y: 61, r: 20, tone: 0, d: 0.1 },
+  { x: 72, y: 50, r: 22.5, tone: 0, d: 0.12 },
+  { x: 43, y: 31, r: 18.5, tone: 0, d: 0.2 },
+  { x: 65, y: 78, r: 18.5, tone: 0, d: 0.24 },
+  { x: 13, y: 46, r: 12, tone: 0, d: 0.34 },
+  { x: 88, y: 66, r: 12.5, tone: 0, d: 0.38 },
+  { x: 35, y: 83, r: 13.5, tone: 0, d: 0.42 },
+  { x: 46, y: 58, r: 18.5, tone: 1, d: 0.14 },
+  { x: 62, y: 44, r: 12.5, tone: 1, d: 0.24 },
+  { x: 34, y: 72, r: 10, tone: 1, d: 0.32 },
+  { x: 76, y: 66, r: 8.5, tone: 1, d: 0.4 },
+  { x: 55, y: 61, r: 5, tone: 3, d: 0.3 },
+  { x: 38, y: 48, r: 4, tone: 3, d: 0.38 },
+  { x: 67, y: 38, r: 3.5, tone: 3, d: 0.46 },
+  { x: 26, y: 73, r: 3.5, tone: 3, d: 0.5 },
+  { x: 4, y: 31, r: 3.5, tone: 1, d: 0.56 },
+  { x: 96, y: 38, r: 4, tone: 1, d: 0.6 },
+  { x: 84, y: 89, r: 3, tone: 1, d: 0.62 },
+  { x: 9, y: 83, r: 3.5, tone: 1, d: 0.58 },
 ];
 
-function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) {
+/** How far (0–1) cow `index` has been marked. */
+function useMark(fill: MotionValue<number>, index: number) {
   const rank = RANK[index];
-  // Each cow flushes over one "unit" of fill, so the marking travels cow to cow.
-  const t = useTransform(fill, (f) => Math.min(1, Math.max(0, f - rank)));
+  // Each cow is marked over one "unit" of fill, so the marking travels cow to cow.
+  return useTransform(fill, (f) => Math.min(1, Math.max(0, f - rank)));
+}
+
+function Colony({ index, fill }: { index: number; fill: MotionValue<number> }) {
+  const t = useMark(fill, index);
+  return (
+    <div className="relative aspect-square" style={{ transform: `translateY(${NUDGE[index]}%)` }}>
+      <motion.svg
+        viewBox="-50 -50 200 200"
+        style={{ "--t": t } as React.ComponentProps<typeof motion.svg>["style"]}
+        className="colony absolute left-[-50%] top-[-50%] h-[200%] w-[200%] overflow-visible"
+      >
+        <g transform={`rotate(${TURN[index]} 50 55)`}>
+          {COLONY.map((c, i) => (
+            <circle key={i} cx={c.x} cy={c.y} r={c.r} fill={COLONY_TONE[c.tone]} style={{ "--d": c.d } as React.CSSProperties} />
+          ))}
+        </g>
+      </motion.svg>
+    </div>
+  );
+}
+
+function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) {
+  const t = useMark(fill, index);
   const healthy = useTransform(t, (v) => 1 - v);
   const scale = useTransform(t, (v) => 1 + v * 0.07);
-  /* a pink glow that follows the cow's outline, instead of a disc behind it */
-  const glow = useTransform(t, (v) => {
-    if (v < 0.02) return "none";
-    const px = (v * 5).toFixed(2);
-    return `drop-shadow(0 0 ${px}px var(--color-pink-soft)) drop-shadow(0 0 ${px}px var(--color-pink-soft))`;
-  });
   const sick = ART.cowSick;
 
   return (
@@ -54,12 +94,9 @@ function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) 
       className="relative aspect-square"
       style={{ transform: `translateY(${NUDGE[index]}%) scale(${SIZE[index]})` }}
     >
-      {SPARKS.map((sp, i) => (
-        <Spark key={i} {...sp} t={t} order={i} />
-      ))}
       {/* breathe animates `translate`, the flip uses `scale`, the mark bump uses `transform` - no overrides */}
       <motion.div
-        style={{ scale, filter: glow, animationDelay: `${(index % 7) * -0.9}s` }}
+        style={{ scale, animationDelay: `${(index % 7) * -0.9}s` }}
         className={cn("relative h-full w-full animate-herd-breathe", FLIP[index] === 1 && "-scale-x-100")}
       >
         <motion.img
@@ -72,7 +109,6 @@ function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) 
           className="pointer-events-none absolute inset-0 h-full w-full select-none object-contain"
         />
         {sick && (
-           
           <motion.img
             src={artUrl("cowSick")}
             alt=""
@@ -88,32 +124,18 @@ function HerdCow({ index, fill }: { index: number; fill: MotionValue<number> }) 
   );
 }
 
-/** A drawn four-point sparkle that pops in as the cow is marked, staggered by `order`. */
-function Spark({ x, y, s, rot, pink, t, order }: (typeof SPARKS)[number] & { t: MotionValue<number>; order: number }) {
-  const from = 0.35 + order * 0.15;
-  const pop = useTransform(t, [from, Math.min(1, from + 0.3)], [0, 1], { clamp: true });
-  const scale = useTransform(pop, (v) => 0.2 + v * 0.8);
-  return (
-    <motion.svg
-      viewBox="0 0 24 24"
-      aria-hidden
-      className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-1/2"
-      style={{ left: `${x}%`, top: `${y}%`, opacity: pop, scale, rotate: rot, width: `${22 * s}%`, height: `${22 * s}%` }}
-    >
-      <path
-        d="M 12 2 C 12.6 8, 15 10.6, 22 12 C 15 13.4, 12.6 16, 12 22 C 11.4 16, 9 13.4, 2 12 C 9 10.6, 11.4 8, 12 2 Z"
-        fill={pink ? "var(--color-pink-soft)" : "#fffdf5"}
-        stroke={LINE}
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-    </motion.svg>
-  );
+const GRID = "grid grid-cols-6 gap-x-1.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-2";
+
+/** Floor colonies for the 40–70% chapter. Still through “1 in 5”. */
+export function HerdBloom({ progress }: { progress: MotionValue<number> }) {
+  const share = useTransform(progress, [0, 0.58, 0.86, 1], [0, 0, 1, 1]);
+  return <InfectionBloom t={share} />;
 }
 
 /**
- * HerdField - twenty-four cows on cream. As `progress` runs, cows flush pink
- * one at a time in a scattered order: five for about 1 in 5, then on to seventeen.
+ * HerdField - twenty-four cows on cream. As `progress` runs, cows turn sick one
+ * at a time in a scattered order, each growing a pink colony behind it that
+ * merges with its neighbours: five for about 1 in 5, then on to seventeen.
  */
 export function HerdField({ progress, className }: { progress: MotionValue<number>; className?: string }) {
   const fill = useTransform(progress, HERD_FILL_IN, HERD_FILL_OUT);
@@ -124,7 +146,12 @@ export function HerdField({ progress, className }: { progress: MotionValue<numbe
       aria-label={`A herd of ${HERD_TOTAL} cows; as you scroll, ${HERD_STAGE_ONE} and then ${HERD_STAGE_TWO} of them are marked as infected`}
       className={cn("relative pb-5", className)}
     >
-      <div className="grid grid-cols-6 gap-x-1.5 gap-y-0.5 sm:gap-x-3 sm:gap-y-2">
+      <div aria-hidden className={cn(GRID, "absolute inset-x-0 top-0")}>
+        {Array.from({ length: HERD_TOTAL }, (_, i) => (
+          <Colony key={i} index={i} fill={fill} />
+        ))}
+      </div>
+      <div className={cn(GRID, "relative")}>
         {Array.from({ length: HERD_TOTAL }, (_, i) => (
           <HerdCow key={i} index={i} fill={fill} />
         ))}
