@@ -16,7 +16,7 @@ export function GlossaryCard({ term }: { term: GlossaryTerm }) {
     <button
       onClick={() => setOpen((o) => !o)}
       aria-expanded={open}
-      className="hand group w-full border-ink/15 bg-milk/70 p-5 text-left transition-transform hover:-translate-y-0.5"
+      className="hand group w-full border-ink bg-milk/70 p-5 text-left transition-transform hover:-translate-y-0.5"
     >
       <div className="flex items-start justify-between gap-3">
         <div>

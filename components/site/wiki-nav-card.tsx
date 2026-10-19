@@ -34,7 +34,7 @@ export function WikiNavCard({
       href={href}
       onClick={onNavigate}
       className={cn(
-        "hand group relative flex h-full flex-col justify-between border-ink/15 bg-milk transition-transform duration-300 hover:-translate-y-0.5",
+        "hand group relative flex h-full flex-col justify-between border-ink bg-milk transition-transform duration-300 hover:-translate-y-0.5",
         compact ? "p-4" : "p-6",
         className,
       )}

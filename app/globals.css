@@ -35,11 +35,11 @@
   --color-ink-55: rgba(28, 20, 15, 0.66);
   --color-ink-40: rgba(28, 20, 15, 0.62);
 
-  /* --- Fonts (all sans-serif; no serif display, no monospace) --- */
-  --font-display: var(--font-space), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* --- Fonts: one fat display face, one friendly text face. No serif, no mono. --- */
+  --font-display: var(--font-bagel), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
   /* Kept as a token for the label/eyebrow style - now sans, not mono. */
-  --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
 
   /* --- Radius --- */
   --radius-card: 1.25rem;
@@ -85,7 +85,6 @@ body {
   background: var(--color-milk);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv01";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -149,11 +148,21 @@ body {
   color: var(--color-milk);
 }
 
-/* Display type helpers */
+/* Display type helpers. Bagel ships one weight; `font-synthesis: none` stops
+   `font-medium` / `font-semibold` call sites from smearing a fake bold. */
 .font-display {
   font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-weight: 400 !important;
+  font-synthesis: none;
+  letter-spacing: 0.005em;
+}
+
+/* Hard offset shadow under display type. `--pop` picks the colour. */
+.pop-text {
+  text-shadow: 0.055em 0.06em 0 var(--pop, var(--color-pink-deep));
+}
+.pop-text-sm {
+  text-shadow: 2px 2.5px 0 var(--pop, var(--color-pink-soft));
 }
 
 .text-balance {
@@ -163,29 +172,101 @@ body {
   text-wrap: pretty;
 }
 
-/* Fluid display sizes. */
+/* Fluid display sizes. Bagel is wide, so these sit a step under the old grotesk. */
 .display-hero {
-  font-size: clamp(2.75rem, 8vw, 7rem);
-  line-height: 1;
-  padding-bottom: 0.04em;
+  font-size: clamp(2.6rem, 7.2vw, 6.25rem);
+  line-height: 1.02;
+  padding-bottom: 0.06em;
 }
 .display-1 {
-  font-size: clamp(2.25rem, 5vw, 4rem);
-  line-height: 1.05;
-  padding-bottom: 0.04em;
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  line-height: 1.06;
+  padding-bottom: 0.06em;
 }
 .display-2 {
-  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  font-size: clamp(1.55rem, 2.9vw, 2.3rem);
   line-height: 1.12;
-  padding-bottom: 0.04em;
+  padding-bottom: 0.06em;
 }
 
-/* Quiet label - same weight as body, no wide tracking, no shout. */
+/* Label: short, heavy, set in the text face. Not tracked caps. */
 .kicker {
   font-family: var(--font-sans);
-  font-weight: 550;
-  font-size: 0.8rem;
+  font-weight: 800;
+  font-size: 0.82rem;
   letter-spacing: 0.01em;
+}
+
+@layer components {
+/* Sticker chip for kickers on banners: a heavy label on a solid tab. */
+.chip-pop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.75rem 0.32rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.95rem 1.2rem 0.8rem 1.1rem / 0.85rem 1.05rem 0.75rem 1rem;
+  background: var(--color-butter);
+  color: var(--color-ink);
+  box-shadow: 2.5px 3px 0 0 var(--color-ink);
+  rotate: -1.5deg;
+}
+
+/* Number sticker in front of an article heading. */
+.num-pop {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 46% 56% 42% 54% / 54% 44% 58% 46%;
+  background: var(--color-butter);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  box-shadow: 2.5px 3px 0 0 var(--color-ink);
+  rotate: -6deg;
+}
+
+/* Heavy wobbly underline under an article heading. */
+.rule-pop {
+  display: block;
+  height: 10px;
+  margin-top: 0.55rem;
+  width: min(14rem, 60%);
+  background: var(--color-pink);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M2 6 C 18 2, 30 9, 46 5 S 76 2, 90 6 S 112 8, 118 4' fill='none' stroke='black' stroke-width='4.5' stroke-linecap='round'/></svg>") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M2 6 C 18 2, 30 9, 46 5 S 76 2, 90 6 S 112 8, 118 4' fill='none' stroke='black' stroke-width='4.5' stroke-linecap='round'/></svg>") center / 100% 100% no-repeat;
+}
+
+/* Die-cut sticker edge around a cutout sprite: a milk rim, then a short ink offset. */
+.sticker {
+  filter: drop-shadow(3px 0 0 var(--color-milk)) drop-shadow(-3px 0 0 var(--color-milk))
+    drop-shadow(0 3px 0 var(--color-milk)) drop-shadow(0 -3px 0 var(--color-milk))
+    drop-shadow(4px 5px 0 color-mix(in srgb, var(--color-ink) 55%, transparent));
+}
+
+/* Press-in hover for anything with a hard offset shadow. */
+.press {
+  transition: translate 160ms var(--ease-out-soft), box-shadow 160ms var(--ease-out-soft);
+}
+.press:hover {
+  translate: -1.5px -1.5px;
+}
+.press:active {
+  translate: 2px 2.5px;
+  box-shadow: 0 0 0 0 var(--color-ink) !important;
+}
+}
+
+@keyframes wiggle {
+  0%, 100% { rotate: 0deg; }
+  25% { rotate: -6deg; }
+  75% { rotate: 5deg; }
+}
+.hover-wiggle:hover {
+  animation: wiggle 420ms ease-in-out;
 }
 
 /* Thin hairline grid background (farm grid -> lab grid motif) */
@@ -488,22 +569,37 @@ body {
   }
   .hand-pill {
     border-radius: 1.65rem 2.05rem 1.4rem 1.9rem / 1.05rem 1.35rem 0.95rem 1.25rem;
-    border-width: 1.75px;
+    border-width: 2.25px;
     border-style: solid;
-    border-color: var(--pen);
-    box-shadow:
-      2.5px 3px 0 0 color-mix(in srgb, var(--pen) 42%, transparent),
-      inset 0 1px 0 color-mix(in srgb, white 35%, transparent);
+    border-color: var(--color-ink);
+    box-shadow: 3px 3.5px 0 0 var(--color-ink);
+    font-weight: 800;
+    transition: translate 160ms var(--ease-out-soft), box-shadow 160ms var(--ease-out-soft),
+      background-color 200ms, color 200ms, filter 200ms;
+  }
+  .hand-pill:hover {
+    translate: -1.5px -1.5px;
+    box-shadow: 4.5px 5px 0 0 var(--color-ink);
+  }
+  .hand-pill:active {
+    translate: 2px 2.5px;
+    box-shadow: 0 0 0 0 var(--color-ink);
+  }
+  .section-dark .hand-pill,
+  [data-nav-tone="dark"] .hand-pill {
+    border-color: var(--color-ink);
+    box-shadow: 3px 3.5px 0 0 var(--color-pink-deep);
+  }
+  .section-dark .hand-pill:hover,
+  [data-nav-tone="dark"] .hand-pill:hover {
+    box-shadow: 4.5px 5px 0 0 var(--color-pink-deep);
   }
   .hand {
     border-radius: 1.05rem 1.6rem 0.88rem 1.42rem;
-    border-width: 1.75px;
+    border-width: 2.25px;
     border-style: solid;
-    border-color: color-mix(in srgb, var(--pen) 55%, transparent);
-    box-shadow: 3px 4px 0 0 color-mix(in srgb, var(--pen) 14%, transparent);
-    background-image: var(--paper-tooth);
-    background-size: 180px 180px;
-    background-repeat: repeat;
+    border-color: var(--color-ink);
+    box-shadow: 4px 5px 0 0 var(--color-ink);
   }
 }
 
@@ -531,14 +627,9 @@ body {
 
 .article-paper {
   border-radius: 1.35rem 2.2rem 1.05rem 1.95rem;
-  border: 1.75px solid color-mix(in srgb, var(--pen) 32%, transparent);
-  box-shadow: 4px 5px 0 0 color-mix(in srgb, var(--pen) 10%, transparent);
-  background-image:
-    var(--paper-tooth),
-    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-pink) 8%, transparent), transparent 36%),
-    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--color-signal) 7%, transparent), transparent 32%);
-  background-size: 180px 180px, auto, auto;
-  background-repeat: repeat, no-repeat, no-repeat;
+  border: 2.5px solid var(--color-ink);
+  box-shadow: 8px 9px 0 0 var(--color-pink);
+  background-color: #fffaf2;
 }
 
 /* HTML tables inside articles (MDX raw tables skip the component map). */
@@ -549,13 +640,13 @@ body {
 }
 
 .article-paper table th {
-  font-weight: 500;
+  font-weight: 800;
   color: var(--color-ink);
-  background: color-mix(in srgb, var(--color-cream) 40%, transparent);
+  background: color-mix(in srgb, var(--color-butter) 55%, transparent);
 }
 
 .article-paper table thead {
-  border-bottom: 1px solid color-mix(in srgb, var(--color-ink) 10%, transparent);
+  border-bottom: 2.25px solid var(--color-ink);
 }
 
 .article-paper table tbody tr + tr {
@@ -564,6 +655,22 @@ body {
 
 .article-paper table td {
   color: var(--color-ink-70);
+}
+
+/* Team wall: polaroids pinned at small, uneven tilts; one straightens while you look at it. */
+.team-wall > * {
+  rotate: var(--tilt, 0deg);
+  transition: rotate 320ms var(--ease-out-soft), translate 320ms var(--ease-out-soft);
+}
+.team-wall > *:nth-child(5n + 1) { --tilt: -1.6deg; }
+.team-wall > *:nth-child(5n + 2) { --tilt: 1.1deg; }
+.team-wall > *:nth-child(5n + 3) { --tilt: -0.7deg; }
+.team-wall > *:nth-child(5n + 4) { --tilt: 1.7deg; }
+.team-wall > *:nth-child(5n) { --tilt: -1.2deg; }
+.team-wall > *:hover,
+.team-wall > *:focus-within {
+  rotate: 0deg;
+  translate: 0 -4px;
 }
 
 /* Reduced motion: turn off ambient + smooth scroll */

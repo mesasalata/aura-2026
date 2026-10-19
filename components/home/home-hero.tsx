@@ -59,7 +59,7 @@ function CinematicField({ progress }: { progress: MotionValue<number> }) {
         style={{ y: titleY, opacity: textFade }}
         className="absolute inset-x-0 top-[28%] z-10 px-6 text-center sm:top-[26%]"
       >
-        <h1 className="font-display text-milk text-[clamp(2.4rem,6.2vw,5.4rem)] leading-[0.98] tracking-tight text-balance">
+        <h1 className="pop-text font-display text-milk text-[clamp(2.4rem,6.2vw,5.4rem)] leading-[1.02] text-balance">
           <span className="block">Milk is quiet.</span>
           <span className="block text-aura">Infection is not.</span>
         </h1>
@@ -69,7 +69,7 @@ function CinematicField({ progress }: { progress: MotionValue<number> }) {
         style={{ y: descY, opacity: textFade }}
         className="absolute inset-x-0 top-[28%] z-10 flex flex-col items-center px-6 pt-[clamp(7.2rem,16.5vw,11rem)] text-center sm:top-[26%]"
       >
-        <p className="hidden max-w-xl text-base leading-relaxed text-milk/70 text-pretty min-[640px]:block sm:text-lg">
+        <p className="hidden max-w-xl pt-5 text-base leading-relaxed text-milk/70 text-pretty min-[640px]:block sm:text-lg">
           {LEDE}
         </p>
         <div className="mt-6">
@@ -94,7 +94,7 @@ function StaticHero() {
   return (
     <section className="section-dark relative overflow-hidden" aria-label="AURA">
       <div className="relative mx-auto flex min-h-[80vh] max-w-3xl flex-col items-center justify-center px-6 py-24 text-center">
-        <h1 className="font-display text-milk display-hero text-balance">
+        <h1 className="pop-text font-display text-milk display-hero text-balance">
           <span className="block">Milk is quiet.</span>
           <span className="block text-aura">Infection is not.</span>
         </h1>

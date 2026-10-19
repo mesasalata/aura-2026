@@ -20,11 +20,24 @@ export function WikiSection({
   children: React.ReactNode;
   className?: string;
 }) {
+  const numbered = kicker && /^\d+$/.test(kicker.trim());
   return (
     <section id={id} className={cn("scroll-mt-28 py-10 first:pt-0", className)}>
-      {kicker && <p className="kicker mb-2 text-pink-deep">{kicker}</p>}
-      {title && <h2 className="mb-5 font-display text-pink-deep display-2">{title}</h2>}
-      <div className="space-y-4 text-ink-70 leading-relaxed [&_p]:text-pretty">{children}</div>
+      {kicker && !numbered && <p className="chip-pop kicker mb-4">{kicker}</p>}
+      {title && (
+        <div className="mb-6">
+          <div className="flex items-center gap-4">
+            {numbered && (
+              <span className="num-pop" aria-hidden>
+                {Number(kicker)}
+              </span>
+            )}
+            <h2 className="font-display text-ink display-2">{title}</h2>
+          </div>
+          <span className="rule-pop" aria-hidden />
+        </div>
+      )}
+      <div className="space-y-4 text-ink/80 leading-relaxed [&_p]:text-pretty">{children}</div>
     </section>
   );
 }
@@ -72,38 +85,30 @@ export function ReadNext({ current }: { current: string }) {
   if (!prev && !next) return null;
 
   return (
-    <div className="mt-12 grid gap-4 sm:grid-cols-2">
+    <div className="mt-14 grid gap-5 sm:grid-cols-2">
       {prev && prev.href !== "/" ? (
-        <Link
-          href={prev.href}
-          className="hand group border-ink/15 bg-milk p-5 transition-transform hover:-translate-y-0.5 hover:border-pink/40"
-        >
-          <span className="kicker flex items-center gap-1.5 text-ink-40">
-            <ArrowLeft className="h-3.5 w-3.5" /> Previous
+        <Link href={prev.href} className="hand press group bg-milk p-5 hover:bg-butter/40">
+          <span className="kicker flex items-center gap-1.5 text-ink/70">
+            <ArrowLeft className="h-4 w-4" strokeWidth={2.75} /> Previous
           </span>
-          <span className="mt-1.5 block font-display text-xl text-ink group-hover:text-pink-deep">
-            {prev.label}
-          </span>
+          <span className="mt-1.5 block font-display text-2xl text-ink">{prev.label}</span>
           {pageDesc(prev.href) && (
-            <span className="mt-1 block text-sm text-ink-55">{pageDesc(prev.href)}</span>
+            <span className="mt-1 block text-sm text-ink/70">{pageDesc(prev.href)}</span>
           )}
         </Link>
       ) : (
         <div className="hidden sm:block" />
       )}
       {next && (
-        <Link
-          href={next.href}
-          className="hand group relative border-pink/30 bg-pink/5 p-5 transition-transform hover:-translate-y-0.5 hover:border-pink/50"
-        >
-          <span className="kicker flex items-center gap-1.5 text-pink-deep/70">
-            Read next <ArrowRight className="h-3.5 w-3.5" />
+        <Link href={next.href} className="hand press group relative bg-pink p-5 hover:bg-pink-soft">
+          <span className="kicker flex items-center gap-1.5 text-ink">
+            Read next <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" strokeWidth={2.75} />
           </span>
-          <span className="mt-1.5 block font-display text-xl text-ink group-hover:text-pink-deep">
+          <span className="mt-1.5 block font-display text-2xl text-milk pop-text-sm [--pop:var(--color-ink)]">
             {next.label}
           </span>
           {pageDesc(next.href) && (
-            <span className="mt-1 block max-w-[75%] text-sm text-ink-55">{pageDesc(next.href)}</span>
+            <span className="mt-1 block max-w-[75%] text-sm font-medium text-ink">{pageDesc(next.href)}</span>
           )}
         </Link>
       )}
@@ -129,10 +134,7 @@ export function WikiLayout({
         <PageToc items={toc} />
         <div className="relative min-w-0">
           <div
-            className={cn(
-              "article-paper relative bg-cream px-7 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16",
-              "[&_h2]:font-display [&_h2]:text-pink-deep",
-            )}
+            className="article-paper relative px-7 py-10 sm:px-12 sm:py-14 lg:px-16 lg:py-16"
           >
             {children}
           </div>

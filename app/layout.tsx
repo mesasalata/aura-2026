@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Bagel_Fat_One, Figtree } from "next/font/google";
 import "./globals.css";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -10,16 +10,17 @@ import { asset } from "@/lib/utils";
 
 const teamBase = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
+const bagel = Bagel_Fat_One({
+  variable: "--font-bagel",
+  weight: "400",
+  subsets: ["latin", "latin-ext"],
   display: "block",
   preload: true,
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const figtree = Figtree({
+  variable: "--font-figtree",
+  subsets: ["latin", "latin-ext"],
   display: "swap",
 });
 
@@ -70,7 +71,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full antialiased`}
+      className={`${bagel.variable} ${figtree.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-cream text-ink">
         <a href="#main" className="skip-link">

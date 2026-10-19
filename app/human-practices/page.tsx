@@ -4,15 +4,19 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Human Practices",
-  description: "Stakeholders who shaped AURA - farmers, vets, processors, regulators, and consumers.",
+  description: "Adapting AURA based on stakeholder feedback and responsible design: dairy farmers, a veterinarian, mastitis and bioelectronics experts, and Reatch.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "approach", label: "Approach" },
-  { id: "map", label: "Stakeholder map" },
-  { id: "themes", label: "Themes" },
-  { id: "outreach", label: "Outreach" },
+  { id: "farmers", label: "Farmers" },
+  { id: "baumert", label: "Amandine Baumert" },
+  { id: "romano", label: "Alicia Romano" },
+  { id: "nakatsuka", label: "Nako Nakatsuka" },
+  { id: "meyer", label: "Pitt Meyer" },
+  { id: "reatch", label: "Reatch" },
+  { id: "responsible", label: "Responsible implementation" },
+  { id: "references", label: "References" },
 ];
 
 export default function Page() {
@@ -20,8 +24,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Engagement · Human Practices"
       accent="pink"
-      title="Built with farms, not just labs"
-      lede="How stakeholder interviews changed scope, readout, claims, and containment."
+      title="Adapting AURA based on stakeholder feedback and responsible design"
+      lede="Human Practices helped us test AURA against real-world needs and change the project when our assumptions were wrong."
       current="/human-practices"
       toc={TOC}
     >

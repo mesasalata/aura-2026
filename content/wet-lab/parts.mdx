@@ -1,46 +1,54 @@
-<Section id="overview" title="Parts overview" kicker="01">
+<Section id="overview" title="Overview" kicker="01">
 
-AURA parts are DNA sequences for the catapult on the FET gate - invasion regions complementary to bta-miR-223, plus off-target controls. Registry IDs will be added on submission; sequences and intended use are documented here first.
-
-<Callout variant="note" title="Characterisation">
-  Parts without measurement data are labelled <em>uncharacterised</em>. Do not assume performance from sequence alone.
-</Callout>
+AURA’s parts are short synthetic DNA oligonucleotides rather than genetic constructs. Four are miR-223-responsive catapult probes, labelled with a 5′ BHQ-1 quencher and a 3′ 6-FAM fluorophore so that opening of the hairpin separates the quencher and fluorophore and produces an increase in fluorescence. The other three are strands for the strand-displacement reset strategy.
 
 </Section>
 
-<Section id="basic" title="Basic parts" kicker="02">
+<Section id="probes" title="Catapult probe parts" kicker="02">
 
-| Part | Type | Status | Role |
-| --- | --- | --- | --- |
-| AuraCat-stem | DNA stem | Uncharacterised | Surface-tethered stem that stays closed until invasion |
-| AuraCat-inv | Invasion region | Testing | Complementary to bta-miR-223 |
-| AuraCat-off | Off-target control | Designed | Invasion region for an irrelevant RNA |
-| AuraRef-probe | Electrode probe | Testing | Ionic / electrochemical baseline upstream of the chamber |
+<DataTable
+  head={["Registry part", "Design", "Sequence (5′ → 3′)", "Modification", "Purpose"]}
+  rows={[
+    [<strong>BBa_26PD7O10</strong>, "miR223CatapultDesign_v2", <code>TGGGGTATTTGACAAACTGACACGCGTCAAATACCCCA</code>, "5′ BHQ-1, 3′ 6-FAM", "Baseline miR-223-responsive catapult"],
+    [<strong>BBa_26IRC2X4</strong>, "1 bp invasion-region replacement", <code>TGGGGTATTTGACAAACTGACTCGCGTCAAATACCCCA</code>, "5′ BHQ-1, 3′ 6-FAM", "Tests modification of the target-invasion region"],
+    [<strong>BBa_268GQMMU</strong>, "Stem shortened by 2 bp", <code>GGGTATTTGACAAACTGACACGCGTCAAATACCC</code>, "5′ BHQ-1, 3′ 6-FAM", "Tests the effect of reduced stem stability"],
+    [<strong>BBa_26U24IU9</strong>, "3′ end shortened by 2 bp", <code>TGGGGTATTTGACAAACTGACACGCTGTCAAATACCC</code>, "5′ BHQ-1, 3′ 6-FAM", "Best-performing tested variant"],
+  ]}
+/>
 
-<Placeholder label="Registry part numbers - to be added" />
-
-</Section>
-
-<Section id="composite" title="Composite parts" kicker="03">
-
-Composite sensing units combine the stem, invasion region, and FET-surface chemistry. Assembly is oligo synthesis and surface attachment, not a living circuit.
-
-| Composite | Components | Status |
-| --- | --- | --- |
-| AuraCatapult-v1 | stem + miR-223 invasion region | In design |
-| AuraCatapult-v2 | tuned stem length | In design |
-| AuraGate-FET | catapult + gate chemistry | Pending |
+In our fluorescence assay against a DNA analogue of miR-223, the signal-to-noise ratios were 6.73 (BBa_26PD7O10), 15.59 (BBa_26IRC2X4), 11.81 (BBa_268GQMMU) and 17.96 (BBa_26U24IU9). BBa_26U24IU9 was selected for later experiments, where it responded to synthetic miR-223 RNA at 39 °C. The characterization is described on our Experiments and Measurement pages.
 
 </Section>
 
-<Section id="measurement" title="Measurement data" kicker="04">
+<Section id="reset" title="Reset parts" kicker="03">
 
-Characterisation data - opening assays, FET current traces, electrode baselines - will be linked from the Measurement page as assays complete.
+<DataTable
+  head={["Registry part", "Function", "Sequence (5′ → 3′)", "Modification"]}
+  rows={[
+    [<strong>BBa_26LF0186</strong>, "13 bp biotinylated replacer (with 20 bp overhang)", <code>GTATTTGACAGCGTGTCAGTTTGTCAAATACCCCACAAAAACCAACAAAACACAC</code>, "5′ biotin"],
+    [<strong>BBa_263Q2IYI</strong>, "9 bp biotinylated replacer (with 20 bp overhang)", <code>ATTTGACAGCGTGTCAGTTTGTCAAATACCCCACAAAAACCAACAAAACACAC</code>, "5′ biotin"],
+    [<strong>BBa_26LMF1QY</strong>, "sensorResetter strand", <code>GTGTGTTTTGTTGGTTTTTGTGGGGTATTTGACAAACTGACACGCTGTCAAATAC</code>, "None"],
+  ]}
+/>
+
+The bead-based strand-displacement reset that used these strands was inconclusive: signals became very low after bead processing, most likely because sensor material was lost during washing.
 
 </Section>
 
-<Section id="contribution" title="For future teams" kicker="05">
+<Section id="oligos" title="Other oligonucleotides used" kicker="04">
 
-Parts ship with sequence files, intended use, and known failure modes. If a part did not work as expected, we document that too - negative results are contributions.
+These oligonucleotides were used in our assays as targets and comparators, and are not submitted as parts.
+
+<DataTable
+  head={["Oligonucleotide", "Function", "Sequence (5′ → 3′)", "Modification"]}
+  rows={[
+    ["miR21_DNA", "miR-21 DNA target", <code>TAG CTT ATC AGA CTG ATG TTG A</code>, "None"],
+    ["miR223_DNA", "miR-223 DNA target", <code>TGT CAG TTT GTC AAA TAC CCC A</code>, "None"],
+    ["miR223_DNA_longAnalogue", "Extended miR-223 DNA target", <code>GAC GCG TGT CAG TTT GTC AAA TAC CCC A</code>, "None"],
+    ["originalmiR21CatapultDesign", "miR-21 catapult probe", <code>TCA ACA TCA GTC TGA TAA GCT ACA GAG ACT GAT GTT GA</code>, "5′ BHQ-1, 3′ 6-FAM"],
+  ]}
+/>
+
+The original miR-21 catapult design comes from the catapult-like DNA actuator described by Park *et al.* (2025); we measured it in our own assay as a reference (SNR 6.41).
 
 </Section>

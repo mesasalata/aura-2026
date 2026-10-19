@@ -78,8 +78,8 @@ export function sceneFor(href: string): ArtScene {
 }
 
 /**
- * One banner sprite per wiki page. `id` is the image title to draw, whether or
- * not that file is in `ART` yet. Missing files are shown as the id and `alt`, as text.
+ * One banner sprite per wiki page: the lab-coat cow doing that page's job.
+ * `id` is the `ART` key; a missing file is shown as its `alt`, as text.
  */
 export type HeroCast = {
   id: string;
@@ -95,27 +95,28 @@ export type HeroCast = {
 
 export const HERO_CAST = {
   default: { id: "logo", alt: "AURA wordmark crest", x: "58%", y: "56%", size: 180, motion: "breathe", depth: 0.25, glow: "pink" },
-  description: { id: "inline-biosensor", alt: "An inline sensor sitting in a milking line", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
-  background: { id: "mastitis-udder", alt: "A dairy cow with a quiet sign of udder infection", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "pink" },
-  engineering: { id: "catapult-cycle", alt: "A DNA catapult opening on a sensor surface", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
-  results: { id: "fluorescence-readout", alt: "A fluorescence trace comparing four probe variants", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
-  contribution: { id: "open-parts", alt: "Labeled DNA parts laid out for another team", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
-  experiments: { id: "binding-assay", alt: "A closed probe opening as a target strand binds", x: "58%", y: "56%", size: 240, motion: "breathe", depth: 0.35, glow: "pink" },
-  protocols: { id: "bench-protocol", alt: "A written bench protocol beside a sample tube", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
-  parts: { id: "dna-parts", alt: "Short DNA strands drawn as separate parts", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
-  measurement: { id: "calibration-curve", alt: "A calibration curve of signal against concentration", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
-  notebook: { id: "lab-notebook", alt: "An open lab notebook with a dated entry", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "butter" },
-  model: { id: "signal-score", alt: "A load score rising from a sensor trace", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
-  hardware: { id: "milking-chamber", alt: "A sampling chamber fitted to a milking machine", x: "58%", y: "56%", size: 240, motion: "breathe", depth: 0.35, glow: "signal" },
-  software: { id: "parlour-display", alt: "A parlour screen showing a quiet cow alert", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
-  "human-practices": { id: "farm-visit", alt: "A farmer and a student talking in a parlour", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
-  "integrated-human-practices": { id: "feedback-loop", alt: "A loop from a farm conversation back to the sensor", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
-  education: { id: "classroom", alt: "Students gathered around a table at a workshop", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "butter" },
-  sustainability: { id: "grazing-herd", alt: "A small dairy herd grazing in a field", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "pink" },
-  safety: { id: "containment", alt: "A closed sample tube sitting in a lab tray", x: "58%", y: "56%", size: 200, motion: "breathe", depth: 0.25, glow: "signal" },
-  team: { id: "team-portrait", alt: "The student team standing together", x: "58%", y: "56%", size: 180, motion: "breathe", depth: 0.25, glow: "pink" },
-  attributions: { id: "advisors", alt: "Advisors standing beside the student team", x: "58%", y: "56%", size: 180, motion: "breathe", depth: 0.25, glow: "butter" },
-  references: { id: "source-stack", alt: "A short stack of papers and citations", x: "58%", y: "56%", size: 180, motion: "float", depth: 0.25, glow: "signal" },
+  description: { id: "hero-description", alt: "The lab-coat cow holding up the inline milk sampling chamber", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
+  background: { id: "hero-background", alt: "The cow, unwell with mastitis, sitting on a straw bale", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "pink" },
+  engineering: { id: "hero-engineering", alt: "The lab-coat cow tightening a wrench on a DNA hairpin", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
+  results: { id: "hero-results", alt: "The lab-coat cow cheering beside a rising chart", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
+  contribution: { id: "hero-contribution", alt: "The lab-coat cow holding out a box of DNA parts", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
+  experiments: { id: "hero-experiments", alt: "The lab-coat cow pipetting pink liquid into tubes", x: "58%", y: "56%", size: 240, motion: "breathe", depth: 0.35, glow: "pink" },
+  protocols: { id: "hero-protocols", alt: "The lab-coat cow reading a long checklist", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
+  parts: { id: "hero-parts", alt: "The lab-coat cow juggling three DNA pieces", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
+  measurement: { id: "hero-measurement", alt: "The lab-coat cow inspecting a pink sample through a magnifying glass", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
+  notebook: { id: "hero-notebook", alt: "The lab-coat cow writing in a lab notebook", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "butter" },
+  model: { id: "hero-model", alt: "The lab-coat cow pointing at an S-shaped curve on an easel", x: "58%", y: "56%", size: 220, motion: "float", depth: 0.3, glow: "butter" },
+  hardware: { id: "hero-hardware", alt: "The lab-coat cow fixing a sensor box onto a milk hose", x: "58%", y: "56%", size: 240, motion: "breathe", depth: 0.35, glow: "signal" },
+  software: { id: "hero-software", alt: "The lab-coat cow holding up a phone with a cow alert", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
+  "human-practices": { id: "hero-human-practices", alt: "The lab-coat cow in a farmer's hat carrying a milk churn", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "pink" },
+  "integrated-human-practices": { id: "hero-integrated-human-practices", alt: "The lab-coat cow holding a looping arrow", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "signal" },
+  education: { id: "hero-education", alt: "The lab-coat cow teaching at a small chalkboard", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "butter" },
+  sustainability: { id: "hero-sustainability", alt: "A healthy cow sniffing a flower on a tuft of grass", x: "58%", y: "56%", size: 220, motion: "breathe", depth: 0.3, glow: "pink" },
+  safety: { id: "hero-safety", alt: "The lab-coat cow in goggles carrying a closed sample tube", x: "58%", y: "56%", size: 200, motion: "breathe", depth: 0.25, glow: "signal" },
+  team: { id: "hero-team", alt: "Three lab-coat cows waving together", x: "58%", y: "56%", size: 180, motion: "breathe", depth: 0.25, glow: "pink" },
+  attributions: { id: "hero-attributions", alt: "The lab-coat cow hugging a big pink heart", x: "58%", y: "56%", size: 180, motion: "breathe", depth: 0.25, glow: "butter" },
+  references: { id: "hero-references", alt: "The cow reading on a tall stack of books", x: "58%", y: "56%", size: 180, motion: "float", depth: 0.25, glow: "signal" },
+  entrepreneurship: { id: "hero-entrepreneurship", alt: "The lab-coat cow with a briefcase and a boxed sensor", x: "58%", y: "56%", size: 200, motion: "bob", depth: 0.3, glow: "signal" },
 } as const satisfies Record<string, HeroCast>;
 
 export type HeroPage = keyof typeof HERO_CAST;

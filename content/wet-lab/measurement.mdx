@@ -1,44 +1,346 @@
-<Section id="overview" title="Measurement overview" kicker="01">
+<Section id="overview" title="Overview" kicker="01">
 
-Characterisation turns the inline FET into comparable data: how far the current ticks, how noisy the milk is, and when a residual becomes a flag. This page collects calibration methods and results as they land.
+AURA ultimately aims to detect miRNA-223 using a field-effect transistor (FET). Before testing an electrical readout, however, we first needed a reliable way to measure whether our DNA catapult probe was behaving as intended.
 
-</Section>
+We therefore used **fluorescence as a proxy for probe opening**. This allowed us to:
 
-<Section id="fet" title="FET current" kicker="02">
+- compare different probe designs;
+- measure target binding;
+- test whether the probe still worked at 39 °C;
+- measure signal reduction after RNase H treatment;
+- and test whether the probe could respond to a new target after resetting.
 
-**Setup.** Source–drain current recorded while milk (or buffer) washes the gated catapult surface; blank with unspiked matrix.
-
-**Metrics.**
-- Baseline current with the catapult closed
-- ΔI when miR-223 opens the invasion-region stem
-- Residual after subtracting that sample's reference-electrode baseline
-
-<Placeholder label="Representative FET current traces - data pending" />
+Our main measurements were **relative fluorescence units (RFU)**, **signal-to-noise ratio (SNR)**, percentage fluorescence change, and standard deviation between technical replicates.
 
 </Section>
 
-<Section id="electrodes" title="Reference electrodes" kicker="03">
+<Section id="principle" title="Measurement principle" kicker="02">
 
-Ionic concentration and electrochemical activity are read upstream of the chamber, so salty milk is less likely to raise a false flag. Calibration uses known-salt standards in milk matrix.
+Our catapult probe contains **BHQ-1 at the 5′ end** and **FAM at the 3′ end**.
 
-<Placeholder label="Electrode baseline calibration - pending" />
+In the closed state, FAM and BHQ-1 are close together, so BHQ-1 quenches the FAM fluorescence. When a complementary target binds, the probe opens and separates the fluorophore from the quencher, causing fluorescence to increase.
+
+- **Closed probe:** low fluorescence
+- **Target-bound probe:** higher fluorescence
+
+We therefore used fluorescence as an indirect measurement of the probe’s conformational state.
+
+<div className="not-prose grid gap-4 sm:grid-cols-2">
+
+<WikiFigure src="/images/Measurement%20probe%20native%20structure.svg" caption="NUPACK-predicted structure of the selected probe in its native state, with BHQ-1 at the 5′ end and FAM at the 3′ end." width="lg" />
+
+<WikiFigure src="/images/Measurement%20probe%20bound%20structure.svg" caption="NUPACK-predicted structure of the selected probe bound to miR-223, which separates FAM from BHQ-1 and increases fluorescence." width="lg" />
+
+</div>
 
 </Section>
 
-<Section id="calibration" title="Calibration standards" kicker="04">
+<Section id="quantities" title="What we measured" kicker="03">
 
-Spiked miR-223 stocks at known concentration anchor the load score. Standards are prepared fresh or thawed from documented aliquots with chain-of-custody in the notebook.
+### Relative fluorescence units
+
+The plate reader reports fluorescence as **relative fluorescence units (RFU)**.
+
+RFU is an instrument-dependent measurement of fluorescence intensity. We did not create a fluorescence standard curve, so RFU could not be converted into an absolute number of fluorophore molecules or opened probes. Instead, RFU was used to compare samples measured under the same experimental conditions.
+
+### Signal-to-noise ratio
+
+During probe optimization, high target fluorescence alone was not enough. A useful sensor also needed low fluorescence when no target was present.
+
+We therefore calculated the **signal-to-noise ratio (SNR)** as the mean fluorescence with target divided by the mean fluorescence without target:
+
+<Callout variant="lab" title="SNR">
+  <div className="text-base text-ink">SNR = mean RFU with target / mean RFU without target</div>
+</Callout>
+
+On this page, SNR specifically refers to this target-to-no-target fluorescence ratio. A higher SNR means that the target-positive and target-negative states are more clearly separated.
 
 </Section>
 
-<Section id="units" title="Units & reporting" kicker="05">
+<Section id="setup" title="Fluorescence measurement setup" kicker="04">
 
-We report source–drain current in SI units (ampere, or a documented multiple), electrode baselines in the same run, and the residual as a dimensionless miR-223 load score until wet-lab calibration is complete.
+All fluorescence measurements were performed using an **Agilent BioTek Cytation 5 Cell Imaging Multimode Reader** with **Gen5 3.16** software.
 
-<ScienceExplainer
-  accent="signal"
-  analogy="Like zeroing a kitchen scale before weighing - the reference electrodes tell you what 'zero' means for this sip of milk."
-  precise="Calibration curves map FET residual current to known miR-223 standards, enabling comparison across runs, cows, and milkings."
+<DataTable
+  head={["Parameter", "Setting"]}
+  rows={[
+    ["Plate reader", "Agilent BioTek Cytation 5"],
+    ["Software", "Gen5 3.16"],
+    ["Read optics", "Top"],
+    ["Reading height", "8.55 mm"],
+    ["Excitation", "492 nm"],
+    ["Excitation bandpass", "20 nm"],
+    ["Emission", "530 nm"],
+    ["Emission bandpass", "20 nm"],
+    ["Gain", "Extended gain"],
+    ["Reading speed", "Normal"],
+    ["Measurement interval", "Every 5 min"],
+  ]}
 />
+
+Measurements were performed in **Greiner Bio-One 384-well PS µCLEAR®, black, non-binding microplates (Item 781906).**
+
+The first lab visit was performed at **30 °C**. This was approximately the ambient laboratory temperature, and the plate reader can heat the plate but cannot actively cool it below room temperature.
+
+The second lab visit was performed at **39 °C**. This temperature was chosen both to test the probe under warmer conditions and because it is close to the body temperature of a cow, making it relevant to the intended application.
+
+For the main assays, reactions had a final volume of **40 µL per well**, with approximately **100 nM probe**, **100 nM target** where applicable, **1× PBS** and **5 mM MgCl₂**. Each main condition was measured in **three technical replicates**.
+
+</Section>
+
+<Section id="snr" title="Using SNR to select our probe" kicker="05">
+
+Our first measurement goal was to compare different catapult probe designs.
+
+Rather than selecting the probe with the highest absolute fluorescence, we wanted the design with the clearest difference between its no-target and target-bound states.
+
+We compared four miRNA-223 designs and also included the original **miR-21 catapult design** that inspired our sensor. The miR-21 probe was based on the catapult-like DNA actuator described by Park *et al.*; the SNR shown below was measured in **our own fluorescence assay**, not taken from the paper.
+
+Fluorescence was measured at **30 °C for 120 minutes**, with measurements every 5 minutes. At 120 minutes:
+
+<DataTable
+  head={["Probe design", "Mean no-target RFU", "Mean target RFU", "SNR"]}
+  rows={[
+    ["Original miR-21 catapult", "2,606", "16,716", "6.41"],
+    ["miR-223 original v2", "2,842", "19,135", "6.73"],
+    ["miR-223 1 bp modification", "1,377", "21,475", "15.59"],
+    ["miR-223 stem −2 bp", "2,045", "24,145", "11.81"],
+    [<strong>miR-223 3′-end −2 bp</strong>, <strong>1,232</strong>, <strong>22,130</strong>, <strong>17.96</strong>],
+  ]}
+/>
+
+The **3′-end-2-bp-shortened miRNA-223 probe had the highest SNR, 17.96**, and was therefore selected for further testing.
+
+Importantly, it did not have the highest absolute target fluorescence. Its high SNR resulted from a strong target signal combined with particularly low background fluorescence. This showed why SNR was a useful measurement for probe selection.
+
+</Section>
+
+<Section id="binding" title="Measuring target binding at 39 °C" kicker="06">
+
+After selecting the 3′-end-2-bp-shortened probe, we tested whether it could still respond to its target at **39 °C**. We compared a no-target control, a complementary ssDNA miR-223 analogue, and synthetic miRNA-223 RNA. Fluorescence was measured every 5 minutes for 30 minutes. At 30 minutes:
+
+<DataTable
+  head={["Condition", "Mean RFU", "SNR"]}
+  rows={[
+    ["No-target", "2,828", "1.00"],
+    ["ssDNA miR-223", "29,165", "10.31"],
+    ["miRNA-223 RNA", "20,595", "7.28"],
+  ]}
+/>
+
+Both complementary targets produced fluorescence well above the no-target control.
+
+The RNA response was particularly important because its fluorescence increased progressively over time while the no-target control remained low. This was consistent with target-dependent probe opening at 39 °C.
+
+<WikiFigure src="/images/Experiments%20miR-223%20detection%20at%2039C.png" caption="Target-dependent fluorescence at 39 °C: the selected probe in no-target, ssDNA miR-223 and synthetic miRNA-223 conditions over 30 minutes." width="lg" />
+
+</Section>
+
+<Section id="controls" title="Controls" kicker="07">
+
+We used several controls to help distinguish target-dependent fluorescence from background changes.
+
+<DataTable
+  head={["Control / condition", "Purpose"]}
+  rows={[
+    [<strong>No-target control</strong>, "Measured the background fluorescence of the probe in the absence of complementary target."],
+    [<strong>ssDNA miR-223</strong>, "Served as a complementary positive reference for probe opening."],
+    [<strong>Synthetic miRNA-223</strong>, "Tested the response to the RNA target relevant to the intended sensor."],
+    [<strong>Water blank</strong>, "Measured background fluorescence from the measurement setup. It remained low at approximately 200–250 RFU and was not subtracted from the reported values."],
+  ]}
+/>
+
+In the RNase H experiment, the ssDNA condition was a reference and **was not treated with RNase H**.
+
+The water blank was **not subtracted** from the reported RFU values. SNR was calculated directly from the target and no-target fluorescence values.
+
+</Section>
+
+<Section id="replicates" title="Technical replicates and error bars" kicker="08">
+
+Each main condition was measured using **three technical replicates**. For each time point, we calculated the mean fluorescence of the three wells. Variation between wells was represented using **population standard deviation (`STDEV.P`)**.
+
+Graphs are therefore shown as **mean ± SD, n = 3 technical replicates**. These replicates measure variation between wells within the same experimental run.
+
+Although experiments were carried out during two separate lab visits, the second visit tested different questions rather than independently repeating the first experiment. We therefore do not claim independent experimental replication.
+
+</Section>
+
+<Section id="analysis" title="Data analysis" kicker="09">
+
+The following calculations were used throughout our measurement analysis.
+
+<DataTable
+  head={["Quantity", "Formula"]}
+  rows={[
+    ["Mean RFU", "(F₁ + F₂ + F₃) / 3"],
+    ["Signal-to-noise ratio", "Mean RFU with target / Mean RFU without target"],
+    ["Change in fluorescence", "ΔF = Fₜ − F₀"],
+    ["Percentage fluorescence change", "((Fₜ − F₀) / F₀) × 100"],
+    ["Percentage fluorescence remaining", "(Fₜ / F₀) × 100"],
+  ]}
+/>
+
+These calculations allowed us to measure both the strength of the fluorescence signal and how it changed over time.
+
+</Section>
+
+<Section id="rnaseh" title="Measuring RNase H-mediated signal reduction" kicker="10">
+
+After confirming that the probe still responded at 39 °C, we tested whether its RNA-associated fluorescence could be reduced.
+
+We used **Thermo Scientific RNase H (EN0201)** at **5 U/µL**. RNA-containing wells received **0.4 µL RNase H**, corresponding to approximately **2 U per well**.
+
+RNase H was added near the top of the well, the plate was centrifuged to mix the reaction, and fluorescence measurement began immediately afterward. The delay between RNase H addition and the first measurement was approximately **1 minute**. Fluorescence was then measured every 5 minutes for 30 minutes at 39 °C. For the selected probe:
+
+<DataTable
+  head={["Condition", "0 min RFU", "30 min RFU", "% change"]}
+  rows={[
+    [<strong>miRNA-223 + RNase H</strong>, "26,466", "7,279", <strong>−72.5%</strong>],
+    ["ssDNA reference", "37,469", "30,681", "−18.1%"],
+    ["No-target control", "2,441", "2,651", "+8.6%"],
+  ]}
+/>
+
+The miRNA-223 + RNase H condition showed a strong, progressive decrease in fluorescence. After 30 minutes, only approximately **27.5% of the initial fluorescence remained**. The ssDNA reference showed a much smaller decrease, while the no-target control remained low.
+
+<WikiFigure src="/images/Measurement%20RNase%20H%20reduction.png" caption="RNase H-associated fluorescence reduction: miRNA-223 + RNase H, ssDNA reference and no-target conditions over 30 minutes at 39 °C." width="lg" />
+
+### Interpreting this result
+
+The ssDNA reference also decreased by approximately 18.1%, showing that some fluorescence loss occurred independently of RNA degradation. Possible causes include temperature equilibration, photobleaching, changes in probe structure or general measurement variation.
+
+The ssDNA reference was also **not treated with RNase H**, so this experiment does not prove absolute RNase H specificity. We therefore interpret the result as **consistent with RNase H-mediated degradation of the RNA target contributing strongly to the fluorescence decrease**.
+
+</Section>
+
+<Section id="redetection" title="Measuring whether the probe could respond again" kicker="11">
+
+Reducing fluorescence alone does not demonstrate that a sensor can be reused. The probe also needs to remain capable of detecting another target.
+
+After RNase H treatment, fresh **ssDNA miR-223** was added to the previously treated samples. All four probe designs showed renewed increases in fluorescence. For the selected 3′-end-2-bp-shortened probe, fluorescence rose from **24,807 RFU to 50,117 RFU** over 30 minutes, an increase of approximately **102%**.
+
+<WikiFigure src="/images/Measurement%20ssDNA%20re-addition.png" caption="Previously RNase H-treated probes produced renewed fluorescence after fresh complementary ssDNA miR-223 was added." width="lg" />
+
+This supports **proof-of-concept reuse at the molecular fluorescence level**.
+
+However, the second target was ssDNA rather than another RNA target, and only one reset/re-detection cycle was tested. We therefore do not claim repeated multi-cycle RNA sensing.
+
+</Section>
+
+<Section id="validation" title="Validation of our measurement" kicker="12">
+
+Several steps helped us check that the measured fluorescence changes were meaningful.
+
+<DataTable
+  head={["Validation check", "What we did", "Interpretation"]}
+  rows={[
+    [<strong>Instrument calibration</strong>, "The Cytation 5 automatically calibrated on startup and produced a warning if calibration was unsuccessful.", "Helped confirm normal instrument operation before measurement."],
+    [<strong>External standard curve</strong>, "No fluorescence standard curve was performed.", "RFU was treated as a relative measurement and was not converted to molecule number or concentration."],
+    [<strong>Water blank</strong>, "Approximately 200–250 RFU; not subtracted.", "Background was small compared with probe signals."],
+    [<strong>Detector range</strong>, "Extended gain supports values up to approximately 9,999,999 RFU; our highest values were around 50,000 RFU.", "Experimental signals were far below the upper saturation limit."],
+  ]}
+/>
+
+Together, these results support fluorescence as a useful proxy for catapult probe behaviour.
+
+</Section>
+
+<Section id="reproducibility" title="Reproducibility" kicker="13">
+
+To make the assay easier for another team to repeat, the main measurement settings are summarized below.
+
+<DataTable
+  head={["Parameter", "Setting"]}
+  rows={[
+    ["Fluorophore", "FAM, 3′ end"],
+    ["Quencher", "BHQ-1, 5′ end"],
+    ["Plate", "Greiner Bio-One 781906"],
+    ["Format", "Black 384-well µCLEAR, non-binding"],
+    ["Reader", "Agilent BioTek Cytation 5"],
+    ["Software", "Gen5 3.16"],
+    ["Read optics", "Top"],
+    ["Reading height", "8.55 mm"],
+    ["Excitation", "492 nm, 20 nm bandpass"],
+    ["Emission", "530 nm, 20 nm bandpass"],
+    ["Gain", "Extended"],
+    ["Read speed", "Normal"],
+    ["Measurement interval", "5 min"],
+    ["Final volume", "40 µL"],
+    ["Probe concentration", "~100 nM"],
+    ["Target concentration", "~100 nM where applicable"],
+    ["Buffer", "1× PBS"],
+    ["MgCl₂", "5 mM"],
+    ["Replicates", "3 technical replicates"],
+    ["First experiment temperature", "30 °C"],
+    ["Second experiment temperature", "39 °C"],
+  ]}
+/>
+
+</Section>
+
+<Section id="protocol" title="Protocol for future teams" kicker="14">
+
+A similar fluorescence workflow could be used for other fluorophore-quencher nucleic-acid sensors.
+
+1. Prepare probe and target/control solutions in the chosen buffer.
+2. For our assay, use **1× PBS with 5 mM MgCl₂**.
+3. Prepare reactions containing approximately **100 nM probe and 100 nM target**, where applicable.
+4. Use a final volume of **40 µL per well**.
+5. Prepare at least three technical replicates.
+6. Include a no-target control, complementary positive target and background blank.
+7. Measure FAM fluorescence using consistent excitation, emission and gain settings.
+8. Maintain a constant temperature during the assay.
+9. Record fluorescence at fixed time intervals.
+10. Keep individual replicate values before calculating the mean.
+11. Calculate mean RFU, SD, SNR and fluorescence change as required.
+12. Compare target-containing samples with matched controls rather than interpreting RFU alone.
+13. Report the instrument settings and whether any blank subtraction or calibration was performed.
+
+</Section>
+
+<Section id="limitations" title="Limitations" kicker="15">
+
+Our measurement system has several important limitations.
+
+First, we used **technical replicates rather than independent experimental repeats**. Our error bars therefore describe variation between wells within one run.
+
+Second, some experiments used an **ssDNA analogue of miRNA-223**. DNA was useful for controlled probe testing, but DNA and RNA do not necessarily behave identically.
+
+Third, these measurements were performed in **buffer rather than real milk**. Milk could affect fluorescence and probe behaviour through proteins, lipids, salts, nucleases or autofluorescence.
+
+Finally, fluorescence measures the molecular behaviour of the probe, not the electrical response of our proposed FET sensor. Testing the FET readout is therefore an important future step.
+
+</Section>
+
+<Section id="beyond" title="Why this approach is useful beyond AURA" kicker="16">
+
+This workflow could also be useful for teams developing **molecular beacons, hairpin probes or other fluorophore-quencher nucleic-acid sensors**. These systems face similar questions:
+
+- Is the background signal low?
+- Does target binding produce a clear signal?
+- Which design gives the best target-to-background separation?
+- How quickly does the signal change?
+- Does the sensor still work at different temperatures?
+- Can the signal be reduced or reset?
+- Can the probe respond again afterward?
+
+Combining **RFU, SNR, time-course measurements, controls and replicate variability** provides a simple way to answer these questions quantitatively.
+
+For AURA, this approach allowed us to measure the probe’s **OFF state, ON state, target discrimination, response at 39 °C, signal reduction and proof-of-concept reuse** before moving toward FET-based detection.
+
+</Section>
+
+<Section id="conclusion" title="Conclusion" kicker="17">
+
+Fluorescence gave us a quantitative way to measure the behaviour of our DNA catapult probe.
+
+Using SNR, we selected the **3′-end-2-bp-shortened miRNA-223 design**, which produced the highest SNR of the tested miRNA-223 probes.
+
+The selected probe remained responsive to both complementary ssDNA and synthetic miRNA-223 at **39 °C**.
+
+RNase H treatment then reduced RNA-associated fluorescence by approximately **72.5%**, and the probe produced a renewed fluorescence response when fresh complementary target was added.
+
+Together, these measurements provided a quantitative framework for evaluating the molecular sensing and reset behaviour of AURA before integration with an electrical FET readout.
 
 </Section>

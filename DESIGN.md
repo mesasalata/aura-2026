@@ -17,9 +17,9 @@ GreatBay is the reference for **how the pictures hold together**, not for how th
 
 | Layer | Source | What we take | What we do **not** take |
 |---|---|---|---|
-| Graphical cohesion | [GreatBay-SCIE 2026](https://2026.igem.wiki/greatbay-scie/) | One illustrated world. Same hand, same line, same materials, same cast, from homepage through every article. Graphics look commissioned, not assembled. | Their layout. Their forest-green / lime / terracotta. Comic nav. Bubble type. HS cute-for-cute. |
+| Graphical cohesion + pop | [GreatBay-SCIE 2025](https://2025.igem.wiki/greatbay-scie/) / [2026](https://2026.igem.wiki/greatbay-scie/) | One illustrated world. Same hand, same line, same materials, same cast, from homepage through every article. Fat display type with a hard offset shadow, flat solid shapes, die-cut stickers, a solid-colour chapter rail, a heavy rule under each heading, a round back-to-top with a progress ring. | Their forest-green / lime / terracotta. Their slab wordmark (we use Bagel Fat One). Their room-corner scene. |
 | Professional craft | [21st.dev](https://21st.dev/) + the galleries below | How a grown-up site is structured: hero has one job, one action, specific claims, CSS-first motion, one H1, words in the HTML. | SaaS chrome, mesh slop, fake logo walls, “Get started,” installing their runtimes. |
-| Colour / type / brand | This repo (`app/globals.css`) | Milk, cream, ink, pink, cyan. Space Grotesk + Inter. | GreatBay greens. Any Recraft “theme lock.” |
+| Colour / type / brand | This repo (`app/globals.css`) | Milk, cream, ink, pink, cyan, butter. Bagel Fat One + Figtree. | GreatBay greens. Any Recraft “theme lock.” |
 
 The green-and-orange iGEM site people mean **is GreatBay**. Study the *drawings*. Recolour nothing of ours to match it. Build our own pages.
 
@@ -67,11 +67,23 @@ These came from the team in session. They override older code.
 | Diagrams should be **interactive** and sit on the page, not in chrome frames | Biosensor already steps; don’t bury it in painted stamps |
 | Article shell: **chapter rail + one paper card + numbered figures + read-next** | Our current professional reading layout - not a GreatBay clone |
 | Lorem is fine on unfinished science pages | Honesty > fake results. Mark pending data. |
-| Mastitis economics copy stays | Quiet disease, loud bill. Homepage bill and herd figures match the background paste: €35 billion, about 1 in 5, 40–70%. The uncited treatment slice (under 15%) stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count |
+| Mastitis economics copy stays | Quiet disease, loud bill. Homepage bill and herd figures match the background paste: up to US$32 billion, about 1 in 5, 40–70%. The uncited treatment slice (under 15%) stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count |
 | Mascot language: lab-coat cow - **not cluttered** | One character at a time on inner heroes |
-| **Homepage form follows `old-migrate/`** | Sequence: pour hero → mastitis summary (`cowSick` sprite; CapsuleStory unmounted for now) → impact beats (including the under-15% slice) → current tools → idea → milk-to-signal → DBTL → parlour. Facts stay the live homepage’s: €35 billion / 1 in 5 / 40–70%, FET catapult (not a colour readout), siphon-in-the-line. Do not bring back 1-in-3 or “pink means look closer.” Homepage sentences that name science or results must agree with the team-written wiki pages. The DBTL wheel is the experiments Design/Build/Test/Learn paste (fluorescence / SNR), not a FET-in-milk loop. Farm-to-lab ends at readings to the app and does not fill the description’s model INSERT. Current-tools names only methods those pages name: SCC, PCR and laboratory testing, and the limit of a pathogen-specific test. The treatment beat keeps the under-15% slice and does not claim that early detection pays. |
-| **Chrome is drawn, type stays set** | Buttons, cards, article paper, and chips share an uneven radius, a cocoa pen (`--pen`, the sketch line), and a short offset shadow. Paper surfaces get a faint tooth. The nav bar, progress rail, and hero stay straight. Display type stays Space Grotesk. No handwritten face. |
-| **The 40–70% chapter has the bloom** | On the herd pin, each marked cow still grows a pink colony in its own cell. The floor `InfectionBloom` stays quiet through “1 in 5” and grows in from the corners only while the chapter reads 40–70%. |
+| **Homepage form follows `old-migrate/`** | Sequence: pour hero → mastitis summary (healthy-looking cow plus an udder callout; CapsuleStory unmounted for now) → impact beats (including the under-15% slice) → current tools → idea → milk-to-signal → DBTL → parlour. Facts stay the live homepage’s: up to US$32 billion / 1 in 5 / 40–70%, FET catapult (not a colour readout), siphon-in-the-line. Do not bring back 1-in-3 or “pink means look closer.” Homepage sentences that name science or results must agree with the team-written wiki pages. The DBTL wheel is the experiments Design/Build/Test/Learn paste (fluorescence / SNR), not a FET-in-milk loop. Farm-to-lab ends at readings to the app and does not fill the description’s model INSERT. Current-tools names only methods those pages name: SCC, PCR and laboratory testing, and the limit of a pathogen-specific test. The treatment beat keeps the under-15% slice and does not claim that early detection pays. |
+| **Poppy, not AI-template** (Oct 19) | The team asked for the site to be “more poppy, less AI-fy”, in GreatBay’s style; zoom-in scroll moves are allowed. What read as AI: Inter + Space Grotesk, centred pill hero, 10–30% opacity pastel blobs, grey low-contrast text, tiny tracked “01” kickers, text placeholders instead of pictures. Those are gone. Display is **Bagel Fat One** (one weight; `.font-display` sets `font-synthesis: none` so old `font-semibold` call sites do not fake a bold), text is **Figtree**. Big display type takes `.pop-text`, a hard offset shadow coloured by `--pop`. |
+| **Chrome is drawn and loud** | Buttons, cards, article paper, chips: uneven radius, solid 2.25px ink line, solid ink offset shadow (not a 14% wash). Buttons press in on `:active` and lift on hover. The article sheet is near-white with an ink line and a pink offset. Washes behind pictures are solid pastel blobs (accent mixed ~38% into milk) with the pen outline, never an opacity ghost. The nav bar, progress rail, and hero edges stay straight. |
+| **Article headings** | H2 is Bagel in ink with a wobbly pink `.rule-pop` under it. A numeric `kicker` on `Section` renders as a butter `.num-pop` sticker in front of the heading; a word kicker renders as a `.chip-pop`. H3 is Bagel in pink-deep. Tables get a butter header row under an ink rule. |
+| **Chapter rail is a pink tab** | `PageToc` is a sticky `hand` card in pink-deep with milk links; the active link has a butter dot and a heavy butter underline. |
+| **Every inner banner has its own cow** | `HERO_CAST` points each route at `hero-<route>.png` in `public/art/images`, made by `scripts/gen-heroes.mjs`: the lab-coat cow doing that page’s job (pipetting on Experiments, a chalkboard on Education, a farmer’s hat on Human Practices). No two pages share a pose. The cow is a `.sticker` (milk die-cut rim + short ink offset) on a solid outlined blob in the page’s `glow` colour, with a few solid drops in the ink sky. The banner ends in a pink wave under the milk wave. |
+| **The 40–70% chapter has the bloom** | On the herd pin, each marked cow still grows a pink colony in its own cell. The floor `InfectionBloom` stays quiet through “1 in 5” and grows in from the corners only while the chapter reads 40–70%. A row of floor lobes (`COLONY_FLOOR`) grows with it across the full width, and the wave under the herd beat starts on that same tone, so the colony runs into the seam instead of being sliced off by the pin’s bottom edge. The herd’s wash blob is butter, not pink, so the pink marks on the cows stay readable. |
+| **The idea beat zooms in** | “What if a biosensor could detect…” is a pinned beat (`components/home/idea-zoom.tsx`). The first paragraph sits beside the milk-sensor sticker; scroll dives into the sensor box and a butter magnifier rim opens a lens (a `clip-path` circle from the box) onto the FET surface. Six DNA catapults stand on the gate, each opens as a pink miR-223 strand lands, and the teal current trace in the channel firms up. The second paragraph reads on a milk card over the close-up. The beat ends on the close-up’s pale teal, and the wave out of it starts on that tone. The lens marks itself `data-nav-tone="light"` only once it covers the bar, because the nav does not read `clip-path`. Narrow screens get a tighter `viewBox` on the gate so all six catapults show. Reduced motion: heading, paragraph, the opened close-up as a figure, paragraph. |
+| **The siphon beat plays out** | “How a siphoned sample reaches the FET” (`components/home/siphon-beat.tsx`) is no longer a centred heading on a blob. Heading and the team’s paragraph sit left; on the right milk runs in the line from the cow, a valve siphons one drop down into the sampling chamber, the chamber fills, the catapults on the biosensor surface tip open, and the readout steps. Labels only name what the paragraph names. Catapult arms in this beat and in the idea zoom keep their length while they turn (geometry computed from the angle, not CSS `rotate`: Motion overrides `transform-origin` on SVG). |
+| **Mastitis plays out inside the udder** | The summary beat (`components/home/mastitis-summary.tsx`) pins for 320vh. The cow on the outside is the healthy `cow` sprite on purpose: nothing shows yet. A butter-rimmed magnifier on her udder plays the paragraph in order: coral pathogens swim up the teat canal, white blood cells slide in, the tissue warms pink, and miR-223 squiggles drift down the canal into a milk drop. The vessel runs to the top of the magnifier. Each sentence of the team’s copy gets a butter highlighter swipe while its step plays; the others dim. Labels only name what the paragraph names. Reduced motion shows the end state with no highlight. |
+| **DBTL holds each phase** | The DBTL wheel pins for 400vh (about 75vh of scroll per phase); it was 120vh and the four phases flashed past. Phase pills are Bagel chips with an ink offset shadow, filled with the phase accent when active; the phase number is a `num-pop` sticker and the phase title is `pop-text` in the phase accent. No tracked caps. |
+| **Milk to signal is a current readout** | The pinned “From milk to signal” chapters (`components/home/signal-beats.tsx`) show a current-vs-time readout on a milk `hand` card, not a vial. The sample vial whose milk turned pink is gone: it read as a colour test, and AURA’s readout is a change in FET current. Input draws the flat baseline, Recognition pops a red dot (coral-deep, ink rim, one pulse ring) onto the trace under a dashed “miR-223 binds” marker; the pink squiggle is not used as a detection marker, Transduction steps the teal trace up (“change in current”), Output adds the flat green dashed “without the target” control. No milk is ever tinted pink anywhere on the site. |
+| **The bill is made of things** | The “very loud bill” flanks are six different props in the cast’s hand (`prop-*` from `scripts/gen-heroes.mjs`): euro note, vet bill, half-empty milk bottle on the left; euro coin, vet’s bag, coin stack on the right, the three costs the paragraph names mixed in with money. Each tumbles in once and then only bobs. No green dollar, no repeated sprite, no skew flutter. |
+| **No edition label** | The nav wordmark is “AURA” alone, and the footer line is “© year AURA”. “iGEM 2026” stays in metadata and in running copy. |
+| **The colony stays on the herd** | Do not stamp the herd colony onto article banners or cards. Each page keeps its own picture. The shared surface is the drawn paper chrome, including article tables and the background stat cards. |
 
 ### Things that already broke once
 
@@ -81,6 +93,7 @@ These came from the team in session. They override older code.
 - Smooth `scroll-behavior` + programmatic `scrollTop` fights sticky pins. Be careful when debugging scroll.
 - Fal rembg poll path is the **base app** (`fal-ai/imageutils`), not the nested route.
 - Recraft often returns WebP named `.png`. Convert with `sips -s format png` before resize.
+- rembg turns the cows’ white lab coats half-transparent; on the ink banner that shows as grey smudge. `gen-heroes.mjs` asks Nano Banana 2.1 edit for a pure white page and flood-fills it from the corners instead (the closed cocoa outline fences the coat in). Ship the result as palette PNG (`-colors 160 PNG8:`), about 50 KB each.
 
 ---
 
@@ -115,16 +128,16 @@ Do not restyle to GreatBay. Tokens live in `app/globals.css`.
 
 ### Type
 
-- Display: Space Grotesk (`font-display`), tight tracking, `display-hero` / `display-1` / `display-2`
-- Body: Inter
-- Kickers: small, tracked, uppercase - **sans, not mono**
-- No serif display. No code-looking labels. No chunky comic slab like GreatBay’s wordmark.
+- Display: Bagel Fat One (`font-display`), one weight, no negative tracking, `display-hero` / `display-1` / `display-2`, `.pop-text` for the offset shadow
+- Body: Figtree; labels and nav at 800
+- Kickers: heavy Figtree on a butter `.chip-pop`, not tracked caps
+- No serif display. No code-looking labels. Not GreatBay’s slab.
 
 ### Surfaces
 
-- Default page is milk. Articles sit on **one cream paper card** (`article-paper`), not a stack of cards.
+- Default page is milk. Articles sit on **one paper sheet** (`article-paper`), not a stack of cards.
 - Ink for the homepage open, every inner-page hero, and the footer. A homepage story beat may also sit on ink.
-- Buttons, cards, the article sheet, and chips use one drawn chrome: uneven radius, cocoa pen, short offset. Paper surfaces carry a faint tooth. The nav bar, progress rail, and hero stay straight, and the type stays Space Grotesk and Inter.
+- Buttons, cards, the article sheet, and chips use one drawn chrome: uneven radius, solid ink line, solid offset shadow. The nav bar, progress rail, and hero stay straight.
 
 ### Art rules (this is the GreatBay lesson)
 
@@ -186,7 +199,7 @@ Layout, type hierarchy, and motion cost stay in the 21st.dev / AURA sections bel
 ### Homepage
 
 - Sticky cinematic hero (tall pin, ~260vh, matching `old-migrate/`) → milk handoff → story beats.
-- Beats, in order: mastitis summary (`cowSick`) → cost → current tools → idea → milk-to-signal → DBTL → parlour (siphon in the line). CapsuleStory is kept but unmounted.
+- Beats, in order: mastitis summary (udder callout) → cost → current tools → idea → milk-to-signal → DBTL → parlour (siphon in the line). CapsuleStory is kept but unmounted.
 - Each beat is **one idea**. If you need a sticker, use one.
 
 Map to the 21st.dev “reader questions” (wiki version, not SaaS):
@@ -195,7 +208,7 @@ Map to the 21st.dev “reader questions” (wiki version, not SaaS):
 2. **Problem** - the signal is hiding; the bill is loud  
 3. **Failed tools** - SCC, PCR and laboratory testing, pathogen-specific limits; shown, not listed  
 4. **Idea / demo** - the biosensor doing the thing (interactive)  
-5. **Evidence** - stats that are checkable (€35 billion, about 1 in 5, 40–70%)  
+5. **Evidence** - stats that are checkable (up to US$32 billion, about 1 in 5, 40–70%)  
 6. **How we work** - DBTL, not a feature bento of fluff  
 7. **Next** - read the project pages (one action, repeated)
 
@@ -210,8 +223,8 @@ Skip logo walls, fake testimonials, pricing tables, countdown timers.
                  [ previous / read next ]
 ```
 
-- Left rail: pink pill on the active H2. Sticky. Hidden below `lg`.
-- Paper: numbered pink H2s (`01`, `02`…), figures with captions, callouts for “how to read / pending data”.
+- Left rail: solid pink-deep tab, butter dot and underline on the active H2. Sticky. Hidden below `lg`.
+- Paper: ink Bagel H2s with a pink wobbly rule, numbers as butter stickers, figures with captions, callouts for “how to read / pending data”.
 - Photo captions are unnumbered. `WikiFigure` uses one short sentence as both the visible caption and the image alt. That sentence says what is happening. Leave out clothing, incidental hands, and lists of objects. If the frame has no activity worth stating, do not use the image.
 - Read-next at the end. Optional small reader-cow on the next card - not a collage.
 - Progress bar on every page.
@@ -238,7 +251,7 @@ These are **general design rules**, not “install this hero.” Source notes: [
 1. **The hero has one job:** make the next scroll feel worth it. Name what this is. One supporting line. Evidence in the frame (the pour, not a stock shot).
 2. **Fewer blocks, filled honestly.** A menu of nine SaaS sections is not a checklist. Three honest beats beat nine half-filled ones.
 3. **One action, repeated.** Hero, middle, and footer ask for the same thing (keep reading / open Description). Two equal buttons split the response.
-4. **Specificity.** “€35 billion a year” beats “mastitis is a big problem.” If a number cannot be checked, do not put it in the hero.
+4. **Specificity.** “up to US$32 billion a year” beats “mastitis is a big problem.” If a number cannot be checked, do not put it in the hero.
 5. **Demo beats description.** The biosensor, readout, and pour must *do the thing*. A 20-second loop of the idea beats two minutes of caption.
 6. **Split layouts:** message first, picture second in the markup. A phone must not see decoration before a word. Do not `order` your way out of a bad source order.
 7. **Nothing after the close except the footer / read-next.** Extra sections after the ask are a pause, not a finish.
@@ -269,7 +282,7 @@ After any assemble: view source, search `<h1>`, check the bundle.
 ### What a hero must not do
 
 - Autoplay video above the fold (fights JS for the only second that counts). The pour film is **scroll-scrubbed and paused** - never `autoplay`.
-- Block the headline on a font swap. Preload Space Grotesk for the hero face.
+- Block the headline on a font swap. Preload Bagel Fat One for the hero face.
 - Load an animation library for one parallax.
 
 ---
@@ -300,7 +313,7 @@ The pour should feel closer to an **Apple product film** than to a Codrops parti
 
 - Diagnostic-support concept. **Not** a diagnosis, not a cure, not a replacement for vets. Hardware: the electrical response is interpreted in context, rather than as a direct identification of mastitis.
 - Mark pending wet-lab results. Do not imply outcomes. The wet-lab work on `/` is the FAM/BHQ probe screen in buffer against a DNA analogue, not current traces in milk.
-- Homepage bill and herd figures match the background paste: €35 billion a year, about 1 in 5 cows, herd-level incidence 40–70%. The uncited “under 15% is treatment” slice stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count. Do not write that early detection pays; the background paste caveats benefits on accuracy, usability, and validation.
+- Homepage bill and herd figures match the background paste: up to US$32 billion a year, about 1 in 5 cows, herd-level incidence 40–70%. The uncited “under 15% is treatment” slice stays on the homepage only. The herd picture marks cows; it does not print a “N of 24 cows marked” count. Do not write that early detection pays; the background paste caveats benefits on accuracy, usability, and validation.
 - Voice: clear, a bit cinematic, professional. Not cute-for-its-own-sake. Not “revolutionise.”
 - When homepage copy names science or results, use the team-written pages (`description`, `background`, `engineering`, `experiments`, `hardware`, and the attribution PCR note). Do not fill INSERT blocks.
 
@@ -442,7 +455,7 @@ Regen: one pail, one faceless drop, one curd, pink flask, milk flask, one coin.
 - **Idle:** breathe / sway / flask glow, 4–8s, a few pixels. Turn `Art` presets back on. No spin, tumble, walk, pointer-chase on articles.
 - `Art` idle presets (breathe, float, bob, sway) are CSS keyframes on an inner wrapper, not Motion props. Motion rewrites the inline transform every frame, the sprite repaints, and Chrome and Firefox snap the bitmap to whole pixels, so the scale looks stepped. Keyframes run on the compositor and scale smoothly. Firefox still snaps an axis-aligned transform to whole pixels, so the moving presets add `rotate(0.01deg)`; measured in headless Firefox 157, that took the sprite from 15 of 24 distinct frames to 24 of 24 and cut its drift from the eased curve about 7×.
 - **Scroll:** signal beat is one composition (cow flushes pink), not three labeled disasters.
-- **Kill:** `PastureScene`, `DriftingMilk`, `MilkRain`, 40-cow grids, Lucide as science pictures, sprite drop-shadows.
+- **Kill:** `PastureScene`, `DriftingMilk`, `MilkRain`, 40-cow grids, Lucide as science pictures, soft blurred sprite shadows (the hard `.sticker` edge is the one sprite treatment).
 
 ### Order
 

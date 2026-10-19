@@ -29,14 +29,7 @@ export function SectionHeader({
       )}
     >
       {kicker && (
-        <p
-          className="kicker mb-3 flex items-center gap-2"
-          style={{ color: ACCENT_HEX[accent] }}
-        >
-          <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ background: ACCENT_HEX[accent] }}
-          />
+        <p className="chip-pop kicker mb-4" style={{ background: ACCENT_HEX[accent] }}>
           {kicker}
         </p>
       )}
@@ -48,6 +41,7 @@ export function SectionHeader({
       >
         {title}
       </h2>
+      <span className={cn("rule-pop", align === "center" && "mx-auto")} style={{ background: ACCENT_HEX[accent] }} aria-hidden />
       {lede && (
         <p
           className={cn(

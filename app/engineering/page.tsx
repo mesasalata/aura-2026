@@ -5,27 +5,26 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 export const metadata: Metadata = {
   title: "Engineering",
   description:
-    "Two Design–Build–Test–Learn cycles: adapting the miR-21 catapult to miR-223, then comparing probe variants by fluorescence.",
+    "Five Design–Build–Test–Learn cycles: adapting the catapult probe to miR-223, improving its fluorescence response, validating it with RNA at 39 °C, and testing two reset strategies.",
 };
 
 const TOC = [
-  { id: "design-1", label: "Design 1" },
-  { id: "build-1", label: "Build 1" },
-  { id: "test-1", label: "Test 1" },
-  { id: "learn-1", label: "Learn 1" },
-  { id: "design-2", label: "Design 2" },
-  { id: "build-2", label: "Build 2" },
-  { id: "test-2", label: "Test 2" },
-  { id: "learn-2", label: "Learn 2" },
-];
+  { id: "rationale", label: "Rationale" },
+  { id: "cycle-1", label: "Cycle 1: Adapt" },
+  { id: "cycle-2", label: "Cycle 2: Reuse-ready" },
+  { id: "cycle-3", label: "Cycle 3: RNA at 39 °C" },
+  { id: "cycle-4", label: "Cycle 4: RNase H" },
+  { id: "cycle-5", label: "Cycle 5: Strand displacement" },
+  { id: "references", label: "References" },
+]
 
 export default function EngineeringPage() {
   return (
     <WikiMdxShell
       kicker="Project · Engineering"
       accent="butter"
-      title="Two cycles on the miR-223 catapult"
-      lede="Cycle 1 adapted the miR-21 catapult to miR-223 and checked the fold in RNAfold. Cycle 2 compared probe variants by fluorescence and carried the strongest design forward."
+      title="Engineering a reusable miR-223 catapult sensor"
+      lede="Five Design–Build–Test–Learn cycles took the catapult probe from miR-21 to miR-223, to RNA at 39 °C, and to two attempts at resetting the sensor."
       current="/engineering"
       toc={TOC}
     >

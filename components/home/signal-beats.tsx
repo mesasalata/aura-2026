@@ -9,16 +9,16 @@ import {
   useReducedMotion,
   type MotionValue,
 } from "motion/react";
-import { Blob, LINE, SHINE, SOFT_ID, type BlobShape } from "@/components/viz/sketch";
+import { Blob, LINE, type BlobShape } from "@/components/viz/sketch";
 import { cn } from "@/lib/utils";
+import { SiphonBeat } from "@/components/home/siphon-beat";
 
 /* ------------------------------------------------------------------ *
  * SignalBeats - how a milk sample becomes a readable result, as one
- * long scroll-pinned stage. The same vial stays on screen through four
- * chapters (input, recognition, amplification, output) and the liquid
- * itself is scrubbed by scroll: it fills, the biomarker docks, the
- * colour blooms pink, and finally the sample is set beside a healthy
- * control. Same layout vocabulary as the impact beats.
+ * long scroll-pinned stage. A current readout stays on screen through four
+ * chapters (input, recognition, transduction, output): the baseline draws,
+ * miR-223 binds, the current steps, and a no-target control stays flat.
+ * Same layout vocabulary as the impact beats.
  * ------------------------------------------------------------------ */
 
 const INK = LINE;
@@ -95,354 +95,73 @@ function useSpan<T extends number | string>(progress: MotionValue<number>, input
   return useTransform(progress, i, o);
 }
 
-/* --------------------------------------------------------- vial geometry */
+/* --------------------------------------------------------- the readout */
 
-const GLASS = "M54 48 L54 150 Q54 178 82 178 L118 178 Q146 178 146 150 L146 48 Z";
-const CX = 100;
-const SURFACE = 86;
-const FLOOR = 178;
-const VIEWBOX = "28 6 144 190";
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v));
+/** 0→1 across [a, b], clamped. Function transforms are not handed to native timelines. */
+const useRamp = (p: MotionValue<number>, a: number, b: number) => useTransform(p, (v) => clamp01((v - a) / (b - a)));
 
-/* receptor stroke goes from sensor teal to lit pink as the signal amplifies */
-const RECEPTOR_IN = [0.5, 0.7];
-const RECEPTOR_OUT = ["#5aaeb8", "#c4456e"];
-const GLOW_IN = 0.5;
-const GLOW_OUT = 0.82;
+const BASE_Y = 300;
+const STEP_Y = 150;
+const BIND_X = 330;
+const END_X = 560;
+/* the main trace: flat until miR-223 binds, then the current steps */
+const TRACE = `M 70 ${BASE_Y} L ${BIND_X} ${BASE_Y} C ${BIND_X + 34} ${BASE_Y}, ${BIND_X + 26} ${STEP_Y}, ${BIND_X + 60} ${STEP_Y} L ${END_X} ${STEP_Y}`;
+const TRACE_FLAT_SHARE = (BIND_X - 70) / (BIND_X - 70 + 170 + (END_X - BIND_X - 60));
 
-/* liquid colours: pale milk → the faintest tint → pink → hot pink */
-const TINT_IN = [0.4, 0.5, 0.7, 0.86];
-const FRONT_OUT = ["#f3ead8", "#f6e4dc", "#ffd1e3", "#ffc2d9"];
-const BACK_OUT = ["#e4d7bd", "#e9d2ca", "#f7abcb", "#f09bb4"];
-
-function buildWave(amp: number, wavelength: number, phase: number) {
-  const pts: string[] = [];
-  for (let x = -40; x <= 240; x += 8) {
-    const y = SURFACE + amp * Math.sin((x / wavelength) * Math.PI * 2 + phase);
-    pts.push(`${x === -40 ? "M" : "L"}${x} ${y.toFixed(3)}`);
-  }
-  pts.push("L240 300 L-40 300 Z");
-  return pts.join(" ");
-}
-const WAVE = buildWave(3.5, 80, 0);
-
-/* Suspended cells; fixed seed so server and client agree. */
-type Mote = { cx: number; cy: number; r: number; phase: number; pink: boolean };
-const MOTES: Mote[] = (() => {
-  let s = 42;
-  const rand = () => ((s = (s * 9301 + 49297) % 233280) / 233280);
-  return Array.from({ length: 11 }, () => ({
-    cx: 62 + rand() * 76,
-    cy: 100 + rand() * 68,
-    r: 1.2 + rand() * 2.4,
-    phase: rand() * Math.PI * 2,
-    pink: rand() > 0.7,
-  }));
-})();
-
-const SITES = [78, 100, 122];
-const RECEPTOR_Y = 130;
-const STAR = "M0 -5 L1.2 -1.2 L5 0 L1.2 1.2 L0 5 L-1.2 1.2 L-5 0 L-1.2 -1.2 Z";
-const SPARKLES = [
-  { x: 80, y: 118, at: 0.6 },
-  { x: 120, y: 106, at: 0.63 },
-  { x: 100, y: 142, at: 0.66 },
-  { x: 130, y: 140, at: 0.69 },
-  { x: 72, y: 150, at: 0.72 },
-];
-
-/* Drawn marks around the glass: little stars and short dashes radiating away from it. */
-type Mark = { kind: "star" | "dash"; x: number; y: number; angle: number; size: number; color: string; at: number };
-const PINK_DEEP = "var(--color-pink-deep)";
-const MARKS: Mark[] = [
-  { kind: "dash", x: 47, y: 62, angle: -150, size: 7, color: PINK_DEEP, at: 0.62 },
-  { kind: "star", x: 41, y: 92, angle: 0, size: 4.2, color: INK, at: 0.66 },
-  { kind: "dash", x: 46, y: 124, angle: 180, size: 6, color: INK, at: 0.7 },
-  { kind: "star", x: 44, y: 158, angle: 0, size: 3.4, color: PINK_DEEP, at: 0.76 },
-  { kind: "dash", x: 152, y: 58, angle: -30, size: 7, color: INK, at: 0.64 },
-  { kind: "star", x: 160, y: 84, angle: 0, size: 4.6, color: PINK_DEEP, at: 0.68 },
-  { kind: "dash", x: 154, y: 118, angle: 0, size: 6, color: PINK_DEEP, at: 0.72 },
-  { kind: "dash", x: 155, y: 146, angle: 25, size: 5, color: INK, at: 0.78 },
-  { kind: "star", x: 130, y: 186, angle: 0, size: 3.2, color: INK, at: 0.8 },
-  { kind: "dash", x: 72, y: 188, angle: 110, size: 5, color: PINK_DEEP, at: 0.82 },
-];
-
-/* --------------------------------------------------------- vial pieces */
-
-function GlassOutline() {
-  return (
-    <g filter={`url(#${SOFT_ID})`} strokeLinecap="round" strokeLinejoin="round">
-      <path d={GLASS} fill="none" stroke={INK} strokeWidth={2.4} />
-      <path d="M62 48 L62 36 M138 48 L138 36" stroke={INK} strokeWidth={2.2} />
-      <rect x={56} y={28} width={88} height={9} rx={3} fill="var(--color-cream)" stroke={INK} strokeWidth={2} />
-      <path d="M62 60 C 60 90, 61 120, 65 150 C 69 152, 71 150, 69 148 C 66 120, 65 90, 67 60 Z" fill={SHINE} fillOpacity={0.75} />
-    </g>
-  );
-}
-
-function Receptor({ x, stroke, children }: { x: number; stroke: string | MotionValue<string>; children?: React.ReactNode }) {
-  return (
-    <g transform={`translate(${x} ${RECEPTOR_Y})`}>
-      <motion.path d="M0 10 L0 0 M0 0 L-5 -7 M0 0 L5 -7" fill="none" style={{ stroke }} strokeWidth={2} strokeLinecap="round" />
-      {children}
-    </g>
-  );
-}
-
-/** A short dash thrown off a bound site, one of four around the docked marker. */
-function Ray({ angle, at, progress, stroke }: { angle: number; at: number; progress: MotionValue<number>; stroke: MotionValue<string> }) {
-  const reach = useTransform(progress, [at, at + 0.08], [6, 12]);
-  const opacity = useTransform(progress, [at, at + 0.03, at + 0.1, at + 0.16], [0, 0.9, 0.9, 0.55]);
-  const rad = (angle * Math.PI) / 180;
-  const x = useTransform(reach, (r) => Math.cos(rad) * r);
-  const y = useTransform(reach, (r) => Math.sin(rad) * r);
-  return (
-    <motion.path
-      d={`M0 -8 L${(Math.cos(rad) * 4).toFixed(3)} ${(-8 + Math.sin(rad) * 4).toFixed(3)}`}
-      style={{ x, y, opacity, stroke }}
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      fill="none"
-    />
-  );
-}
-
-function OuterMark({ mark, progress }: { mark: Mark; progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [mark.at, mark.at + 0.06], [0.2, 1]);
-  const opacity = useTransform(progress, [mark.at, mark.at + 0.06], [0, 1]);
-  const rad = (mark.angle * Math.PI) / 180;
-  return (
-    <g transform={`translate(${mark.x} ${mark.y}) scale(${mark.kind === "star" ? mark.size / 5 : 1})`}>
-      {mark.kind === "star" ? (
-        <motion.path d={STAR} fill={mark.color} style={{ scale, opacity }} />
-      ) : (
-        <motion.path
-          d={`M0 0 L${(Math.cos(rad) * mark.size).toFixed(3)} ${(Math.sin(rad) * mark.size).toFixed(3)}`}
-          fill="none"
-          stroke={mark.color}
-          strokeWidth={1.8}
-          strokeLinecap="round"
-          style={{ scale, opacity }}
-        />
-      )}
-    </g>
-  );
-}
-
-function DriftingMote({ mote, progress, show }: { mote: Mote; progress: MotionValue<number>; show: MotionValue<number> }) {
-  const y = useTransform(progress, (p) => Math.sin(p * Math.PI * 6 + mote.phase) * 5);
-  return (
-    <motion.g style={{ y, opacity: show }}>
-      <circle cx={mote.cx} cy={mote.cy} r={mote.r} fill={mote.pink ? "var(--color-pink)" : INK} fillOpacity={mote.pink ? 0.4 : 0.16} />
-    </motion.g>
-  );
-}
-
-function DockingSite({ x, i, progress }: { x: number; i: number; progress: MotionValue<number> }) {
-  const at = 0.33 + i * 0.025;
-  const dockY = useTransform(progress, [at, at + 0.09], [-30, 0]);
-  const dockIn = useTransform(progress, [at, at + 0.03], [0, 1]);
-  const lockAt = at + 0.1;
-  const lockScale = useTransform(progress, [lockAt, lockAt + 0.07], [0.5, 1.6]);
-  const lockOpacity = useTransform(progress, [lockAt, lockAt + 0.02, lockAt + 0.07], [0, 0.8, 0]);
-  const stroke = useSpan(progress, RECEPTOR_IN, RECEPTOR_OUT);
-  const rayAt = 0.53 + i * 0.03;
-
-  return (
-    <Receptor x={x} stroke={stroke}>
-      <motion.g style={{ y: dockY, opacity: dockIn }}>
-        <circle cy={-8} r={3.4} fill="var(--color-pink)" />
-      </motion.g>
-      <motion.circle cy={-8} r={9} fill="none" stroke="var(--color-signal)" strokeWidth={1.2} vectorEffect="non-scaling-stroke" style={{ scale: lockScale, opacity: lockOpacity }} />
-      {/* once bound, each site throws four short dashes - the signal leaving the receptor */}
-      {[-135, -45, 45, 135].map((angle, k) => (
-        <Ray key={angle} angle={angle} at={rayAt + k * 0.012} progress={progress} stroke={stroke} />
-      ))}
-    </Receptor>
-  );
-}
-
-function Sparkle({ x, y, at, progress }: { x: number; y: number; at: number; progress: MotionValue<number> }) {
-  const scale = useTransform(progress, [at, at + 0.06], [0.3, 1]);
-  const opacity = useTransform(progress, [at, at + 0.06], [0, 0.95]);
-  return (
-    <g transform={`translate(${x} ${y})`}>
-      <motion.path d={STAR} fill="var(--color-pink-deep)" style={{ scale, opacity }} />
-    </g>
-  );
-}
-
-/** The sample under test: fills, is read, and turns pink as you scroll. */
-function SampleVial({ progress }: { progress: MotionValue<number> }) {
-  const level = useTransform(progress, [0.03, 0.17], [FLOOR + 4, SURFACE]);
-  const waveY = useTransform(level, (y) => y - SURFACE);
-  const waveX = useTransform(progress, [0, 1], [0, -80]);
-  const lineY = useTransform(level, (y) => y - 1);
-  const front = useSpan(progress, TINT_IN, FRONT_OUT);
-  const back = useSpan(progress, TINT_IN, BACK_OUT);
-  const motesIn = useTransform(progress, [0.08, 0.2], [0, 1]);
-
-  const dropY = useTransform(progress, [0.15, 0.22], [-34, SURFACE - 52]);
-  const dropOpacity = useTransform(progress, [0.14, 0.16, 0.21, 0.225], [0, 1, 1, 0]);
-  const rippleScale = useTransform(progress, [0.215, 0.3], [0.15, 1]);
-  const rippleOpacity = useTransform(progress, [0.215, 0.23, 0.3], [0, 0.7, 0]);
-
-  const receptorsIn = useTransform(progress, [0.26, 0.32], [0, 1]);
-
-  /* the glow hugs the drawn silhouette: two stacked drop-shadows on the whole vial, no disc behind it */
-  const glow = useTransform(progress, (p) => {
-    const t = Math.min(1, Math.max(0, (p - GLOW_IN) / (GLOW_OUT - GLOW_IN)));
-    if (t === 0) return "none";
-    const tight = (t * 6).toFixed(1);
-    const wide = (t * 18).toFixed(1);
-    return `drop-shadow(0 0 ${tight}px var(--color-pink-soft)) drop-shadow(0 0 ${wide}px var(--color-pink-soft))`;
+/**
+ * A current readout that follows the chapters: the baseline draws while the
+ * sample is loaded, miR-223 binds at the marker, the current steps, and the
+ * no-target control stays flat beside it. The signal is a current, never a colour.
+ */
+function CurrentReadout({ progress, className }: { progress: MotionValue<number>; className?: string }) {
+  const base = useRamp(progress, 0.04, 0.22);
+  const bind = useRamp(progress, 0.3, 0.44);
+  const step = useRamp(progress, 0.55, 0.7);
+  const control = useRamp(progress, 0.8, 0.92);
+  const trace = useTransform(() => base.get() * TRACE_FLAT_SHARE + step.get() * (1 - TRACE_FLAT_SHARE));
+  const dot = useTransform(bind, (t) => {
+    const k = clamp01(t / 0.45);
+    return k < 0.7 ? (k / 0.7) * 1.25 : 1.25 - 0.25 * ((k - 0.7) / 0.3);
   });
-
-  return (
-    <motion.svg viewBox={VIEWBOX} className="block h-auto w-full overflow-visible" style={{ filter: glow }} aria-hidden>
-      <defs>
-        <clipPath id="signal-glass-sample">
-          <path d={GLASS} />
-        </clipPath>
-      </defs>
-
-      <g clipPath="url(#signal-glass-sample)">
-        <motion.rect x={40} y={0} width={120} height={140} style={{ y: level, fill: back }} />
-        <motion.path d={WAVE} style={{ x: waveX, y: waveY, fill: front }} />
-        <motion.rect x={54} y={0} width={92} height={2} fill={INK} opacity={0.12} style={{ y: lineY }} />
-
-        {MOTES.map((m, i) => (
-          <DriftingMote key={i} mote={m} progress={progress} show={motesIn} />
-        ))}
-
-        <motion.ellipse
-          cx={CX}
-          cy={SURFACE}
-          rx={32}
-          ry={9}
-          fill="none"
-          stroke="var(--color-orange)"
-          strokeWidth={1.4}
-          vectorEffect="non-scaling-stroke"
-          style={{ scale: rippleScale, opacity: rippleOpacity }}
-        />
-
-        <motion.g style={{ opacity: receptorsIn }}>
-          {SITES.map((x, i) => (
-            <DockingSite key={x} x={x} i={i} progress={progress} />
-          ))}
-        </motion.g>
-
-        {SPARKLES.map((s) => (
-          <Sparkle key={s.x} x={s.x} y={s.y} at={s.at} progress={progress} />
-        ))}
-      </g>
-
-      {/* the last drop of the sample, drawn behind the lip so it reads as coming through the mouth */}
-      <motion.g style={{ y: dropY, opacity: dropOpacity }}>
-        <path d="M100 20 C106 30 112 36 112 44 A12 12 0 1 1 88 44 C88 36 94 30 100 20 Z" fill="var(--color-milk)" stroke={INK} strokeWidth={2} strokeLinejoin="round" />
-        <path d="M95 40 C 94 43, 94 46, 95.5 49" fill="none" stroke={INK} strokeOpacity={0.3} strokeWidth={1.4} strokeLinecap="round" />
-      </motion.g>
-
-      <GlassOutline />
-
-      {MARKS.map((m, i) => (
-        <OuterMark key={i} mark={m} progress={progress} />
-      ))}
-    </motion.svg>
-  );
-}
-
-/** The healthy control: same glass, same receptors, nothing docked, milk stays pale. */
-function ControlVial() {
-  return (
-    <svg viewBox={VIEWBOX} className="block h-auto w-full overflow-visible" aria-hidden>
-      <defs>
-        <clipPath id="signal-glass-control">
-          <path d={GLASS} />
-        </clipPath>
-      </defs>
-      <g clipPath="url(#signal-glass-control)">
-        <rect x={40} y={SURFACE} width={120} height={140} fill={BACK_OUT[0]} />
-        <path d={WAVE} fill={FRONT_OUT[0]} transform="translate(-24 0)" />
-        <rect x={54} y={SURFACE - 1} width={92} height={2} fill={INK} opacity={0.12} />
-        {MOTES.filter((m) => !m.pink).map((m, i) => (
-          <circle key={i} cx={m.cx} cy={m.cy} r={m.r} fill={INK} fillOpacity={0.16} />
-        ))}
-        {SITES.map((x) => (
-          <Receptor key={x} x={x} stroke="var(--color-signal)" />
-        ))}
-      </g>
-      <GlassOutline />
-    </svg>
-  );
-}
-
-/* --------------------------------------------------------- the visual */
-
-type Readout = { title: string; verdict: string; note: string; accent: string };
-
-const HEALTHY: Readout = {
-  title: "Without the target",
-  verdict: "Catapult closed",
-  note: "Without the target miRNA, the catapult stays closed.",
-  accent: "var(--color-bio)",
-};
-const INFECTED: Readout = {
-  title: "With miR-223",
-  verdict: "Catapult opens",
-  note: "When the miRNA associates, the FET detects a change in current.",
-  accent: "var(--color-pink)",
-};
-
-function Verdict({ r, opacity, y }: { r: Readout; opacity: MotionValue<number>; y: MotionValue<number> }) {
-  return (
-    <motion.div style={{ opacity, y }} className="mt-2 flex flex-col items-center text-center sm:mt-3">
-      <span
-        className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.6rem] font-semibold uppercase tracking-widest text-ink sm:px-3 sm:text-[0.68rem]"
-        style={{ background: `color-mix(in srgb, ${r.accent} 28%, transparent)` }}
-      >
-        <Blob shape="c" fill={r.accent} className="h-2.5 w-2.5" soft={false} />
-        {r.verdict}
-      </span>
-      <p className="mt-2 font-display text-base text-ink sm:text-lg">{r.title}</p>
-      <p className="mt-1 hidden max-w-[22ch] text-sm leading-relaxed text-ink-70 sm:block">{r.note}</p>
-    </motion.div>
-  );
-}
-
-function SignalVisual({ progress, className }: { progress: MotionValue<number>; className?: string }) {
-  const reduce = useReducedMotion();
-
-  /* output: the sample slides to its column and the control appears beside it */
-  const sampleX = useTransform(progress, [0.76, 0.88], ["-50%", "0%"]);
-  const controlOpacity = useSpan(progress, [0.8, 0.9], [0, 1]);
-  const controlX = useTransform(progress, [0.8, 0.9], [reduce ? "0%" : "-18%", "0%"]);
-  const verdictOpacity = useSpan(progress, [0.88, 0.97], [0, 1] as number[]);
-  const verdictY = useTransform(progress, [0.88, 0.97], [reduce ? 0 : 14, 0]);
+  const pulse = useTransform(bind, (t) => 1 + 1.8 * clamp01((t - 0.4) / 0.6));
+  const pulseOpacity = useTransform(bind, (t) => (t < 0.4 || t >= 1 ? 0 : 1 - (t - 0.4) / 0.6));
+  const marker = useTransform(bind, (t) => clamp01((t - 0.7) / 0.3));
+  const stepLabel = useTransform(step, (t) => clamp01((t - 0.6) / 0.4));
 
   return (
     <div
       role="img"
-      aria-label="A milk sample in a biosensor vial. As you scroll it is loaded, the DNA catapult binds miR-223 if it is present, and the sample is set beside a control without the target: without the target the catapult stays closed; with miR-223 the catapult opens and the FET current changes."
-      className={cn("relative grid w-full grid-cols-2", className)}
+      aria-label="A current readout. While the sample is loaded the current holds a flat baseline; when miR-223 binds the DNA catapult the current steps; a control without the target stays flat."
+      className={cn("hand relative w-full bg-milk p-3 sm:p-5", className)}
     >
-      <motion.div style={{ opacity: controlOpacity, x: controlX }} className="flex flex-col items-center px-3 sm:px-6">
-        <ControlVial />
-        <Verdict r={HEALTHY} opacity={verdictOpacity} y={verdictY} />
-      </motion.div>
+      <svg viewBox="0 0 620 400" className="block h-auto w-full" aria-hidden>
+        {/* axes */}
+        <path d={`M 70 60 V ${BASE_Y + 40} H ${END_X + 30}`} fill="none" stroke={INK} strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+        <text x={46} y={200} textAnchor="middle" transform="rotate(-90 46 200)" className="fill-ink font-display" fontSize="22">current</text>
+        <text x={END_X + 30} y={BASE_Y + 74} textAnchor="end" className="fill-ink font-display" fontSize="22">time</text>
 
-      <motion.div style={{ x: sampleX }} className="flex flex-col items-center px-3 sm:px-6">
-        <SampleVial progress={progress} />
-        <Verdict r={INFECTED} opacity={verdictOpacity} y={verdictY} />
-      </motion.div>
+        {/* the no-target control: flat all the way */}
+        <motion.path d={`M 70 ${BASE_Y} H ${END_X}`} fill="none" stroke="var(--color-bio)" strokeWidth="7" strokeDasharray="2 14" strokeLinecap="round" style={{ pathLength: control }} />
+        <motion.text x={END_X} y={BASE_Y + 32} textAnchor="end" className="fill-ink font-display" fontSize="20" style={{ opacity: control }}>
+          without the target
+        </motion.text>
 
-      <motion.div
-        aria-hidden
-        style={{ opacity: verdictOpacity }}
-        className="pointer-events-none absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2 text-center"
-      >
-        <p className="font-display text-sm text-ink-40">vs</p>
-      </motion.div>
+        {/* binding marker: a red dot where miR-223 binds */}
+        <motion.path d={`M ${BIND_X + 20} 70 V ${BASE_Y + 36}`} stroke={INK} strokeWidth="3" strokeDasharray="6 8" strokeLinecap="round" style={{ opacity: marker }} />
+        <motion.text x={BIND_X + 34} y={84} className="fill-pink-deep font-display" fontSize="22" style={{ opacity: marker }}>
+          miR-223 binds
+        </motion.text>
+
+        {/* the sample's trace */}
+        <motion.path d={TRACE} fill="none" stroke="var(--color-signal)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" style={{ pathLength: trace }} />
+
+        <motion.circle cx={BIND_X + 20} cy={BASE_Y} r={14} fill="none" stroke="var(--color-coral-deep)" strokeWidth="4" vectorEffect="non-scaling-stroke" style={{ scale: pulse, opacity: pulseOpacity }} />
+        <motion.circle cx={BIND_X + 20} cy={BASE_Y} r={14} fill="var(--color-coral-deep)" stroke={INK} strokeWidth="4" style={{ scale: dot }} />
+        <motion.text x={END_X} y={STEP_Y - 22} textAnchor="end" className="fill-ink font-display" fontSize="20" style={{ opacity: stepLabel }}>
+          change in current
+        </motion.text>
+      </svg>
     </div>
   );
 }
@@ -462,25 +181,31 @@ function Chapter({ stage, i, progress }: { stage: Stage; i: number; progress: Mo
       className={cn("[grid-area:1/1]", reduce && !last && "invisible")}
       aria-hidden={reduce && !last ? true : undefined}
     >
-      <div className="font-display text-[clamp(2.5rem,6.6vw,6rem)] leading-[0.95] tracking-[-0.04em] text-ink">{stage.label}</div>
-      <p className="mt-3 text-lg font-medium text-ink sm:mt-5 sm:text-2xl">{stage.tag}</p>
-      <p className="mt-1.5 max-w-md text-[0.9rem] leading-relaxed text-ink-70 sm:mt-2 sm:text-lg">{stage.desc}</p>
+      <div className="pop-text font-display text-[clamp(2.4rem,6.2vw,5.6rem)] leading-[0.98] text-ink [--pop:var(--color-pink)]">{stage.label}</div>
+      <p className="mt-4 text-lg font-extrabold text-ink sm:mt-6 sm:text-2xl">{stage.tag}</p>
+      <p className="mt-1.5 max-w-md text-[0.9rem] leading-relaxed text-ink/80 sm:mt-2 sm:text-lg">{stage.desc}</p>
     </motion.div>
   );
 }
 
-function Wash({ stage, i, progress }: { stage: Stage; i: number; progress: MotionValue<number> }) {
-  const [a, , , d] = stage.window;
-  const start = i === 0 ? 0 : a;
-  const end = i === LAST ? 1 : d;
-  const opacity = useSpan(
-    progress,
-    i === 0 ? [end - 0.05, end] : i === LAST ? [start, start + 0.05] : [start, start + 0.05, end - 0.05, end],
-    i === 0 ? [0.11, 0] : i === LAST ? [0, 0.11] : [0, 0.11, 0.11, 0],
-  );
+/* Each stage's accent mixed 38% into milk, as solid hex so Motion can blend them. */
+const WASH_TONES = ["#f9c8a8", "#bbd6d0", "#f6dfad", "#efb6bf"];
+
+/** One solid wash behind the vial. It changes colour between chapters and never fades. */
+function SolidWash({ progress }: { progress: MotionValue<number> }) {
+  const input: number[] = [0];
+  const output: string[] = [WASH_TONES[0]];
+  STAGES.forEach((stage, i) => {
+    if (i === 0) return;
+    input.push(STAGES[i - 1].window[2], stage.window[1]);
+    output.push(WASH_TONES[i - 1], WASH_TONES[i]);
+  });
+  input.push(1);
+  output.push(WASH_TONES[LAST]);
+  const fill = useTransform(progress, input, output);
   return (
-    <motion.div style={{ opacity }} className="absolute inset-0">
-      <Blob shape={stage.wash} fill={stage.accent} className="h-full w-full" />
+    <motion.div className="absolute inset-0" style={{ "--wash": fill } as React.ComponentProps<typeof motion.div>["style"]}>
+      <Blob shape="b" fill="var(--wash)" outline className="h-full w-full" />
     </motion.div>
   );
 }
@@ -503,53 +228,9 @@ export function SignalBeats({
 } = {}) {
   return (
     <div className="relative">
-      {intro && <SignalIntro />}
+      {intro && <SiphonBeat />}
       <SignalStage caption={caption} />
     </div>
-  );
-}
-
-function SignalIntro() {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const done = useMotionValue(1);
-  const progress = reduce ? done : scrollYProgress;
-
-  const enter = useSpan(progress, [0, 0.12], [0, 1]);
-  const washY = useTransform(progress, [0, 1], [reduce ? 0 : 40, reduce ? 0 : -40]);
-  const textY = useTransform(progress, [0, 1], [reduce ? 0 : 36, reduce ? 0 : -28]);
-
-  return (
-    <section
-      ref={ref}
-      className={cn("relative bg-milk", reduce ? "min-h-svh" : "h-[150vh]")}
-      aria-label="How a siphoned sample reaches the FET"
-    >
-      <div className={cn("top-0 h-svh overflow-hidden", reduce ? "relative" : "sticky")}>
-        <motion.div
-          aria-hidden
-          style={{ y: washY }}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2"
-        >
-          <Blob shape="a" fill="var(--color-signal)" className="h-full w-full opacity-[0.12]" />
-        </motion.div>
-        <motion.div
-          style={{ opacity: enter, y: textY }}
-          className="relative mx-auto flex h-full w-full max-w-4xl flex-col items-center justify-center px-6 text-center"
-        >
-          <p className="font-display text-[clamp(2.4rem,5.6vw,4.6rem)] leading-[1.06] tracking-tight text-ink text-balance">
-            How a siphoned sample reaches the FET
-          </p>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-70 text-pretty">
-            During each milking session a small sample of milk is siphoned to a sampling chamber and
-            passes over the biosensor surface. When miR-223 associates with the DNA catapult, the
-            local electrical field changes and the FET detects a change in electrical current
-            between the source and the drain.
-          </p>
-        </motion.div>
-      </div>
-    </section>
   );
 }
 
@@ -578,12 +259,10 @@ function SignalStage({ caption }: { caption?: string }) {
           style={{ y: washY }}
           className="pointer-events-none absolute right-[-14vmin] top-1/2 h-[88vmin] w-[88vmin] -translate-y-1/2"
         >
-          {STAGES.map((s, i) => (
-            <Wash key={s.index} stage={s} i={i} progress={progress} />
-          ))}
+          <SolidWash progress={progress} />
         </motion.div>
 
-        <motion.div style={{ opacity: enter }} className="relative mx-auto flex h-full w-full max-w-7xl flex-col px-5 pt-16 pb-16 sm:px-8 sm:pt-20 sm:pb-10">
+        <motion.div style={{ opacity: enter }} className="relative mx-auto flex h-full w-full max-w-7xl flex-col px-5 pt-24 pb-16 sm:px-8 sm:pt-20 sm:pb-10">
           <div className="grid flex-1 grid-rows-[auto_minmax(0,1fr)] items-center gap-4 max-lg:content-start lg:grid-cols-2 lg:grid-rows-1 lg:gap-12">
             <motion.div style={{ y: textY, x: textX }} className="relative max-lg:pt-2 lg:order-1">
               {caption && <p className="kicker mb-4 text-pink-deep">{caption}</p>}
@@ -596,9 +275,9 @@ function SignalStage({ caption }: { caption?: string }) {
 
             <motion.div
               style={{ y: visualY, scale: visualScale }}
-              className="relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[42svh] max-lg:self-end max-lg:[&>*]:max-h-full lg:order-2"
+              className="relative flex min-h-0 w-full items-center justify-center max-lg:max-h-[42svh] max-lg:self-start max-lg:[&>*]:max-h-full lg:order-2"
             >
-              <SignalVisual progress={progress} className="max-w-[38rem] max-lg:w-[min(100%,66svh)]" />
+              <CurrentReadout progress={progress} className="max-w-[38rem] max-lg:w-[min(100%,58svh)]" />
             </motion.div>
           </div>
         </motion.div>

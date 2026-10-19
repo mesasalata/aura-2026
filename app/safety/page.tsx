@@ -4,16 +4,14 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Safety",
-  description: "Containment, responsible use, and iGEM safety compliance for AURA.",
+  description: "Lab safety training and procedures, AURA's cell-free in vitro design, and responsible use as a screening tool.",
 };
 
 const TOC = [
-  { id: "overview", label: "Overview" },
-  { id: "commitments", label: "Commitments" },
-  { id: "organisms", label: "Organisms" },
-  { id: "release", label: "Release" },
-  { id: "dual-use", label: "Dual use" },
-  { id: "igem", label: "iGEM" },
+  { id: "team", label: "Team safety" },
+  { id: "project", label: "Project safety" },
+  { id: "responsible-use", label: "Responsible use" },
+  { id: "references", label: "References" },
 ];
 
 export default function Page() {
@@ -21,8 +19,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Engagement · Safety"
       accent="coral"
-      title="Containment & responsible use"
-      lede="In-vitro by design, no environmental release, and claims matched to validation."
+      title="Safety and security"
+      lede="EPFL safety training, standard lab procedures, a cell-free in vitro project, and a sensor meant to prompt investigation rather than decide treatment."
       current="/safety"
       toc={TOC}
     >

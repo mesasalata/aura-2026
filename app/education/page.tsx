@@ -5,28 +5,31 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 export const metadata: Metadata = {
   title: "Education",
   description:
-    "Synthetic Biology Club, a learning website, a card game, and workshops for students from about age 8 through 17.",
+    "Making synthetic biology understandable, interactive, and accessible: a weekly club, workshops, community talks, a website, a card game, and written science communication.",
 };
 
 const TOC = [
-  { id: "overview", label: "What we taught" },
-  { id: "club", label: "SynBio club" },
+  { id: "overview", label: "Overview" },
+  { id: "approach", label: "Our approach" },
   { id: "website", label: "Website" },
-  { id: "isl", label: "ISL workshop" },
   { id: "game", label: "Card game" },
-  { id: "bake-sale", label: "Bake sale" },
-  { id: "juniors", label: "Juniors" },
+  { id: "rolle", label: "Rolle outreach" },
+  { id: "club", label: "SynBio Club" },
+  { id: "isl", label: "ISL workshop" },
+  { id: "juniors", label: "Junior workshop" },
   { id: "bookfete", label: "Bookfête" },
-  { id: "workshop", label: "Junior workshop" },
-];
+  { id: "reatch", label: "Reatch" },
+  { id: "other", label: "Outreach & fundraising" },
+  { id: "learned", label: "What we learned" },
+]
 
 export default function Page() {
   return (
     <WikiMdxShell
       kicker="Engagement · Education"
       accent="butter"
-      title="Synthetic biology, taught in the open"
-      lede="A weekly club at Le Rosey, a public learning site, a card game, and workshops for students from about age 8 through 17."
+      title="Making synthetic biology understandable, interactive, and accessible"
+      lede="A weekly club, workshops, community talks, an educational website, a card game, and written science communication, each adapted to its audience."
       current="/education"
       toc={TOC}
     >

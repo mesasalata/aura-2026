@@ -16,6 +16,7 @@ import { PailSplit } from "@/components/viz/pail-split";
 import { Blob, type BlobShape } from "@/components/viz/sketch";
 import { CashBurst } from "@/components/home/cash-burst";
 import { CREAM50, MILK, WaveSeam } from "@/components/site/wave-seam";
+import { COLONY_FLOOR } from "@/components/viz/infection-bloom";
 import { ACCENT_HEX } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -73,7 +74,7 @@ function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length =
             side === "left" ? "right-[-14vmin]" : "left-[-14vmin]",
           )}
         >
-          <Blob shape={wash} fill={accent} className="h-full w-full opacity-[0.11]" />
+          <Blob shape={wash} fill={`color-mix(in srgb, ${accent} 38%, var(--color-milk))`} outline className="h-full w-full" />
         </motion.div>
         {backdrop?.(progress)}
 
@@ -105,7 +106,7 @@ function Beat({ index, kicker, side, accent, tone = "milk", wash = "a", length =
 
 function Big({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={cn("font-display text-[clamp(3.6rem,11.5vw,10.5rem)] leading-[0.92] tracking-[-0.045em] text-ink", className)}>
+    <div className={cn("pop-text font-display text-[clamp(3.4rem,10.5vw,9.5rem)] leading-[0.95] text-ink [--pop:var(--color-pink)]", className)}>
       {children}
     </div>
   );
@@ -114,8 +115,8 @@ function Big({ children, className }: { children: React.ReactNode; className?: s
 function Copy({ label, sub }: { label: string; sub: string }) {
   return (
     <>
-      <p className="mt-4 text-xl font-medium text-ink sm:mt-5 sm:text-2xl">{label}</p>
-      <p className="mt-1.5 max-w-md text-[0.95rem] leading-relaxed text-ink-70 sm:mt-2 sm:text-lg">{sub}</p>
+      <p className="mt-5 inline-block text-xl font-extrabold text-ink sm:mt-6 sm:text-2xl">{label}</p>
+      <p className="mt-1.5 max-w-md text-[0.95rem] leading-relaxed text-ink/80 sm:mt-2 sm:text-lg">{sub}</p>
     </>
   );
 }
@@ -129,7 +130,7 @@ export function ImpactIntroBeat() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
   const done = useMotionValue(1);
   const progress = reduce ? done : scrollYProgress;
-  const enter = useTransform(progress, [0, 0.12], [0, 1]);
+  const enter = useTransform(progress, [0, 0.12, 1], [0, 1, 1]);
   const textY = useTransform(progress, [0, 1], [reduce ? 0 : 36, reduce ? 0 : -28]);
   const washY = useTransform(progress, [0, 1], [reduce ? 0 : 40, reduce ? 0 : -40]);
 
@@ -145,7 +146,7 @@ export function ImpactIntroBeat() {
           style={{ y: washY }}
           className="pointer-events-none absolute left-1/2 top-1/2 h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2"
         >
-          <Blob shape="b" fill={ACCENT_HEX.coral} className="h-full w-full opacity-[0.12]" />
+          <Blob shape="b" fill={`color-mix(in srgb, ${ACCENT_HEX.coral} 34%, var(--color-milk))`} outline className="h-full w-full" />
         </motion.div>
         <motion.div
           style={{ opacity: enter, y: textY }}
@@ -174,7 +175,7 @@ export function ImpactIntroBeat() {
   );
 }
 
-/** €35 billion plunge chart beat. */
+/** Up to US$32 billion plunge chart beat. */
 export function ImpactBillBeat() {
   return (
     <Beat
@@ -199,7 +200,7 @@ export function ImpactHerdBeat() {
       index="02"
       kicker="The herd"
       side="right"
-      accent={ACCENT_HEX.pink}
+      accent={ACCENT_HEX.butter}
       tone="cream"
       length="h-[420vh]"
       text={(p) => <HerdCopy progress={p} />}
@@ -238,7 +239,7 @@ export function ImpactBeats({ through = "treatment" }: { through?: "herd" | "tre
       <ImpactHerdBeat />
       {through === "treatment" && (
         <>
-          <WaveSeam from={CREAM50} to={MILK} />
+          <WaveSeam from={COLONY_FLOOR} to={MILK} />
           <ImpactTreatmentBeat />
         </>
       )}
@@ -251,7 +252,9 @@ function BillCopy({ progress }: { progress: MotionValue<number> }) {
   return (
     <>
       <Big>
-        <CountUp to={35} prefix="€" progress={count} />
+        <span className="text-[0.32em] lg:block">up to </span>
+        <span className="text-[0.38em]">US</span>
+        <CountUp to={32} prefix="$" progress={count} />
         <span className="text-[0.38em]"> billion</span>
       </Big>
       <Copy

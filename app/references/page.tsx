@@ -4,22 +4,22 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "References",
-  description: "Sources and further reading cited across the AURA wiki.",
+  description: "Published sources and stakeholder consultations cited across the AURA wiki.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "list", label: "Bibliography" },
-  { id: "further", label: "Further reading" },
-];
+  { id: "literature", label: "Literature" },
+  { id: "consultations", label: "Consultations" },
+]
 
 export default function Page() {
   return (
     <WikiMdxShell
       kicker="Team · References"
       accent="ink"
-      title="Sources & further reading"
-      lede="Bibliography for mastitis biology, economics, detection, and biosensor context."
+      title="Sources"
+      lede="Every published source and stakeholder consultation cited on the AURA wiki, in one list."
       current="/references"
       toc={TOC}
     >

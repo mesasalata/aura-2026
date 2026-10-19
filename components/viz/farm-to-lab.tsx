@@ -45,17 +45,17 @@ export function FarmToLabPipeline() {
         >
           <div className="flex w-[4.5rem] flex-col items-center gap-1.5 text-center sm:w-20">
             <div className="relative grid h-14 w-14 place-items-center sm:h-16 sm:w-16">
-              <Blob shape={(["a", "b", "c", "d"] as const)[i % 4]} fill={s.accent} className="absolute inset-0 h-full w-full opacity-25" />
+              <Blob shape={(["a", "b", "c", "d"] as const)[i % 4]} fill={`color-mix(in srgb, ${s.accent} 50%, var(--color-milk))`} outline className="absolute inset-0 h-full w-full" />
               <div className="relative">{s.glyph}</div>
             </div>
             <div>
-              <p className="text-xs font-semibold text-ink sm:text-sm">{s.label}</p>
+              <p className="font-display text-sm text-ink sm:text-base">{s.label}</p>
               <p className="text-[0.65rem] leading-snug text-ink-55 sm:text-xs">{s.sub}</p>
             </div>
           </div>
           {i < STEPS.length - 1 && (
-            <svg viewBox="0 0 24 12" className="mt-6 hidden h-3 w-6 text-ink-40 sm:block" aria-hidden>
-              <path d="M2 6 C 8 5, 14 7, 21 6 M17 2 L22 6 L17 10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            <svg viewBox="0 0 24 12" className="mt-6 hidden h-3 w-6 text-ink sm:block" aria-hidden>
+              <path d="M2 6 C 8 5, 14 7, 21 6 M17 2 L22 6 L17 10" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
         </motion.div>

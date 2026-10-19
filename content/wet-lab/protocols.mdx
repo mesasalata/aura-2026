@@ -1,65 +1,149 @@
-<Section id="overview" title="Protocols overview" kicker="01">
+<Section id="overview" title="Overview" kicker="01">
 
-Reproducible methods for AURA bench work. Each protocol lists reagents, steps, controls, and what can go wrong. Update versions are noted in the notebook when conditions change.
+These are the bench methods behind our fluorescence experiments, collected in one place so that another team can repeat them. They are taken from the methods of Experiment 1, Experiment 2 and our Measurement page; the full results are on the Experiments page.
+
+<DataTable
+  head={["Protocol", "Used for"]}
+  rows={[
+    ["RNase-free workspace and oligo resuspension", "Preparing probes and targets"],
+    ["Hairpin refolding and beacon QC", "Making sure each probe starts closed"],
+    ["Fluorescence binding assay", "Comparing probe designs and measuring target binding"],
+    ["Temperature-performance assay at 39 °C", "Testing binding under milk-like temperature"],
+    ["RNase H reset", "Reducing the signal from bound miR-223 RNA"],
+    ["Toehold-mediated strand displacement", "A second reset strategy using replacer strands and beads"],
+  ]}
+/>
+
+All experiments were cell-free and used synthetic oligonucleotides in buffer.
 
 </Section>
 
-<Section id="milk" title="Milk sample preparation" kicker="02">
+<Section id="preparation" title="Workspace and oligo preparation" kicker="02">
 
-**Purpose.** Prepare consistent milk matrix for spiking and assay development.
+### RNase-free workspace
 
-**Outline.**
-1. Collect or thaw milk aliquots; record source and date
-2. Centrifuge to remove fat if required for assay format
-3. Filter or dilute per assay SOP; document dilution factor
-4. Spike miR-223 at defined concentrations; include unspiked control
+1. Wipe benchtop, pipettes, and tube racks with RNase AWAY, then rinse with nuclease-free water. Let air dry.
+2. Use filter tips throughout. Wear gloves; change after touching shared surfaces.
+3. Label all tubes before filling. Wrap every FAM-labelled tube in foil immediately.
+4. Keep a dedicated DNA-only zone, with no shared pipettes between beacon and target tubes.
 
-<Callout variant="lab" title="Matrix matters">
-  Buffer-only controls are necessary but not sufficient - always include unspiked and spiked milk. Milk is ionic; that is why the reference electrodes exist.
+### Resuspend oligonucleotides
+
+Resuspension volume (µL) = nmol delivered × 10, giving a 100 µM stock.
+
+1. Centrifuge the sealed shipping tube at 500×g for 30 s before opening.
+2. Add the calculated buffer volume slowly against the tube wall.
+3. Vortex 10 s, incubate at 37 °C for 5 min, then vortex 10 s again.
+4. Aliquot 10 µL single-use portions into amber tubes. Store at −20 °C.
+5. Make 10 µM working stocks: 10 µL of 100 µM stock + 90 µL matching buffer.
+
+</Section>
+
+<Section id="refold" title="Hairpin refolding and beacon QC" kicker="03">
+
+### Refold the hairpin beacon
+
+1. Add 960 µL of 1× binding buffer to a low-binding 1.5 mL amber tube.
+2. Add 240 µL of 10 µM beacon working stock (giving 1,200 µL at 1 µM).
+3. Mix by gentle inversion 10×.
+4. Thermocycler: 95 °C × 5 min, ramp to 25 °C at 0.1 °C/s (~11.7 min), hold 25 °C × 5 min, then hold at 4 °C. As a fallback, heat to 95 °C × 5 min on a heat block, turn the block off, and cool passively on the bench.
+5. Wrap in foil. Use within 24 h if stored at 4 °C, or aliquot and freeze at −20 °C.
+6. On the assay day, dilute the 1 µM refolded stock 1:5 in 1× binding buffer to make 200 nM.
+
+### Beacon quality control
+
+Run before every binding experiment, in triplicate, with 40 µL per well in a 384-well black flat-bottom plate:
+
+<DataTable
+  head={["Well", "Recipe (40 µL total)", "Measures"]}
+  rows={[
+    ["A: F_buffer", "40 µL 1× buffer", "Instrument background"],
+    ["B: F_closed", "4 µL of 1 µM refolded beacon + 36 µL buffer", "OFF-state background"],
+    ["C: F_open", "4 µL of 1 µM beacon + 2 µL of 10 µM opener + 34 µL buffer; equilibrate 2 h at 37 °C", "F_max reference"],
+    ["D: F_thermal", "4 µL of 1 µM beacon + 36 µL buffer; heat sealed plate 95 °C × 5 min; read immediately at assay temp", "Label integrity check"],
+  ]}
+/>
+
+<Callout variant="lab" title="QC pass criteria">
+  <div className="space-y-2 text-base text-ink">
+    <p>QE = 1 − (F<sub>closed</sub> − F<sub>buffer</sub>) / (F<sub>open</sub> − F<sub>buffer</sub>). Pass: QE ≥ 0.85</p>
+    <p>DR = (F<sub>open</sub> − F<sub>buffer</sub>) / (F<sub>closed</sub> − F<sub>buffer</sub>). Pass: DR ≥ 8×</p>
+    <p>Label-integrity ratio = (F<sub>thermal</sub> − F<sub>buffer</sub>) / (F<sub>open</sub> − F<sub>buffer</sub>). Pass: 0.7–1.2</p>
+  </div>
 </Callout>
 
 </Section>
 
-<Section id="binding" title="Catapult opening screen" kicker="03">
+<Section id="assay" title="Fluorescence binding assay" kicker="04">
 
-**Purpose.** Compare DNA-catapult candidates against purified miR-223 and milk matrix.
+1. Prepare probe and target/control solutions in 1× PBS with 5 mM MgCl₂, at 200 nM each (2× working concentration).
+2. Dispense 20 µL probe mix and 20 µL target/control mix into each well, for a final volume of **40 µL** with approximately **100 nM probe and 100 nM target** where applicable.
+3. Prepare at least three technical replicates per condition.
+4. Include a no-target control, a complementary positive target and a background (water) blank.
+5. Measure FAM fluorescence using consistent excitation, emission and gain settings, at a constant temperature, at fixed time intervals.
+6. Keep individual replicate values before calculating the mean.
+7. Calculate mean RFU, SD, SNR and fluorescence change as required, and compare target-containing samples with matched controls rather than interpreting RFU alone.
+8. Report the instrument settings and whether any blank subtraction or calibration was performed.
 
-**Outline.**
-1. Immobilise candidate catapult on the FET gate (or a screening surface)
-2. Incubate with miR-223 in buffer, then in diluted milk
-3. Wash; include irrelevant-RNA control
-4. Read opening (shape change / current) against the closed-stem baseline
+### Plate reader settings we recorded
 
-<Placeholder label="Full step-by-step with volumes - expand before submission" />
-
-</Section>
-
-<Section id="fet" title="FET current traces" kicker="04">
-
-**Purpose.** Turn catapult opening into source–drain current.
-
-**Outline.**
-1. Mount the gated surface; record closed-stem baseline in unspiked milk
-2. Introduce miR-223 spike or field sample
-3. Record current between source and drain through the milking-pulse window
-4. Subtract that run's reference-electrode baseline to get the residual
-
-</Section>
-
-<Section id="electrodes" title="Reference electrodes" kicker="05">
-
-**Purpose.** Taste this sample's salt and electrochemical noise before the chamber, so ionic milk is less likely to raise a false flag.
-
-**Outline.**
-1. Place electrodes upstream of the siphon chamber
-2. Register ionic concentration and electrochemical activity for that pulse
-3. Store the baseline with the FET trace for the same cow and milking
-4. Feed both into the on-farm load score
+<DataTable
+  head={["Parameter", "Setting"]}
+  rows={[
+    ["Reader", "Agilent BioTek Cytation 5, Gen5 3.16"],
+    ["Plate", "Greiner Bio-One 781906, black 384-well µCLEAR, non-binding"],
+    ["Read optics", "Top, 8.55 mm reading height"],
+    ["Excitation / emission", "492 nm / 530 nm, 20 nm bandpass each"],
+    ["Gain", "Extended"],
+    ["Read speed", "Normal"],
+    ["Measurement interval", "Every 5 min"],
+    ["Temperature", "30 °C (probe screen, 120 min) or 39 °C (Experiment 2, 30 min)"],
+  ]}
+/>
 
 </Section>
 
-<Section id="waste" title="Waste & decontamination" kicker="06">
+<Section id="temperature" title="Temperature-performance assay at 39 °C" kicker="05">
 
-All biological waste is decontaminated per institutional SOP before disposal. No engineered material leaves the lab except documented, inactivated samples for analysis.
+1. Prepare the sensor-side and target/control-side working mixes at 200 nM in 1× PBS/5 mM MgCl₂; this gives 100 nM of each intended strand after mixing equal 20 µL volumes.
+2. Dispense 20 µL sensor mix and 20 µL target/control mix into each assigned well. Use three technical replicates per condition.
+3. Include: v2 sensor + water, v2 + miR223_DNA, v2 + miR21_DNA, 3′-end-shortened sensor + water, 3′-end-shortened sensor + miR223_DNA, and a water blank.
+4. Begin FAM reads immediately after mixing. Acquire a time-zero read and repeated measurements for a recorded 30 min hold at 39 °C.
+5. Subtract the water blank. Retain each technical replicate, calculate ΔF from time 0, and calculate fold-change relative to the matched sensor-only control.
+
+</Section>
+
+<Section id="rnaseh" title="RNase H reset" kicker="06">
+
+1. Prepare the miRNA-223 probe reactions using **three technical replicates per condition**, with a final volume of **40 µL per well** and probe and target at **100 nM** where applicable.
+2. Prepare RNA-containing samples with **synthetic miRNA-223**, since RNase H acts on RNA–DNA hybrids. Include **ssDNA miR-223 and no-target samples** as reference conditions.
+3. For the RNA conditions assigned to RNase H treatment, add **0.4 µL RNase H per reaction** (Thermo Scientific EN0201, 5 U/µL; approximately 2 U per well) in 1× buffer with 5 mM MgCl₂. Add it near the top of the well and centrifuge the plate to mix.
+4. Start measuring immediately (we had a delay of about 1 minute). Measure fluorescence at approximately **39 °C** over **30 minutes**, at **0, 5, 10, 15, 20, 25 and 30 minutes**.
+5. Compare the change in fluorescence of the **miRNA-223 + RNase H** samples with the ssDNA reference and no-target traces.
+6. To test whether the probe can respond again, add fresh **ssDNA miR-223** to the treated samples and measure for a further 30 minutes.
+
+<Callout title="Control to add">
+
+Our ssDNA reference was not treated with RNase H. Including an RNase H-treated DNA reference would show how much of the signal decrease comes specifically from enzymatic RNA degradation.
+
+</Callout>
+
+</Section>
+
+<Section id="strand-displacement" title="Toehold-mediated strand displacement" kicker="07">
+
+1. Prepare the selected miR-223 probe with either **ssDNA miR-223 or miRNA-223** and the appropriate **9 bp or 13 bp biotinylated replacer strand**, using three technical replicates per condition.
+2. Measure fluorescence **before bead treatment** to obtain a pre-bead reference measurement.
+3. Add **magnetic streptavidin beads** to the samples designated for bead treatment (approximately **0.8 µL of beads per well**).
+4. Wash the bead-containing samples **three times**, using **40 µL of wash buffer** (1× PBS, 5 mM MgCl₂) per wash.
+5. Resuspend the beads after washing and add **sensorResetter** to the appropriate conditions, to a final concentration of approximately **110 nM**.
+6. For the re-detection conditions, add fresh **ssDNA miR-223 or miRNA-223**. Control conditions receive water instead.
+7. Measure fluorescence and compare it with the corresponding pre-bead and no-bead reference conditions.
+
+<Callout title="What we would change">
+
+Many beads were likely lost during our washes, which made the result inconclusive. Increasing or optimizing bead quantity, improving bead retention during washing, and adding controls that distinguish molecular resetting from physical sensor loss should come first.
+
+</Callout>
 
 </Section>

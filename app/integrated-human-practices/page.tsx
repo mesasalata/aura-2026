@@ -4,17 +4,18 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Integrated Human Practices",
-  description: "How stakeholder feedback was woven into AURA's engineering and safety decisions.",
+  description: "How conversations with farmers, a veterinarian, mastitis and bioelectronics experts, and Reatch changed AURA.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "farmer", label: "Farmers" },
-  { id: "vet", label: "Veterinarians" },
-  { id: "processor", label: "Processors" },
-  { id: "regulator", label: "Regulators" },
-  { id: "consumer", label: "Consumers" },
-  { id: "loop", label: "Feedback loop" },
+  { id: "farmers", label: "Farmers" },
+  { id: "baumert", label: "Amandine Baumert" },
+  { id: "romano", label: "Alicia Romano" },
+  { id: "nakatsuka", label: "Nako Nakatsuka" },
+  { id: "meyer", label: "Pitt Meyer" },
+  { id: "reatch", label: "Reatch" },
+  { id: "references", label: "References" },
 ];
 
 export default function Page() {
@@ -22,8 +23,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Engagement · Integrated HP"
       accent="coral"
-      title="Feedback woven into design"
-      lede="Specific things we heard - and the specific design moves they caused."
+      title="How Human Practices changed AURA"
+      lede="What each conversation changed: our target farms, the inline design, future detection targets, and how we tested the probe."
       current="/integrated-human-practices"
       toc={TOC}
     >

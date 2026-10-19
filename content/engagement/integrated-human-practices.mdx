@@ -1,53 +1,59 @@
-<Section id="overview" title="Integrated HP" kicker="01">
+<Section id="overview" title="How Human Practices changed AURA" kicker="01">
 
-Integrated Human Practices means feedback did not sit in a report - it changed the siphon, the flag, the claims, and safety commitments. This page traces specific stakeholder input to specific design moves.
+Stakeholder feedback changed several parts of AURA. Conversations with small Swiss farmers showed us that a mastitis-only diagnostic would have limited value for farms where cows are already closely monitored. This pushed us to focus more on larger dairy farms and inline monitoring.
 
-</Section>
+Veterinarians and mastitis experts also showed us that detecting inflammation alone has limits. Their feedback encouraged us to consider more specific forms of detection in future versions of AURA.
 
-<Section id="farmer" title="Farmers → inline siphon" kicker="02">
+Bioelectronics experts helped us think more carefully about how the sensor would actually work in real milk and how it could be made practical and reusable, while technical guidance helped us improve our probe testing and experimental design.
 
-**Heard.** A test must sit in the milking line, cost less than the loss it prevents, and return a readout before the tank is mixed.
-
-**Integrated change.** We put AURA in the milking machine as an inline siphon - not another lab errand - and made the output a quiet flag, not a diagnosis.
+Who we spoke to, and what they told us, is described on our Human Practices page. Below is how each conversation influenced AURA.
 
 </Section>
 
-<Section id="vet" title="Veterinarians → diagnostic-support framing" kicker="03">
+<Section id="farmers" title="Farmers: larger farms and inline monitoring" kicker="02">
 
-**Heard.** Early signal is good; mistaken diagnosis is dangerous. Treatments should be targeted to the root problem, not blanket antibiotics.
+This feedback made us realise that small farms were probably not the best target for AURA. We therefore shifted our focus toward **larger dairy farms**, where it is much harder to monitor every cow individually.
 
-**Integrated change.** All wiki copy positions AURA as decision-support pointing to confirmatory testing. No cure or diagnosis claims. miR-223 was chosen in part because it can differentiate bacterial from other causes.
-
-</Section>
-
-<Section id="processor" title="Processors → tank-level thinking" kicker="04">
-
-**Heard.** Milk quality and SCC already drive pricing.
-
-**Integrated change.** We added cow-level and tank-level decision framing: flag this cow before the tank is mixed.
+This influenced our decision to design AURA as an **inline system integrated into the milking process**, so that cows could be monitored automatically during routine milking rather than requiring farmers to carry out a separate test.
 
 </Section>
 
-<Section id="regulator" title="Regulators → containment by design" kicker="05">
+<Section id="baumert" title="Amandine Baumert: who the product is for" kicker="03">
 
-**Heard.** Engineered systems must stay contained.
-
-**Integrated change.** DNA catapult on a FET surface, documented waste handling, no field release this season. See Safety page.
+This conversation helped our team to focus on refining our product idea: the product was useful, but we were targeting the wrong market. Large milking parlours would have limited marginal benefit from our diagnostic, given that their machines are already very sophisticated. If we wanted to create a general diagnostic tool, we needed to re-brand our product for veterinary use: faster, on-site, cost-effective diagnostics. Alternatively, we could focus on detecting specific bacterial strains that are treated with antibiotics, such as *Staphylococcus aureus*. This would allow farmers to determine whether a particular case of mastitis needs further intervention or can be resolved naturally. This would be achieved by using the same mechanism but a new target strand: a bacterial miRNA, RNA, or DNA.<sup>[1]</sup>
 
 </Section>
 
-<Section id="consumer" title="Consumers → transparency" kicker="06">
+<Section id="romano" title="Alicia Romano: towards differential diagnosis" kicker="04">
 
-**Heard.** People want safe milk and well-treated animals; GMO language is often misunderstood.
-
-**Integrated change.** Education materials use analogies first; welfare and milk safety are explicit. The device is an inline transistor, not a living circuit in the cow.
+Our conversation with Dr. Romano confirmed that we needed to specialise our diagnostic to detecting bacterial species. Compiling multiple biosensor surfaces to create a layered detection surface, where sampling can pass through as it would in a microfiber cell system, would enable the use of synthetic biology-based differential diagnosis. Alternatively, using different catapult DNA on two distinct surfaces could be used as a simplified diagnostic to determine whether the infection is contagious or environmental.<sup>[2]</sup>
 
 </Section>
 
-<Section id="loop" title="The feedback loop" kicker="07">
+<Section id="nakatsuka" title="Nako Nakatsuka: designing for the FET surface" kicker="05">
 
-<Callout variant="note" title="Ongoing">
-  HP is not finished when interviews end. Each engineering cycle includes a check: does this still match what stakeholders said?
-</Callout>
+Our meeting with Dr. Nakatsuka helped us to solidify the tetrahedron design for attaching our DNA catapult, and to find a starting point for the stem length at a minimum of 13 base pairs. Moreover, we discovered how to design a slight tether to enable self-cleaning of the detection surface as ionic conditions change or it is flushed with a solution. This was crucial for the development of our product, as the aim is to create a diagnostic that requires very little supervision or expertise.<sup>[3]</sup>
+
+</Section>
+
+<Section id="meyer" title="Pitt Meyer: a feasible testing plan" kicker="06">
+
+Pitt helped us plan what equipment and conditions we would realistically need at EPFL (e.g., plate-reader-based fluorescence assays, ion/buffer considerations, temperature/replicate strategy), which shaped our prototyping timeline and made our testing plan more rigorous and feasible. Without his support, we would have been unable to access the materials needed for our proof-of-concept experiments and DNA design.<sup>[4]</sup>
+
+</Section>
+
+<Section id="reatch" title="Reatch: reaching the public" kicker="07">
+
+The goal of the discussion was to discover how our team could engage with the public and diffuse knowledge of synthetic biology to Swiss citizens. Through their journal and blog platforms, we released an introductory article to synthetic biology. The connections and community contact Reatch has allowed our team to make an impact on our local community and Switzerland as a whole.<sup>[5]</sup>
+
+</Section>
+
+<Section id="references" title="References" kicker="08">
+
+1. Amandine Baumert, Rindergesundheit Schweiz (RGS). Zoom consultation with the AURA team, 2026.
+2. Alicia Romano, Agroscope. Zoom consultation with the AURA team, April 14, 2026.
+3. Nako Nakatsuka, EPFL. Zoom consultation with the AURA team, April 21, 2026.
+4. Pitt Meyer, EPFL. Multiple Zoom consultations with the AURA team, May 2026.
+5. Dea Mariette Müller and Hannah Schoch, Reatch. Zoom consultation with the AURA team, June 2026.
 
 </Section>

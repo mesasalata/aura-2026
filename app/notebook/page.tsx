@@ -4,22 +4,28 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Notebook",
-  description: "Dated log of wet lab, dry lab, design, modeling, and engagement work.",
+  description: "Dated project notes from AURA's season, from defining the problem to consolidating the project direction.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "timeline", label: "Timeline" },
-  { id: "format", label: "Format" },
-];
+  { id: "april", label: "April" },
+  { id: "may", label: "May" },
+  { id: "june", label: "June" },
+  { id: "july", label: "July" },
+  { id: "august", label: "August" },
+  { id: "september", label: "September" },
+  { id: "october", label: "October" },
+  { id: "reading", label: "Reading" },
+]
 
 export default function Page() {
   return (
     <WikiMdxShell
       kicker="Wet Lab · Notebook"
       accent="bio"
-      title="Lab & project log"
-      lede="Filterable timeline of what we did, saw, and decided - updated as the season progresses."
+      title="Project notes"
+      lede="Key dates in AURA's development, from April to October."
       current="/notebook"
       toc={TOC}
     >

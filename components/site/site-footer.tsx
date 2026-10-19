@@ -51,7 +51,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-milk/10 pt-6 text-xs text-milk/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} AURA · iGEM 2026</p>
+          <p>© {new Date().getFullYear()} AURA</p>
           <p className="kicker">
             Content on this wiki reflects a proof-of-concept in progress. Pending data is marked as such.
           </p>

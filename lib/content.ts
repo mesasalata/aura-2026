@@ -14,10 +14,10 @@ export type Stat = {
 /** Homepage figures. The first three match the background page. The treatment slice is not in that paste. */
 export const IMPACT_STATS: Stat[] = [
   {
-    value: "€35 billion",
-    prefix: "€",
+    value: "Up to US$32 billion",
+    prefix: "US$",
     suffix: " billion",
-    to: 35,
+    to: 32,
     label: "Estimated annual global losses",
     sub: "Mastitis is associated with substantial economic losses across the dairy industry worldwide.",
     accent: "coral",

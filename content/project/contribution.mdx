@@ -1,95 +1,99 @@
-<Section id="overview" title="Why contribution matters" kicker="01">
+<Section id="overview" title="Contributions" kicker="01">
 
-iGEM teams stand on each other's work. AURA is one season of design and testing - what we document, deposit, and leave behind should make the next team's path shorter, whether they continue mastitis biosensing or fork the DNA catapult for another inline diagnostic.
-
-<Callout variant="note" title="What we mean by contribution">
-  Parts on the Registry, reproducible protocols, honest negative results, and design frameworks that transfer - not just a polished story.
-</Callout>
+Through AURA, we developed and characterized miR-223-responsive DNA catapult probes, investigated methods for resetting the sensor, and created open-source software for interpreting biosensor measurements. By documenting both successful and unsuccessful approaches, we hope our work can support future iGEM teams developing reusable nucleic-acid biosensors.
 
 </Section>
 
-<Section id="parts" title="Parts & constructs" kicker="02">
+<Section id="probes" title="Engineered miR-223-responsive DNA probes" kicker="02">
 
-We aim to submit characterised and uncharacterised parts relevant to inline FET biosensing:
+A central contribution of AURA was adapting the DNA catapult sensing architecture to recognize miR-223, a microRNA associated with the inflammatory response to mastitis.
 
-- **DNA catapult stems** with invasion regions complementary to bta-miR-223
-- **Off-target invasion controls** so a hit is not just "any RNA"
-- **Composite gate units** combining catapult and FET-surface chemistry (where assembly is complete)
+We first designed a baseline miR-223-responsive probe and then created several variants to investigate how changes to the probe structure affected its response. The probes were designed with 5′ BHQ-1 and 3′ 6-FAM, so that opening of the hairpin separates the quencher and fluorophore and produces an increase in fluorescence.
 
-Each part will include sequence, intended use, and measurement data where available. Parts without full characterisation are labelled accordingly - future teams should not have to guess what was validated.
-
-<Placeholder label="Registry part numbers - to be added on submission" />
-
-</Section>
-
-<Section id="protocols" title="Protocols & methods" kicker="03">
-
-Reproducibility is a contribution in itself. We document:
-
-- Milk sample preparation and miR-223 spiking for assay development
-- Catapult-opening workflows and controls
-- FET current traces and residual calculation
-- Reference-electrode placement and baseline procedure
-
-Protocols live on the Protocols and Notebook pages with enough detail for another lab to repeat the work, including what failed and why.
-
-</Section>
-
-<Section id="framework" title="Design framework" kicker="04">
-
-Not everything transfers as a deposited oligo. We also contribute a **decision framework** for early mastitis biosensor design:
-
-1. **Marker selection** - score candidates on timing, specificity, and deployability (we chose miR-223)
-2. **Matrix compatibility** - test in milk early, not only in buffer; ionic milk needs its own baseline
-3. **Readout first** - define what the farmer must see (a flag, not a courtroom diagnosis) before optimising molecular detail
-4. **Stakeholder alignment** - farmers and vets set constraints: sit in the milking line, cost less than the loss, a readout before the tank is mixed
-
-<ScienceExplainer
-  accent="butter"
-  analogy="Like a recipe card that explains *why* you add salt, not just how much - so the next cook can adapt it."
-  precise="A documented set of criteria and trade-offs derived from our DBTL cycles, usable for other host-response diagnostics in complex matrices."
+<DataTable
+  head={["Registry part", "Design", "Purpose"]}
+  rows={[
+    [<strong>BBa_26PD7O10</strong>, "miR223CatapultDesign_v2", "Baseline miR-223-responsive catapult"],
+    [<strong>BBa_26IRC2X4</strong>, "1 bp invasion-region replacement", "Tests modification of the target-invasion region"],
+    [<strong>BBa_268GQMMU</strong>, "Stem shortened by 2 bp", "Tests the effect of reduced stem stability"],
+    [<strong>BBa_26U24IU9</strong>, "3′ end shortened by 2 bp", "Best-performing tested variant"],
+  ]}
 />
 
-</Section>
-
-<Section id="software" title="Software & models" kicker="05">
-
-Where we build analysis scripts or the on-farm load-score model, we release them with open licences and README files explaining inputs, assumptions, and limits. Model code without wet-lab calibration is marked as theoretical.
-
-<Placeholder label="Repository links - to be added" />
+These parts give future teams several experimentally compared starting points.
 
 </Section>
 
-<Section id="hp" title="Human practices artefacts" kicker="06">
+<Section id="characterization" title="Characterizing catapult performance" kicker="03">
 
-Engagement outputs are part of our contribution:
+We developed a fluorescence-based workflow to compare the different catapult designs under the same conditions. Their signal-to-noise ratios were:
 
-- Stakeholder interview guides and anonymised themes
-- Plain-language explainers for non-specialist audiences
-- Safety and containment documentation aligned with iGEM policies
+- baseline probe: **6.73**
+- stem-shortened probe: **11.81**
+- 1 bp invasion-region replacement: **15.59**
+- 3′-end-shortened probe: **17.96**
 
-These materials help future teams start HP conversations faster and avoid repeating mistakes in how synthetic biology is explained to the public.
+The 3′-end-shortened probe, BBa_26U24IU9, produced the strongest response and was therefore selected for later experiments.
 
-</Section>
-
-<Section id="lessons" title="Lessons for future teams" kicker="07">
-
-What we would tell the next team on day one:
-
-- **Scope to the season.** A credible proof-of-concept beats an overambitious pipeline with no data.
-- **Test in matrix early.** Milk is not PBS; assumptions from buffer-only assays rarely survive.
-- **Design for the readout.** Farmers need a quiet flag in the parlour, not a fluorescent workbench.
-- **Mark pending work.** Judges and peers respect honesty; implied validation erodes trust.
-- **Talk to users before locking the construct.** Our best design changes came from farmers and vets, not from the bench alone.
+This comparison also demonstrates how relatively small changes to probe architecture can substantially alter sensor performance. Future teams adapting similar probes could use the same iterative approach to design, test, and compare variants.
 
 </Section>
 
-<Section id="collaboration" title="Collaboration & credit" kicker="08">
+<Section id="rna" title="Validation with miR-223 RNA" kicker="04">
 
-We welcome forks, improvements, and critique. If you build on AURA parts or protocols, please cite the team and link back to this wiki. Attributions for advisors, labs, and prior art are listed on the Attributions page.
+After initially characterizing the system using a complementary DNA analogue, we tested our selected probe with synthetic miR-223 RNA at 39 °C.
 
-<Callout variant="lab" title="Get in touch">
-  Questions about parts, protocols, or design choices? Reach us through the team contact on the Members page - we are happy to help future teams avoid our dead ends.
-</Callout>
+The probe showed a substantial increase in fluorescence in the presence of the RNA target, demonstrating that the adapted catapult could respond to miR-223 RNA rather than only to a DNA analogue.
+
+Our experiments were performed with synthetic targets rather than raw milk, so further work is still required to characterize the probe in complex biological samples. Nevertheless, these results provide a starting point for teams interested in adapting the catapult architecture for microRNA detection.
+
+</Section>
+
+<Section id="reset" title="Exploring sensor reset and reuse" kicker="05">
+
+Because AURA is ultimately intended to function as a reusable sensor, we also investigated methods for removing bound target and restoring the probe.
+
+### RNase H reset
+
+We tested RNase H, which can degrade RNA within an RNA–DNA hybrid. For our selected 3′-end-shortened probe, fluorescence decreased by approximately 72.5% following RNase H treatment. Addition of fresh target afterwards produced a renewed fluorescence response, showing that the probe remained functional after the reset process.
+
+These results are consistent with RNase H-mediated removal of bound RNA. However, our DNA reference was not treated with RNase H under identical conditions, so additional controls would be required to determine how much of the fluorescence decrease resulted specifically from enzymatic RNA degradation.
+
+Documenting this limitation provides future teams with a clearer starting point for improving enzymatic sensor regeneration.
+
+### Strand-displacement reset
+
+We also investigated a second reset strategy using short biotinylated replacer strands, streptavidin beads, and a separate sensorResetter strand.
+
+<DataTable
+  head={["Registry part", "Function"]}
+  rows={[
+    [<strong>BBa_26LF0186</strong>, "13 bp biotinylated replacer"],
+    [<strong>BBa_263Q2IYI</strong>, "9 bp biotinylated replacer"],
+    [<strong>BBa_26LMF1QY</strong>, "sensorResetter strand"],
+  ]}
+/>
+
+This approach was ultimately inconclusive. Signals became very low after bead processing, suggesting that sensor material may have been physically lost during the repeated washing steps.
+
+Although this experiment did not establish successful resetting, it identified an important practical limitation. Future teams using a similar approach should carefully control for probe loss during washing and distinguish true molecular resetting from physical removal of the sensor.
+
+</Section>
+
+<Section id="software" title="UdderNet software" kicker="06">
+
+Our contribution also extended beyond the molecular sensor.
+
+We developed UdderNet, an open-source software platform designed to receive biosensor and cow-level data, process the measurements, explain how a screening result was produced, generate reports, and alert farm staff when further attention may be required.
+
+UdderNet includes a documented API, contextual machine-learning analysis, transparent presentation of BioFET measurements and thresholds, cow-specific PDF reports, real-time and background phone alerts, and automated testing.
+
+The software is released under the MIT License, allowing future teams to adapt the platform for other biosensors or monitoring applications.
+
+</Section>
+
+<Section id="future" title="What future teams can build on" kicker="07">
+
+Future teams could build on AURA by adapting the catapult recognition sequence to new nucleic-acid targets, further optimizing our probe variants, applying our fluorescence-characterization workflow, improving reset strategies, or testing the selected probe on an immobilized sensing surface.
 
 </Section>

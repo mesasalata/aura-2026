@@ -76,6 +76,20 @@ const MASSES = [
   { ...mass(grow(160, 100, -70, -24, 50, 23), "right"), className: "right-0 w-[50%] max-lg:w-[60%]" },
 ];
 
+/* Lobes along the whole floor, so the bloom meets the seam below as one pink edge.
+   `d` stays under ~0.6 so every lobe is full size by the end of the chapter. */
+const FLOOR: ColonyDot[] = (() => {
+  const rand = seeded(41);
+  const dots: ColonyDot[] = [];
+  for (let x = -4; x <= 164; x += 7 + rand() * 3) {
+    dots.push({ x: round(x), y: round(102.5 + rand() * 1.5), r: round(6 + rand() * 4), tone: 0, d: round(0.25 + rand() * 0.35) });
+  }
+  return dots;
+})();
+
+/** The bloom's floor tone. The seam under the herd beat starts on it. */
+export const COLONY_FLOOR = COLONY_TONE[0];
+
 /**
  * InfectionBloom - the herd beat's backdrop: pink colonies creeping in along
  * the floor as `t` (0–1, the share of the herd marked) rises.
@@ -99,6 +113,11 @@ export function InfectionBloom({ t, className }: { t: MotionValue<number>; class
           ))}
         </svg>
       ))}
+      <svg viewBox="0 90 160 10" preserveAspectRatio="xMidYMax slice" className="absolute inset-x-0 bottom-0 h-[clamp(3.5rem,6.25vw,6rem)] w-full">
+        {FLOOR.map((c, i) => (
+          <circle key={i} cx={c.x} cy={c.y} r={c.r} fill={COLONY_FLOOR} style={{ "--d": c.d } as React.CSSProperties} />
+        ))}
+      </svg>
     </motion.div>
   );
 }

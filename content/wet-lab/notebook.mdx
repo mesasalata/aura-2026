@@ -1,21 +1,152 @@
 <Section id="overview" title="Notebook" kicker="01">
 
-A dated log of wet lab, dry lab, design, modeling, and engagement work. Filter by track to follow one thread, or read chronologically for the full season.
+This project notebook includes certain key dates during the development of AURA throughout the season.
 
-<Callout variant="note" title="Living document">
-  Entries are added as work happens. Older entries are not rewritten - corrections are new entries.
+<Callout title="How to read these notes">
+
+These are project notes from our discussions and research, not a bench log. The protocols and results of our experiments are on the Experiments and Measurement pages.
+
 </Callout>
 
 </Section>
 
-<Section id="timeline" title="Timeline" kicker="02">
+<Section id="april" title="April" kicker="02">
 
-<NotebookTimeline />
+### 1 April: Defining the problem
+
+We discussed bovine mastitis and why detecting it earlier could help farmers. We wanted to find a way to identify signs of inflammation before the disease becomes more serious. This could help farmers respond sooner, reduce losses, and protect milk production.
+
+Before deciding on our approach, we agreed that we needed to understand how mastitis is currently detected and where existing methods could be improved.
+
+### 14 April: Comparing existing mastitis tests
+
+We compared somatic cell count testing, bacterial culture, and laboratory microRNA testing. We learned that each method provides different information. Somatic cell counts indicate inflammation, bacterial cultures help identify bacteria, and microRNA testing looks for small RNA molecules that may change during disease.
+
+We decided to explore whether a sensor could detect these molecules more conveniently. Our main goal was earlier detection, rather than assuming our approach would automatically be cheaper than existing tests.
+
+### 21 April: Exploring microRNA biomarkers
+
+We collected research on several microRNAs, including miR-146a, miR-155, miR-29b-2, miR-148a, miR-142-5p, and miR-223. Some studies suggested that certain microRNA levels might change before the somatic cell count rises, potentially allowing earlier detection.
+
+However, we could not assume this would always happen or that it would give us a specific amount of extra detection time. We also learned that some microRNAs are linked to inflammation in general, meaning they might not be specific to mastitis.
 
 </Section>
 
-<Section id="format" title="Entry format" kicker="03">
+<Section id="may" title="May" kicker="03">
 
-Each entry records date, track, title, and a short narrative: what we did, what we observed, and what we decided next. Raw data links to Results or Measurement when available.
+### 5 May: Selecting miR-223 as a target
+
+We focused on miR-223 as one possible target and compared it with other candidates. We looked at whether it could be detected in milk, whether its levels changed during mastitis, and whether we could design a complementary probe to recognize it.
+
+We also realized that we still needed more research into sensor designs and how they could work in milk. We had not yet established whether a complete sensor would be practical for farmers to use.
+
+### 21 May: Exploring electrochemical detection
+
+We researched electrochemical sensors that turn target binding into an electrical signal. Our idea was to use a DNA probe that recognizes a specific microRNA and produces a measurable change when it binds.
+
+We also looked at research showing very low detection limits in other microRNA applications. However, we understood that these results would not necessarily apply to our own design, especially when working with raw milk.
+
+</Section>
+
+<Section id="june" title="June" kicker="04">
+
+### 2 June: Understanding challenges in raw milk
+
+We discussed how fats, proteins, and cells in milk could build up on the sensor surface and interfere with its signal. This could make it difficult to tell whether a change came from our target or from the milk itself.
+
+We considered sample preparation and protective coatings as possible solutions. We also realized that we would need to compare the sensor’s performance in a simple solution and in milk.
+
+### 16 June: Evaluating speed, cost, and practical value
+
+We discussed whether our sensor could provide results faster than sending samples to a laboratory. We realized that we needed to consider the entire process, including sample collection and preparation, rather than just the measurement time.
+
+We also looked at rough cost estimates for disposable electrodes, probes, and a portable reader. These were only initial estimates, not confirmed costs for our design.
+
+We agreed that the main potential benefit would be helping farmers identify possible signs of mastitis earlier. Any claims about saving money or improving treatment would need further evidence.
+
+</Section>
+
+<Section id="july" title="July" kicker="05">
+
+### 7 July: Exploring CRISPR-based alternatives
+
+We researched CRISPR-based detection, particularly Cas13, which can recognize RNA and produce a signal through the cutting of reporter molecules.
+
+We also explored paper-based devices that could guide a sample into a reaction area and potentially show a colour change.
+
+However, we realized that detecting bacterial RNA would be different from detecting the cow’s own inflammatory microRNAs. We needed to be clear about which target we wanted to detect and what the results would tell us.
+
+### 21 July: Investigating sensor reset and reuse
+
+We returned to our DNA-probe design and explored whether the sensor could be reused after detecting a microRNA. We researched toehold-mediated strand displacement, where an incoming strand binds to an exposed section and replaces an existing strand.
+
+We also looked at remote-toehold designs and discussed whether they could help release the microRNA from our proposed catapult mechanism.
+
+However, we had not yet established whether this would work with our design, so we needed to understand the strand interactions better before testing them.
+
+</Section>
+
+<Section id="august" title="August" kicker="06">
+
+### 4 August: Planning binding and release experiments
+
+We planned how to test whether our DNA probe could bind to the target and whether a release strand could separate them again. We discussed using gel electrophoresis to compare the strands before and after binding and release.
+
+We also considered control samples without the target or release strand to help us interpret the results. We agreed to start with a simple, controlled setup before introducing milk.
+
+At this stage, these were planned experiments, and we had not yet established any results.
+
+### 18 August: Revisiting sensor cleaning and regeneration
+
+We discussed whether flowing more milk through the system could remove the target and reset the sensor. However, we realized that milk could leave residues on the surface, so we could not rely on this approach without testing it.
+
+We also considered using a separate release solution followed by washing. Heating and cooling were briefly discussed, but these could affect the probe and sensor performance.
+
+</Section>
+
+<Section id="september" title="September" kicker="07">
+
+### 1 September: Designing for the milking workflow
+
+We discussed how the device could fit into a normal milking routine. We realized that a slow measurement or reset process could make it impractical for farmers to use.
+
+One idea was to collect a sample and reset the sensor while milking continued. We also considered whether separate chambers and valves would be needed or whether a disposable sensing part would be simpler.
+
+We agreed that we needed to check our assumptions about timing and workflow with people who work on farms. Our next step was to sketch a simple process showing sample collection, measurement, and sensor reset.
+
+### 22 September: Identifying key limitations
+
+We reviewed the main questions we still needed to answer:
+
+- Can we reliably detect the target in raw milk?
+- Can we distinguish mastitis from other causes of inflammation?
+- What microRNA level would count as a positive result?
+- How stable would the probe be during storage and use?
+- Would the sensor reset consistently between samples?
+- Would the process be practical and affordable for farmers?
+
+We also recognized that a sensitive signal alone would not make our device a reliable diagnostic test. We would need to compare it with existing methods and test samples from cows with different health conditions.
+
+</Section>
+
+<Section id="october" title="October" kicker="08">
+
+### 5 October: Consolidating the project direction
+
+We organized our research into three main areas: microRNA targets, detection methods, and making the sensor practical to use with milk.
+
+Our main idea remained a microRNA sensor for identifying possible early signs of bovine mastitis. We had also explored CRISPR detection, paper-based devices, and strand displacement, but these were still concepts rather than parts of a tested device.
+
+We agreed that our next priority was to develop a clear experimental plan. This meant choosing our target, reviewing the probe design, planning binding and release tests, and working out how to deal with interference from milk.
+
+</Section>
+
+<Section id="reading" title="Reading references" kicker="09">
+
+- Mastitis diagnosis: [pmc.ncbi.nlm.nih.gov/articles/PMC10384116](https://pmc.ncbi.nlm.nih.gov/articles/PMC10384116/)
+- MicroRNA and inflammation: [pmc.ncbi.nlm.nih.gov/articles/PMC11853211](https://pmc.ncbi.nlm.nih.gov/articles/PMC11853211/)
+- Strand displacement: [spiral.imperial.ac.uk](https://spiral.imperial.ac.uk/server/api/core/bitstreams/641e2adc-fa89-436a-a8f5-54a531f3e731/content)
+- Sensor concept: [sciencedirect.com/science/article/pii/S0956566322009629](https://www.sciencedirect.com/science/article/pii/S0956566322009629)
+- Milk and surface fouling: [sciencedirect.com/science/article/pii/S0026265X25002607](https://www.sciencedirect.com/science/article/pii/S0026265X25002607)
 
 </Section>

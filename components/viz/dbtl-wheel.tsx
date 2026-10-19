@@ -94,7 +94,7 @@ export function DbtlWheel({ className }: { className?: string }) {
   const phase = PHASES[active];
 
   return (
-    <div ref={ref} className={cn("relative h-[120vh]", className)}>
+    <div ref={ref} className={cn("relative h-[400vh]", className)}>
       <div className="sticky top-0 flex min-h-screen flex-col items-center justify-center gap-8 overflow-hidden px-6 py-16 sm:gap-10 sm:py-20">
         {/* flat wash, re-tints per phase */}
         <motion.div
@@ -102,11 +102,11 @@ export function DbtlWheel({ className }: { className?: string }) {
           style={{ rotate: washRotate }}
           aria-hidden
         >
-          <Blob shape="d" fill={phase.accent} className="h-full w-full opacity-[0.12]" />
+          <Blob shape="d" fill={`color-mix(in srgb, ${phase.accent} 38%, var(--color-milk))`} outline className="h-full w-full" />
         </motion.div>
 
         <div className="relative max-w-2xl text-center">
-          <span className="kicker text-butter">Engineering</span>
+          <span className="chip-pop">Engineering</span>
           <p className="mt-3 text-sm leading-relaxed text-ink-70 sm:text-base">
             These experiments formed an iterative engineering cycle. The 3′ end 2 bp shorter probe
             was identified as the lead architecture for continued development.
@@ -215,12 +215,12 @@ export function DbtlWheel({ className }: { className?: string }) {
                     onClick={() => scrollToPhase(i)}
                     onKeyDown={(e) => onPhaseKeyDown(e, i)}
                     className={cn(
-                      "rounded-full border-2 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest transition-colors",
+                      "rounded-full border-2 border-ink px-3.5 py-1.5 font-display text-base text-ink transition-[translate,box-shadow,background-color] duration-200",
                       isActive
-                        ? "border-ink bg-milk text-ink shadow-[0_0_0_2px_var(--color-milk),0_0_0_4px_var(--color-ink)]"
-                        : "border-ink/20 bg-transparent text-ink-55 hover:border-ink/45 hover:text-ink",
+                        ? "-translate-y-0.5 shadow-[3px_4px_0_0_var(--color-ink)]"
+                        : "bg-milk shadow-[2px_2px_0_0_var(--color-ink)] hover:-translate-y-0.5",
                     )}
-                    style={isActive ? { background: `color-mix(in srgb, ${p.accent} 22%, var(--color-milk))` } : undefined}
+                    style={isActive ? { background: p.accent } : undefined}
                   >
                     {p.label}
                   </button>
@@ -235,16 +235,10 @@ export function DbtlWheel({ className }: { className?: string }) {
               transition={{ duration: 0.35 }}
               aria-live="polite"
             >
-              <div
-                className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-widest"
-                style={{
-                  background: `color-mix(in srgb, ${phase.accent} 22%, transparent)`,
-                  color: "var(--color-ink)",
-                }}
-              >
-                Phase {active + 1} / 4
-              </div>
-              <h4 className="font-display text-3xl text-ink">{phase.label}</h4>
+              <span className="num-pop">{active + 1}</span>
+              <h4 className="pop-text mt-3 font-display text-4xl text-ink" style={{ ["--pop" as string]: phase.accent }}>
+                {phase.label}
+              </h4>
               <p className="mt-2 leading-relaxed text-ink-70">{phase.blurb}</p>
             </motion.div>
           </motion.div>

@@ -1,98 +1,111 @@
 <Section id="overview" title="Results overview" kicker="01">
 
-This page collects what we measured, what we observed in prototypes, and what remains open. AURA is a proof-of-concept in progress - we report outcomes honestly and mark pending work rather than implying validation we do not yet have.
+This year, we adapted the DNA catapult to recognise miR-223, optimised the probe through several engineering cycles, demonstrated detection of synthetic miR-223 RNA at 39 °C, and investigated methods for resetting the sensor.
 
-<Callout variant="note" title="Pending data">
-  Where a result depends on wet-lab work still underway, you will see an explicit placeholder. We will update this page as data arrives.
+All of our wet-lab results come from a fluorescence assay. We used **fluorescence as a proxy for probe opening**: the catapult probe carries BHQ-1 at the 5′ end and FAM at the 3′ end, so when a complementary target binds and opens the probe, fluorescence increases. The full methods are on our Experiments and Measurement pages, and the design reasoning behind each step is on our Engineering page.
+
+<Callout title="What these results do not yet show">
+
+Fluorescence measures the molecular behaviour of the probe, not the electrical response of our proposed FET sensor. The measurements were performed in buffer rather than real milk, and the hardware was designed but not constructed. Direct FET-based detection, testing in raw milk, and integration of the complete system into the milking workflow are the next stages.
+
 </Callout>
 
 </Section>
 
-<Section id="constructs" title="Catapult sequences" kicker="02">
+<Section id="computational" title="The adapted probe keeps its catapult structure" kicker="02">
 
-We designed DNA catapults with an invasion region complementary to bta-miR-223, plus off-target controls. Sequence files and intended use are documented on the Parts page.
+The original miR-21 catapult and the adapted miR-223 catapult were computationally modeled in the absence and presence of their target miRNAs (25 °C, 150 mM Na⁺, 2 mM Mg²⁺, 1 µM strands).
 
-<Placeholder label="Oligo design and synthesis confirmation - figures pending" />
-
-**What we can say now:** sequence strategy is documented; catapults are ready for surface attachment and opening assays. Quantitative characterisation (opening, ΔI, residual) is the next milestone.
-
-</Section>
-
-<Section id="binding" title="Opening assays" kicker="03">
-
-Cycle 2 targeted opening of the selected catapult in buffer and in diluted milk matrix. Controls included irrelevant RNA and unspiked milk.
-
-<Placeholder label="Opening curves and specificity table - data pending" />
-
-**Expected readouts:** whether miR-223 opens the stem, signal-to-noise in milk, and whether surface attachment affects sensitivity.
-
-</Section>
-
-<Section id="fet" title="FET performance" kicker="04">
-
-The field-effect transistor is designed so that catapult opening moves charge away from the gate and ticks current between source and drain. Characterisation includes time-course traces, residual after electrode subtraction, and comparison of catapult variants.
-
-<Placeholder label="FET current traces - data pending" />
-
-<ScienceExplainer
-  accent="bio"
-  analogy="Think of the FET like a dimmer switch: we want it quiet when nothing is wrong, and clearly ticking when miR-223 is present - without flickering on salt alone."
-  precise="We measure closed-stem baseline current, ΔI at saturating miR-223, and the residual after subtracting that sample's reference-electrode baseline."
+<DataTable
+  head={["Structure", "Predicted free energy (kcal/mol)"]}
+  rows={[
+    ["Original catapult", "−12.92"],
+    ["Original catapult + miR-21", "−30.79"],
+    ["miR223CatapultDesign_v2", "−13.91"],
+    ["miR223CatapultDesign_v2 + miR-223", "−30.91"],
+  ]}
 />
 
-</Section>
-
-<Section id="device" title="Siphon & electrode prototypes" kicker="05">
-
-Inline siphon chambers were built to test whether a milking pulse can wash the FET surface without another trip to the lab. Reference electrodes sit upstream of the chamber on every prototype.
-
-<Placeholder label="Siphon prototype photos and electrode placement - data pending" />
-
-Early bench tests focused on flow through the chamber and electrode stability before running biological samples.
+These results suggested that replacing the miR-21 recognition region with a sequence complementary to miR-223 preserved the intended catapult structure and allowed formation of a stable target-bound complex. This was computational evidence for the feasibility of the adapted design, not experimental confirmation.
 
 </Section>
 
-<Section id="comparison" title="Comparison to reference methods" kicker="06">
+<Section id="selection" title="A shortened probe gave the clearest signal" kicker="03">
 
-The ultimate question is whether AURA's flag moves earlier or more accessibly than methods farms already use. We frame comparison against:
+Four miR-223 probe designs, plus the original miR-21 catapult, were exposed to a synthetic DNA analogue of their target and monitored for 120 minutes at 30 °C. Probe performance was compared using the signal-to-noise ratio (SNR): mean fluorescence with target divided by mean fluorescence without target.
 
-- Somatic cell count (industry standard early indicator)
-- Electrical conductivity (common inline proxy)
-- Culture or PCR (confirmatory reference)
+<DataTable
+  head={["Probe design", "SNR"]}
+  rows={[
+    ["Original miR-21 catapult", "6.41"],
+    ["miR-223 baseline (v2)", "6.73"],
+    ["miR-223 stem −2 bp", "11.81"],
+    ["miR-223 1 bp invasion-region replacement", "15.59"],
+    [<strong>miR-223 3′ end −2 bp</strong>, <strong>17.96</strong>],
+  ]}
+/>
 
-<Placeholder label="Side-by-side comparison table - pending paired samples" />
+The 3′-end-2-bp-shortened probe had the highest SNR, approximately **2.7-fold higher** than the baseline miR-223 design, and was selected for further testing. It did not have the highest absolute target fluorescence: its high SNR came from a strong target signal combined with particularly low background fluorescence.
 
-We do not claim clinical validation. Any comparison is exploratory and sample-limited. AURA is a flag, not a diagnosis.
+<WikiFigure src="/images/Experiments%20water%20control%20vs%20miR-223.png" caption="Mean fluorescence after 120 minutes: water control vs. miR-223 detection." width="md" />
 
-</Section>
-
-<Section id="modelling" title="Modelling support" kicker="07">
-
-Dry-lab work estimated load-score thresholds and consecutive-session rules that would make a flag useful at the parlour. Model outputs informed cycle 3 FET traces and cycle 5 flag logic.
-
-<Placeholder label="Model plots linked from the Model page - pending" />
-
-</Section>
-
-<Section id="summary" title="Summary table" kicker="08">
-
-| Milestone | Status | Notes |
-| --- | --- | --- |
-| Catapult sequence design | In progress | Sequences drafted; opening data pending |
-| Opening in milk matrix | Pending | Assays designed, runs scheduled |
-| FET current traces | Pending | Gate chemistry under test |
-| Siphon + electrodes | Pending | Prototype built; biological runs pending |
-| Consecutive-session flag | Not started | Requires paired milkings and vet oversight |
+The water control exhibited minimal fluorescence (208 RFU), while target-containing samples produced substantially higher signals (19,135–22,130 RFU).
 
 </Section>
 
-<Section id="next" title="What comes next" kicker="09">
+<Section id="temperature" title="miR-223 RNA opens the probe at 39 °C" kicker="04">
 
-Results from cycles 4 and 5 depend on integration testing. Priority order:
+Milk leaving the udder is warm, and higher temperature can weaken hybridization. We therefore tested the selected probe at 39 °C with no target, a complementary ssDNA analogue, and synthetic miR-223 RNA, over 30 minutes.
 
-1. Complete catapult opening assays with positive controls
-2. Run FET traces with spiked milk panels
-3. Document limits of detection and false-positive/negative rates in controlled settings
-4. Publish raw data and protocols for reproducibility
+<DataTable
+  head={["Target", "0 min (RFU)", "30 min (RFU)", "Change (RFU)"]}
+  rows={[
+    ["No-target control", "3,164", "2,828", "−336"],
+    ["ssDNA-223", "16,212", "29,165", "+12,953"],
+    [<strong>miRNA-223</strong>, "4,138", "20,595", <strong>+16,457</strong>],
+  ]}
+/>
+
+<WikiFigure src="/images/Experiments%20miR-223%20detection%20at%2039C.png" caption="miRNA-223 detection at 39 °C. Fluorescence of the selected probe was measured over 30 minutes in no-target control, complementary DNA target and synthetic miRNA-223 RNA conditions. Three technical replicates are shown for each condition." width="lg" />
+
+Increasing the temperature to 39 °C did not prevent target binding. Synthetic miRNA-223 RNA produced a progressive increase in fluorescence clearly above the no-target control, showing that the molecular sensing mechanism remained functional with the intended RNA target.
+
+</Section>
+
+<Section id="reset" title="RNase H reduces the signal, and the probe responds again" kicker="05">
+
+For the selected probe, RNase H treatment of miRNA-223-bound samples reduced fluorescence from approximately 26,466 RFU to 7,279 RFU over 30 minutes at 39 °C, a **72.5% decrease**. The ssDNA reference decreased by 18.1%, and the no-target control stayed low.
+
+<WikiFigure src="/images/Experiments%20fluorescence%20remaining%20after%20RNase%20H.png" caption="Fluorescence remaining after 30 minutes during the RNase H experiment. RNA + RNase H samples retained only approximately 27–35% of their initial fluorescence across all four probe designs, whereas DNA reference samples retained approximately 75–85%." width="lg" />
+
+The pattern held across all four probe designs. The signal did not return fully to the no-target level (7,279 RFU against 2,651 RFU), so the sensor was not completely regenerated.
+
+When fresh ssDNA miR-223 was then added, all four designs showed renewed fluorescence; the selected probe rose from approximately 24,807 RFU to 50,117 RFU (about **102%**). This is proof-of-concept evidence for **signal reduction followed by renewed target detection** at the molecular fluorescence level.
+
+Two limits apply. The DNA reference was not treated with RNase H, so the result is consistent with, but does not prove, RNase H-specific degradation of the RNA target. And the second detection used ssDNA rather than RNA, with only one reset/re-detection cycle tested, so we do not claim repeated multi-cycle RNA sensing.
+
+</Section>
+
+<Section id="beads" title="Bead-based strand displacement was inconclusive" kicker="06">
+
+A second reset strategy used biotinylated 9 bp and 13 bp replacer strands, magnetic streptavidin beads, and a sensorResetter strand. After bead processing, all four target/replacer conditions stayed at low fluorescence (roughly 300–680 RFU) with no clear time-dependent change.
+
+Because many beads were likely lost during washing, the low final fluorescence could reflect either successful resetting or physical loss of bead-bound sensor. The first wash eluate was much less fluorescent than no-bead controls, which suggests the sensor complexes did initially attach to the beads. Improving bead retention and washing is needed before this reset strategy can be evaluated reliably.
+
+</Section>
+
+<Section id="summary" title="Summary" kicker="07">
+
+<DataTable
+  head={["Question", "Result"]}
+  rows={[
+    ["Can the catapult be adapted to miR-223?", "Yes, in simulation: structure and target-bound complex were preserved."],
+    ["Which probe design performs best?", "3′ end −2 bp, SNR 17.96 against a DNA analogue at 30 °C."],
+    ["Does miR-223 RNA open the probe at 39 °C?", "Yes: a clear rise above the no-target control."],
+    ["Can the signal be reset with RNase H?", "Partly: 72.5% reduction, then renewed detection of fresh ssDNA target; one cycle only."],
+    ["Can strand displacement reset the probe?", "Inconclusive, because of bead loss during washing."],
+    ["Does AURA work as an electrical sensor in milk?", "Not yet tested: FET readout, raw milk and the integrated hardware are future work."],
+  ]}
+/>
 
 </Section>

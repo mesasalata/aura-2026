@@ -20,7 +20,7 @@ export function ScienceExplainer({
 }) {
   const hex = ACCENT_HEX[accent];
   return (
-    <div className={cn("hand grid gap-4 border-ink/15 bg-milk/60 p-6 sm:grid-cols-2", className)}>
+    <div className={cn("hand grid gap-4 border-ink bg-milk/60 p-6 sm:grid-cols-2", className)}>
       <div className="border-b border-ink/10 pb-4 sm:border-b-0 sm:border-r sm:pb-0 sm:pr-6">
         <div className="mb-2 flex items-center justify-between">
           <span className="kicker" style={{ color: hex }}>

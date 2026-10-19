@@ -21,9 +21,8 @@ const navFadeMotion = { duration: 0.25, ease: [0.16, 1, 0.3, 1] as const };
 const ROW = "mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8";
 const BRAND = "flex items-center gap-2.5 rounded-lg";
 const WORDMARK = "font-display text-2xl font-semibold tracking-tight";
-const EDITION = "hidden text-[0.7rem] sm:inline";
 const GROUPS = "hidden items-center gap-1 lg:flex";
-const GROUP = "rounded-full px-3.5 py-2 text-sm font-medium";
+const GROUP = "rounded-full px-3.5 py-2 text-[0.95rem] font-extrabold";
 const CTA = "px-5 max-sm:hidden";
 
 export function SiteNav() {
@@ -152,7 +151,6 @@ export function SiteNav() {
         <Link href="/" className={cn(BRAND, "focus-visible:outline-none")} aria-label="AURA home">
           <AuraLogo />
           <span className={cn(WORDMARK, "text-ink")}>AURA</span>
-          <span className={cn(EDITION, "text-ink-40")}>iGEM 2026</span>
         </Link>
 
         {/* Desktop nav */}
@@ -214,7 +212,6 @@ export function SiteNav() {
           <div className={BRAND}>
             <AuraLogo className="invisible" />
             <span className={cn(WORDMARK, "text-milk")}>AURA</span>
-            <span className={cn(EDITION, "text-milk/45")}>iGEM 2026</span>
           </div>
           <div className={GROUPS}>
             {NAV.map((group) => (

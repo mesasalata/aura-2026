@@ -4,16 +4,16 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 font-medium transition-[background-color,color,filter,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap",
+  "inline-flex items-center justify-center gap-2 font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 disabled:pointer-events-none disabled:opacity-50 whitespace-nowrap",
   {
     variants: {
       variant: {
         primary: "hand-pill bg-ink text-milk hover:bg-ink-2",
-        signal: "hand-pill bg-signal text-ink hover:brightness-110 font-semibold",
-        pink: "hand-pill bg-pink text-ink hover:brightness-110 font-semibold",
-        outline: "hand-pill bg-milk/40 text-ink hover:bg-ink hover:text-milk",
+        signal: "hand-pill bg-signal text-ink hover:brightness-110",
+        pink: "hand-pill bg-pink text-ink hover:bg-pink-soft",
+        outline: "hand-pill bg-milk text-ink hover:bg-butter",
         ghost: "radius-hand text-ink hover:bg-ink/5",
-        onDark: "hand-pill border-milk/45 text-milk hover:bg-milk hover:text-ink",
+        onDark: "hand-pill bg-milk text-ink hover:bg-butter",
       },
       size: {
         sm: "h-9 px-4 text-sm",

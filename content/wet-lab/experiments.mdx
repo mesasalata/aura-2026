@@ -1,10 +1,10 @@
-<Section id="methodology" title="Methodology" kicker="01">
+<Section id="methodology" title="Experiment 1: Methodology" kicker="01">
 
-This experiment was designed to test the efficacy of different probe candidates at binding to the target miRNA. Rather than using FET sensor technology, we used BHQ-1 (Black Hole Quencher) and a FAM-6 fluorophore to create a proof of concept without designing the entire system. Both attachments were placed at either end of the catapult sequence, so when it is closed we get no signal, but when it opens a signal will be produced as the BHQ is separated from the fluorophore. Alongside this, we also replaced the miRNA 223 with a strand of ssDNA with the same sequence, thus eliminating a layer of complexity. We did this because DNA is more stable than RNA.
+This experiment was designed to test the efficacy of different probe candidates at binding to the target miRNA. Rather than using FET sensor technology, we used BHQ-1 (Black Hole Quencher) and a FAM-6 fluorophore to create a proof of concept without designing the entire system. Both attachments were placed at either end of the catapult sequence, so when it is closed we get no signal, but when it opens a signal will be produced as the BHQ is separated from the fluorophore. Alongside this, we also replaced the miRNA-223 with a strand of ssDNA with the same sequence, thus eliminating a layer of complexity, as DNA is more stable than RNA and less prone to degradation.
 
 ### Reaction conditions
 
-Catapult probes were diluted to a **200 nM working concentration**, corresponding to a **100 nM final probe concentration** in the assay.
+Catapult probes were diluted to a **200 nM working concentration**, corresponding to a **100 nM final probe concentration** in all the experimental assays.
 
 Reactions were performed in **1× PBS supplemented with 5 mM MgCl₂**.
 
@@ -12,7 +12,7 @@ MgCl₂ was included to support stabilization of the probe secondary structure a
 
 Final reaction volumes were either **20 µL or 40 µL per well**.
 
-Fluorescence was measured for **120 minutes at 30.3°C**.
+Fluorescence was measured for **120 minutes at 30 °C**.
 
 </Section>
 
@@ -27,7 +27,7 @@ Fluorescence was measured for **120 minutes at 30.3°C**.
 
 ### Resuspension of oligos
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -72,7 +72,7 @@ Total [Cl⁻] = 20 mM (from 2 × 10 mM MgCl₂).
 4. Vortex 10 s.
 5. Sterile filter at 0.22 µm. Store at 4 °C.
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -109,7 +109,7 @@ Total [Cl⁻] = 20 mM (from 2 × 10 mM MgCl₂).
 
 **Resuspension volume formula:** V<sub>resuspend</sub> (μL) = nmol delivered × 10
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -186,7 +186,7 @@ Run before every binding experiment. Prepare the following in a 384-well black f
 
 Each well = **40 µL total**. 3×.
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -232,7 +232,13 @@ Each well = **40 µL total**. 3×.
 
 Calculate and pass/fail:
 
-<Placeholder label="QC pass/fail calculation. Figure not in the source paste (Screenshot 2026-06-05 at 20.55.13.png)" />
+<Callout variant="lab" title="QC pass criteria">
+  <div className="space-y-2 text-base text-ink">
+    <p>QE = 1 − (F<sub>closed</sub> − F<sub>buffer</sub>) / (F<sub>open</sub> − F<sub>buffer</sub>). Pass: QE ≥ 0.85</p>
+    <p>DR = (F<sub>open</sub> − F<sub>buffer</sub>) / (F<sub>closed</sub> − F<sub>buffer</sub>). Pass: DR ≥ 8×</p>
+    <p>Label-integrity ratio = (F<sub>thermal</sub> − F<sub>buffer</sub>) / (F<sub>open</sub> − F<sub>buffer</sub>). Pass: 0.7–1.2</p>
+  </div>
+</Callout>
 
 </Section>
 
@@ -242,7 +248,7 @@ Calculate and pass/fail:
 
 40 µL total, 384-well plate.
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -279,7 +285,7 @@ Compare S/B at each temperature. The highest S/B and lowest CV is the optimal te
   </div>
 </Callout>
 
-### At EPFL: load the 384-well plate
+### Load the 384-well plate
 
 All wells = **40 µL total**. Load in this order:
 
@@ -287,7 +293,7 @@ All wells = **40 µL total**. Load in this order:
 2. Seal the plate with optical adhesive film.
 3. Centrifuge the sealed plate at 200×g for 30 s to remove bubbles.
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -315,7 +321,7 @@ All wells = **40 µL total**. Load in this order:
     <tr>
       <td>D1–D3</td>
       <td>20 µL beacon + 20 µL target (1,000 nM)</td>
-      <td><strong>25 °C experimental</strong></td>
+      <td><strong>30 °C experimental</strong></td>
     </tr>
     <tr>
       <td>E1–E3</td>
@@ -325,7 +331,7 @@ All wells = **40 µL total**. Load in this order:
     <tr>
       <td>F1–F3</td>
       <td>20 µL beacon + 20 µL target (1,000 nM)</td>
-      <td><strong>37 °C experimental</strong></td>
+      <td><strong>30 °C experimental</strong></td>
     </tr>
   </tbody>
 </table>
@@ -333,7 +339,7 @@ All wells = **40 µL total**. Load in this order:
 
 ### Plate reader settings (384-well)
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -380,7 +386,7 @@ All wells = **40 µL total**. Load in this order:
 
 ### Table 1. Oligonucleotides used in the assay
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -459,7 +465,7 @@ Following resuspension, the concentration of each oligonucleotide was determined
 
 ### Table 2. Oligonucleotide concentrations following resuspension
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -536,7 +542,7 @@ An example is well C2, which increased from **13,811 RFU** at 0 minutes to **14,
 
 ### Table 3. Example fluorescence changes over 120 minutes
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -587,7 +593,7 @@ The resulting signal-to-noise ratio demonstrated substantial differences between
 
 ### Table 4. Signal-to-noise ratio of catapult probe variants
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -634,7 +640,7 @@ The strongest-performing probe also produced the highest mean fluorescence signa
 
 ### Table 5. Mean fluorescence measurements
 
-<div className="not-prose my-4 overflow-x-auto rounded-2xl border border-ink/10">
+<div className="hand not-prose my-4 overflow-x-auto border-ink">
 <table className="w-full text-left text-sm">
   <thead>
     <tr>
@@ -667,35 +673,19 @@ The relatively low signal observed in the water control confirmed that backgroun
 
 ### Fluorescence intensity: water control vs. miR-223 detection
 
-Graph of mean fluorescence after 120 minutes at approximately 30°C.
-
-<Placeholder label="Mean fluorescence after 120 min at ~30°C. Water control vs miR-223 detection (image.png)" />
+<WikiFigure src="/images/Experiments%20water%20control%20vs%20miR-223.png" caption="Mean fluorescence after 120 minutes: water control vs. miR-223 detection." width="md" />
 
 Comparison of background fluorescence in the water control with target-associated fluorescence from selected miR-223 reporter constructs. The water control exhibited minimal fluorescence (208 RFU), while target-containing samples produced substantially higher signals (19,135–22,130 RFU). These results demonstrate a clear distinction between background fluorescence and reporter-associated signals under the experimental conditions.
 
-For all three probes, the fluorescence remained mostly steady with a slight increase over time.
+<WikiFigure src="/images/Experiments%20probe%20time%20course.png" caption="Mean fluorescence signal of all the designed probes over time." width="lg" />
 
-<Placeholder label="Time-course traces for the three probes (image.png)" />
+The fluorescence increased and then plateaued over time.
 
-</Section>
-
-<Section id="dbtl" title="Design–Build–Test–Learn" kicker="09">
-
-These experiments formed an iterative engineering cycle.
-
-**Design.** We designed several variants of the original miR-223 catapult probe by modifying specific structural regions.
-
-**Build.** The oligonucleotides were synthesized with a BHQ-1 quencher and 6-FAM fluorophore and prepared at standardized working concentrations.
-
-**Test.** Each probe was tested against synthetic DNA target analogues using time-course fluorescence measurements.
-
-**Learn.** Probe structure had a major effect on assay performance. The original miR-223 v2 probe produced an SNR of 6.73, while the optimized 3′ end-shortened probe reached an SNR of 17.96.
-
-This result informed our subsequent design decisions and identified the **3′ end 2 bp shorter probe** as the lead architecture for continued development.
+The engineering implications of these results are discussed on our Engineering page.
 
 </Section>
 
-<Section id="limitations" title="Limitations" kicker="10">
+<Section id="limitations" title="Experiment 1: Limitations" kicker="09">
 
 Although the results demonstrate successful optimization of the fluorescent probe system, several limitations remain.
 
@@ -703,9 +693,11 @@ First, these experiments were performed using **synthetic DNA analogues rather t
 
 Second, the experiments were conducted under controlled buffer conditions. Milk is a complex biological matrix containing proteins, lipids, ions, nucleases, and other molecules that may affect probe folding and fluorescence.
 
+Lastly, the experiments were conducted at 30 °C, while freshly drawn milk has a temperature of 37–39 °C. Therefore, to properly assess and validate the activity of our catapult probes, it is necessary to repeat this assay at a higher temperature.
+
 </Section>
 
-<Section id="conclusion" title="Conclusion" kicker="11">
+<Section id="conclusion" title="Experiment 1: Conclusion" kicker="10">
 
 Our results demonstrate that relatively small changes to the catapult-probe architecture can strongly influence assay performance.
 
@@ -715,10 +707,251 @@ One possible explanation is that shortening the 3′ region reduces the energeti
 
 The 3′ end 2 bp shorter not only proved to be the most successful probe, it did so by a relatively large margin, and with an SNR of 17.96, it had an approximately **2.7-fold improvement in SNR** compared to the baseline probe.
 
+These results guided the next engineering cycles, where we tested the selected probe at a temperature of 39 °C. We also performed the assay using miR-223 RNA and explored ways to reset the sensor.
+
 </Section>
 
-<Section id="next" title="Next steps" kicker="12">
+<Section id="exp2-methodology" title="Experiment 2: Methodology" kicker="11">
 
-Now that we have the best catapult design, we need to run some tests to determine its viability for our planned use case. We need to determine if it is possible to remove the miRNA from the catapult strand: being able to clean the system would mean that it can be reused after a positive test, drastically reducing the cost of the diagnostic.
+There were three goals for this set of experiments. The first goal was to determine whether the temperature of the milk could disrupt the miRNA binding process to the catapult and hence stop the signal from being transmitted. To test whether this would be a hindrance to our sensor, we performed the binding in a 39 °C environment, a temperature which roughly mimics the temperature milk would be when it comes from a cow’s udder.
+
+The second goal of this set of experiments was to determine whether our probes could be made **reusable**. By reusable, we mean that after a probe has bound to its target and produced a signal, the target could be removed so that the probe becomes available to detect another target molecule.
+
+In our earlier sensing experiments, we mainly used **ssDNA sequences corresponding to miRNA-223 and miRNA-21** as target analogues, as DNA is generally more stable than RNA and less prone to degradation.
+
+To test the possibility of resetting our probe, we decided to use an enzyme called ribonuclease H (RNase H): an endoribonuclease that specifically degrades an RNA strand when found in RNA–DNA hybrids (heteroduplex) while leaving the complementary DNA strand intact. In order to use the RNase H approach, we had to switch to **RNA targets**.
+
+We therefore used RNase H to digest miRNA-223 after it had bound to the DNA catapult probe, with the aim of freeing the probe and reducing the fluorescence signal. To test whether the probe remained functional after this reset step, we then added fresh **ssDNA miR-223** and measured whether the fluorescence increased again, as RNase H does not digest ssDNA, dsDNA, or unhybridized ssRNA.
+
+We also investigated **toehold-mediated strand displacement**, another potential reset strategy. In this approach, a new strand binds to an exposed region of the target–probe complex and displaces the bound target strand. We designed replacement strands containing biotin and washed them afterwards with magnetic streptavidin beads as an alternative way to free the probe for reuse.
+
+</Section>
+
+<Section id="exp2-protocol" title="Experiment 2: Protocol" kicker="12">
+
+Run the temperature-performance assay at 39 °C first, then the RNase H wash at 39 °C.
+
+### Temperature-performance assay
+
+1. Prepare the sensor-side and target/control-side working mixes at 200 nM in 1× PBS/5 mM MgCl₂; this gives 100 nM of each intended strand after mixing equal 20 µL volumes.
+2. Dispense 20 µL sensor mix and 20 µL target/control mix into each assigned well. Use three technical replicates per condition.
+3. Include: v2 sensor + water (T1), v2 + miR223_DNA (T2), v2 + miR21_DNA (T3), 3′-end-shortened sensor + water (T4), 3′-end-shortened sensor + miR223_DNA (T5), and water blank (T6). These choices retain the supplied miR-223 benchmark and short-design comparator layout.
+4. Begin FAM reads immediately after mixing. Acquire a time-zero read and repeated measurements for a recorded 30 min hold at 39 °C.
+5. Subtract the water blank. Retain each technical replicate, calculate ΔF from time 0, and calculate fold-change relative to the matched sensor-only control.
+
+### RNase H treatment
+
+1. Prepare the miRNA-223 probe reactions according to the assay layout, using **three technical replicates per condition**. The final assay volume was **40 µL per well**, with the probe and target at a final concentration of **100 nM** where applicable.
+2. RNA-containing samples were prepared using **synthetic miRNA-223**, since RNase H acts on RNA–DNA hybrids. Corresponding **ssDNA miR-223 and no-target samples** were included as reference conditions.
+3. For the RNA conditions assigned to RNase H treatment, add **0.4 µL RNase H per reaction**. The assay setup used **1× buffer** and **5 mM MgCl₂** in the final reaction.
+4. Measure fluorescence at approximately **39 °C** over **30 minutes**, taking readings at **0, 5, 10, 15, 20, 25, and 30 minutes**.
+5. Compare the change in fluorescence of the **miRNA-223 + RNase H samples** with the corresponding ssDNA reference and no-target traces to determine whether degradation of the bound RNA reduced the fluorescent signal.
+
+### Toehold-mediated strand displacement
+
+1. Prepare the selected miR-223 probe with either **ssDNA miR-223 or miRNA-223** and the appropriate **9 bp or 13 bp replacer strand**, using three technical replicates per condition.
+2. Measure fluorescence of the prepared sensor–target/replacer samples **before bead treatment** to obtain a pre-bead reference measurement.
+3. Add **magnetic streptavidin beads** to the samples designated for bead treatment. The assay setup used approximately **0.8 µL of beads per well**.
+4. Wash the bead-containing samples **three times**, using **40 µL of wash buffer per wash**. The wash buffer contained **1× PBS and 5 mM MgCl₂**.
+5. Resuspend the beads after washing and add **sensorResetter** to the appropriate conditions. The final sensorResetter concentration was approximately **110 nM**.
+6. For the re-detection conditions, add fresh **ssDNA miR-223 or miRNA-223** after the reset procedure. Control conditions received water instead.
+7. Measure fluorescence after completion of the bead-treatment procedure and compare it with the corresponding pre-bead and no-bead reference conditions.
+
+</Section>
+
+<Section id="exp2-temperature" title="Target binding at 39 °C" kicker="13">
+
+Our experimental work focused on three questions relevant to the development of the miRNA-223 sensor. First, we investigated whether target binding could still occur at an elevated temperature of **39 °C**. We then tested whether an RNA-generated fluorescent signal could be reduced using **RNase H**. Finally, we investigated an alternative reset strategy based on **strand displacement and magnetic streptavidin beads**.
+
+### Aim
+
+The first experiment investigated whether the sensor could still bind its complementary target at **39 °C**.
+
+The sensing mechanism depends on hybridization between the target and the DNA probe. Increasing temperature can destabilize nucleic-acid interactions, so it was important to determine whether the probe would still open and generate a fluorescent response under these elevated-temperature conditions.
+
+The main question was therefore: **can the miRNA-223 sensor still bind its target and generate a measurable signal at 39 °C?**
+
+### Results
+
+To compare the response of the probe to **ssDNA-223 and miRNA-223 at 39 °C**, mean fluorescence at the beginning and end of the 30-minute measurement was compared. Both targets produced substantially greater fluorescence than the no-target control, although the magnitude of the response differed between ssDNA and miRNA.
+
+<DataTable
+  head={["Target", "0 min fluorescence (RFU)", "30 min fluorescence (RFU)", "Change in fluorescence (RFU)", "% increase"]}
+  rows={[
+    [<strong>No-target control</strong>, "3,164", "2,828", "−336", "−10.6%"],
+    [<strong>ssDNA-223</strong>, "16,212", "29,165", <strong>+12,953</strong>, <strong>+79.9%</strong>],
+    [<strong>miRNA-223</strong>, "4,138", "20,595", <strong>+16,457</strong>, <strong>+397.7%</strong>],
+  ]}
+/>
+
+Both ssDNA-223 and miRNA-223 produced a clear fluorescent response at 39 °C, confirming that both targets were able to bind to the probe under these conditions. The **ssDNA-223 condition produced a higher absolute fluorescence signal**, reaching 29,165 RFU after 30 minutes compared with 20,595 RFU for miRNA-223. However, **miRNA-223 showed a larger change in fluorescence during the measurement**, increasing by 16,457 RFU compared with 12,953 RFU for ssDNA-223. The apparent percentage increase was also much larger for miRNA-223 because its fluorescence was much lower at the first measurement.
+
+<WikiFigure src="/images/Experiments%20miR-223%20detection%20at%2039C.png" caption="miRNA-223 detection at 39 °C. Fluorescence of the selected probe was measured over 30 minutes in no-target control, complementary DNA target and synthetic miRNA-223 RNA conditions. Three technical replicates are shown for each condition." width="lg" />
+
+The RNA response is particularly useful for interpreting the experiment. Unlike the no-target control, which remained low, the RNA samples showed a progressive increase in fluorescence throughout the measurement period. Since fluorescence increases when target binding opens the FAM/BHQ probe, this is consistent with successful target–probe hybridization at 39 °C.
+
+The DNA signal was already relatively high at the first measurement. This does not mean that binding occurred instantaneously at exactly 0 minutes, because target and probe had already been combined before the first plate-reader measurement. Binding could therefore have begun during sample preparation and transfer.
+
+The DNA and RNA targets also showed different kinetics. DNA produced a faster and stronger fluorescent response, whereas RNA increased more gradually. However, the objective of this experiment was not to show that DNA and RNA behave identically. The important result was that **both complementary targets produced signals clearly above the no-target control at 39 °C**.
+
+### What we learned
+
+These results show that increasing the temperature to **39 °C did not prevent target binding**.
+
+Most importantly, synthetic miRNA-223 RNA still generated a strong fluorescent response. This demonstrated that the molecular sensing mechanism remained functional at the elevated temperature and allowed us to continue investigating methods for reversing the target-generated signal.
+
+</Section>
+
+<Section id="exp2-rnaseh" title="RNase H-mediated signal reduction" kicker="14">
+
+### Aim
+
+After establishing that target binding could occur at 39 °C, we investigated whether the RNA-generated fluorescence could subsequently be reduced.
+
+This is relevant to the long-term goal of developing a reusable sensor. If the probe remains permanently in its high-fluorescence state after detecting one target, it cannot easily be used for repeated measurements.
+
+RNase H was investigated because it cleaves RNA when the RNA is hybridized to complementary DNA. Since miRNA-223 forms an RNA–DNA hybrid with our DNA probe, degradation of the bound RNA could potentially disrupt this complex and reduce the fluorescence signal.
+
+The main question was: **can degradation of bound miRNA-223 using RNase H reduce the sensor’s fluorescent signal?**
+
+### Time-dependent response
+
+For the selected 3′-end-2-bp-shortened probe, the RNA-containing samples showed a strong and progressive decrease in fluorescence over the 30-minute measurement. In contrast, the ssDNA reference showed a much smaller decrease, while the no-target control remained low and relatively stable.
+
+<DataTable
+  head={["Condition", "0 min (RFU)", "30 min (RFU)", "Change (RFU)", "% change"]}
+  rows={[
+    [<strong>miRNA-223 + RNase H</strong>, "26,466", "7,279", <strong>−19,187</strong>, <strong>−72.5%</strong>],
+    [<strong>ssDNA-223 reference</strong>, "37,469", "30,681", "−6,788", "−18.1%"],
+    [<strong>No-target control</strong>, "2,441", "2,651", "+210", "+8.6%"],
+  ]}
+/>
+
+The substantially greater decrease in the **miRNA-223 + RNase H** condition is consistent with RNase H-mediated degradation of the RNA target contributing to the reduction in fluorescence. The smaller change in the ssDNA reference indicates that some fluorescence loss also occurred independently of RNA degradation, while the no-target control showed little overall change.
+
+<WikiFigure src="/images/Experiments%20RNase%20H%20effect.png" caption="Effect of RNase H on miRNA-223 sensor fluorescence. Fluorescence was monitored over 30 minutes for three RNA + RNase H replicates, three DNA reference replicates and three no-target controls using the selected probe design." width="lg" />
+
+The progressive reduction in the RNA samples provides stronger evidence than simply comparing the first and final measurements. Fluorescence continuously decreased over time, whereas the DNA reference remained relatively high and the control remained low.
+
+Some decrease was also observed in the DNA reference. This shows that fluorescence can change over time for reasons unrelated to RNase H-mediated RNA degradation, potentially including changes in probe conformation, temperature equilibration, photobleaching or general measurement variation. However, the decrease in the RNA samples was considerably larger.
+
+One important limitation is that the DNA samples were **reference samples, not DNA samples treated with RNase H**. Therefore, this experiment should not be described as proving absolute RNase H specificity. Instead, the results are **consistent with RNase H-mediated degradation of the RNA target contributing strongly to the decrease in fluorescence**.
+
+### Comparison across probe designs
+
+The RNA-associated fluorescence decrease was observed across all four miRNA-223 probe designs. The corresponding DNA reference decreases were substantially smaller.
+
+<DataTable
+  head={["Probe design", "RNA-associated decrease (0–30 min)", "DNA reference decrease (0–30 min)"]}
+  rows={[
+    ["Original v2", "71.9%", "24.8%"],
+    ["1 bp modification", "64.6%", "15.5%"],
+    ["Stem −2 bp", "68.9%", "21.3%"],
+    ["3′ end −2 bp", "72.5%", "18.1%"],
+  ]}
+/>
+
+<WikiFigure src="/images/Experiments%20fluorescence%20remaining%20after%20RNase%20H.png" caption="Fluorescence remaining after 30 minutes during the RNase H experiment. RNA + RNase H samples retained only approximately 27–35% of their initial fluorescence across all four probe designs, whereas DNA reference samples retained approximately 75–85%. This shows that RNA-associated fluorescence decreased substantially more than the DNA reference signal." width="lg" />
+
+This comparison shows that the strong reduction in RNA-associated fluorescence was consistent across all four probe designs. After 30 minutes, the RNA + RNase H samples retained only approximately **27–35% of their initial fluorescence**, while the DNA reference samples retained approximately **75–85%**. This indicates that the RNA-associated signal was reduced much more strongly than the DNA reference signal across every probe design.
+
+The 3′-end-2-bp-shortened sensor showed the lowest remaining RNA-associated fluorescence at approximately **27.5%**, although the differences between the four RNA probe designs were relatively small. Without additional statistical testing and independent experimental repeats, this should not be interpreted as evidence that it was definitively the best design for RNase H-mediated resetting.
+
+### Was the signal completely reset?
+
+Although RNase H caused a strong reduction in fluorescence, the signal did **not return fully to the no-target level**. For the selected 3′-end-2-bp-shortened probe, mean fluorescence decreased to approximately **7,279 RFU after 30 minutes**, compared with approximately **2,651 RFU** for the no-target control.
+
+This shows that RNase H produced substantial signal reduction, but not a complete return to the original low-fluorescence state. The remaining fluorescence could be due to incomplete RNA degradation or some probes remaining in an open or partially open conformation after cleavage. The fluorescence data alone cannot distinguish between these possibilities.
+
+However, to determine whether the sensor could actually be reused, it was necessary to test whether the probe remained functional after RNase H treatment. Fresh **ssDNA miR-223** was therefore added to the previously RNase H-treated samples, and fluorescence was measured again over 30 minutes.
+
+<WikiFigure src="/images/Experiments%20ssDNA%20re-addition%20after%20RNase%20H.png" caption="Fluorescence response after ssDNA miR-223 re-addition following RNase H treatment. All four probe designs showed a renewed increase in fluorescence over 30 minutes; the selected 3′-end-2-bp-shortened probe showed the strongest recovery, from approximately 24,807 RFU to 50,117 RFU." width="lg" />
+
+The renewed increase in fluorescence across all four designs shows that RNase H treatment did not permanently disable the probes. For the selected 3′-end-2-bp-shortened probe, fluorescence increased by approximately **102%** during the re-addition experiment.
+
+Together, these results provide proof-of-concept evidence that the probe can undergo **signal reduction followed by renewed target detection**, supporting its potential for reuse at the molecular fluorescence level.
+
+A limitation is that the second detection step used **ssDNA miR-223 rather than a second miRNA-223 RNA target**, and only one reset/re-detection cycle was tested. Therefore, the experiment demonstrates functional reuse after RNase H treatment, but not yet repeated multi-cycle RNA sensing.
+
+### What we learned
+
+The RNase H experiment provided the strongest evidence for reversible sensor behaviour. RNase H substantially reduced the RNA-associated fluorescence signal, and the subsequent increase following fresh ssDNA miR-223 addition showed that the probes remained functional after treatment. Together, these results provide proof-of-concept evidence for **signal reduction followed by renewed target detection**, although repeated cycles using RNA target would be required to demonstrate full reusable operation.
+
+</Section>
+
+<Section id="exp2-beads" title="Bead-based strand displacement" kicker="15">
+
+### Aim
+
+We also investigated a second potential reset mechanism based on **strand displacement combined with magnetic streptavidin beads**.
+
+The aim was to determine whether replacer strands could be used as part of a bead-based system to manipulate the target-bound sensor and ultimately return it toward a reset state.
+
+Two replacer designs with different invasion-region lengths were tested to compare their ability to promote strand displacement:
+
+<DataTable
+  head={["Replacer design", "Invasion region", "Purpose"]}
+  rows={[
+    [<strong>9 bp replacer</strong>, "9 bp", "Designed to initiate strand displacement of the target-bound sensor"],
+    [<strong>13 bp replacer</strong>, "13 bp", "Designed with a longer invasion region to test whether increased complementarity improved strand displacement"],
+  ]}
+/>
+
+Both DNA- and RNA-target-containing sensor complexes were tested. The main question was: **could the bead-based strand-displacement system produce a clear change in fluorescence consistent with successful sensor resetting?**
+
+### Results
+
+After the bead-processing procedure, fluorescence was monitored for **120 minutes**. For the correctly mapped bead-treated samples, fluorescence remained low and showed **no large time-dependent change**. The approximate mean fluorescence changed from:
+
+- **DNA, 9 bp:** 673 → 656 RFU
+- **DNA, 13 bp:** 677 → 625 RFU
+- **RNA, 9 bp:** 603 → 508 RFU
+- **RNA, 13 bp:** 388 → 315 RFU
+
+These correspond only to relatively small changes across the 120-minute measurement compared with the large responses observed in the previous experiments.
+
+<WikiFigure src="/images/Experiments%20bead%20strand%20displacement.png" caption="Fluorescence following bead-based strand displacement. Mean fluorescence of bead-processed sensor samples containing DNA or RNA target and either the 9 bp or 13 bp replacer was monitored for 120 minutes. Each point represents the mean of three technical replicates. No substantial time-dependent change in fluorescence was observed for any of the four conditions." width="lg" />
+
+The most important observation from this experiment is that **none of the four conditions showed a clear time-dependent fluorescence response that could be interpreted as successful strand displacement during the measurement period**. However, the low absolute fluorescence values also cannot be interpreted as evidence that the sensor had successfully reset, because there was an important experimental limitation during the bead-handling procedure.
+
+According to the experimental observations, a substantial number of beads were likely lost during the washing steps. Because the sensor complexes were expected to be associated with the beads, loss of beads could also have caused loss of sensor from the final samples. Consequently, a final sample with very low fluorescence could result from **successful molecular resetting** or simply from **physical loss of bead-bound sensor**.
+
+Because some bead-bound material may have been lost during washing, the low final fluorescence could not be attributed confidently to strand displacement alone. As a result, this experiment did not provide a definitive measure of reset efficiency.
+
+### Evidence that initial bead binding probably occurred
+
+A later measurement of the **first wash eluate** provided useful supporting information about whether the sensor complexes had initially associated with the magnetic streptavidin beads.
+
+If the sensor complexes had failed to bind to the beads, a substantial amount of fluorescent sensor would be expected to remain in solution and appear in the first wash fraction. Instead, the fluorescence measured in the wash eluates was much lower than in the corresponding no-bead controls.
+
+<WikiFigure src="/images/Experiments%20first%20wash%20eluate.png" caption="Fluorescence in the first wash eluate compared with no-bead controls. The first wash eluates showed substantially lower fluorescence than the corresponding no-bead controls for all four target/replacer conditions. This is consistent with most fluorescent sensor complexes remaining associated with the magnetic streptavidin beads during the initial wash." width="lg" />
+
+The low fluorescence in the first wash eluate therefore suggests that the sensor complexes likely **did initially attach to the beads**. However, this result does not show that the later strand-displacement/reset mechanism itself was successful.
+
+The main limitation appears to have occurred during the later washing steps. Some beads were likely lost during washing, and because the sensor complexes were associated with those beads, this could also have removed sensor from the final samples. As a result, the low fluorescence measured after the complete bead workflow could not be confidently attributed to successful strand displacement alone.
+
+### What we learned
+
+The bead-based experiment therefore produced an **inconclusive result for sensor resetting**, but it still provided useful information about the system.
+
+The wash-elution data suggest that the sensor complexes were capable of associating with the magnetic streptavidin beads. However, losses during the subsequent washing steps made it difficult to determine whether the strand-displacement mechanism successfully regenerated the sensor.
+
+This means that the main issue was not necessarily a failure of the sensor to bind to the beads. Instead, the experiment highlighted the need to improve the **bead-handling and recovery procedure**, for example by increasing bead quantity and reducing bead loss during washing, before the strand-displacement reset mechanism can be evaluated reliably.
+
+Under the conditions tested, RNase H therefore provided clearer evidence of reversible sensor behaviour than the bead-based approach, while the bead experiment identified an important technical limitation that can be addressed in future optimization.
+
+</Section>
+
+<Section id="exp2-conclusion" title="Experiment 2: Overall conclusion" kicker="16">
+
+Together, the three experiments provided several important insights into the behaviour and potential reusability of our miRNA-223 sensing system.
+
+First, the probe remained capable of binding complementary target at **39 °C**, with both ssDNA miR-223 and synthetic miRNA-223 RNA producing fluorescence clearly above the no-target control. This demonstrated that the sensing mechanism remained functional under elevated-temperature conditions.
+
+Second, RNase H treatment produced a strong reduction in RNA-associated fluorescence. After 30 minutes, the RNA + RNase H samples retained only approximately **27–35% of their initial fluorescence**, compared with approximately **75–85% for the DNA reference samples**. Importantly, addition of fresh ssDNA miR-223 after RNase H treatment caused fluorescence to increase again across all four probe designs. This shows that the probes remained capable of responding to a new complementary target after signal reduction and provides proof-of-concept evidence for **reuse of the sensing probe at the molecular fluorescence level**.
+
+Finally, the bead-based strand-displacement experiment produced a more complex result. The bead-treated samples showed low and relatively stable fluorescence, meaning that successful strand-displacement resetting could not be demonstrated directly. However, fluorescence in the **first wash eluate was much lower than in the corresponding no-bead controls**, which is consistent with the sensor complexes initially associating with the magnetic streptavidin beads rather than being immediately lost during the first wash. This suggests that initial bead binding was likely successful, while losses during subsequent washing steps prevented a reliable assessment of the strand-displacement reset itself.
+
+Overall, our results demonstrate that the sensor can function at elevated temperature and identify **RNase H as the most successful reset strategy tested**, since it enabled both substantial signal reduction and renewed target detection. The bead experiments also provided evidence that the sensor complexes can initially associate with magnetic streptavidin beads, but improvements in bead retention and washing are required before the strand-displacement mechanism can be properly evaluated. Together, these results provide a foundation for developing a **reversible and potentially reusable miRNA-223 sensing system**.
 
 </Section>

@@ -4,17 +4,18 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Protocols",
-  description: "Reproducible bench methods for milk prep, binding screens, expression, and strip readout.",
+  description: "Bench methods for AURA's cell-free fluorescence assays: oligo preparation, refolding and QC, binding, 39 °C testing and two reset strategies.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "milk", label: "Milk prep" },
-  { id: "binding", label: "Binding screen" },
-  { id: "expression", label: "Expression" },
-  { id: "strip", label: "Strip readout" },
-  { id: "waste", label: "Waste" },
-];
+  { id: "preparation", label: "Preparation" },
+  { id: "refold", label: "Refold and QC" },
+  { id: "assay", label: "Binding assay" },
+  { id: "temperature", label: "39 °C assay" },
+  { id: "rnaseh", label: "RNase H reset" },
+  { id: "strand-displacement", label: "Strand displacement" },
+]
 
 export default function Page() {
   return (
@@ -22,7 +23,7 @@ export default function Page() {
       kicker="Wet Lab · Protocols"
       accent="signal"
       title="Reproducible methods"
-      lede="Step-by-step protocols with controls, matrix considerations, and waste handling."
+      lede="The steps behind our fluorescence experiments, with the controls and plate-reader settings we used."
       current="/protocols"
       toc={TOC}
     >

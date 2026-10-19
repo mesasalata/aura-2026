@@ -4,16 +4,17 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Sustainability",
-  description: "Animal welfare, antimicrobial stewardship, environment, and SDG alignment for AURA.",
+  description: "How AURA relates to SDGs 2, 3, 9 and 12: earlier mastitis detection for healthier cows, more resilient farms, and more efficient dairy production.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "welfare", label: "Welfare" },
-  { id: "antibiotics", label: "Antibiotics" },
-  { id: "environment", label: "Environment" },
-  { id: "sdgs", label: "SDGs" },
-  { id: "limits", label: "Limits" },
+  { id: "sdg2", label: "SDG 2" },
+  { id: "sdg3", label: "SDG 3" },
+  { id: "sdg9", label: "SDG 9" },
+  { id: "sdg12", label: "SDG 12" },
+  { id: "bigger-picture", label: "Bigger picture" },
+  { id: "references", label: "References" },
 ];
 
 export default function Page() {
@@ -21,8 +22,8 @@ export default function Page() {
     <WikiMdxShell
       kicker="Engagement · Sustainability"
       accent="bio"
-      title="Welfare, environment & the SDGs"
-      lede="How AURA connects to animal health, farm resilience, and responsible antibiotic use - honestly scoped."
+      title="Sustainable Development Goals"
+      lede="Earlier mastitis detection for healthier cows, more resilient farms, and more efficient dairy production."
       current="/sustainability"
       toc={TOC}
     >

@@ -218,7 +218,7 @@ export function StakeholderMap() {
                   outline={isActive}
                   className={cn(
                     "absolute inset-0 h-full w-full transition-[opacity,transform] duration-300 ease-out group-hover:scale-105",
-                    isActive ? "scale-105 opacity-55" : "opacity-30",
+                    isActive ? "scale-105 opacity-90" : "opacity-50",
                   )}
                 />
                 <span className={cn("relative transition-transform duration-300 ease-out group-hover:scale-105", isActive && "scale-110")}>
@@ -249,7 +249,7 @@ export function StakeholderMap() {
         >
           <div className="flex items-center gap-3">
             <span className="relative grid h-11 w-11 shrink-0 place-items-center">
-              <Blob shape={WASH[STAKEHOLDERS.indexOf(current)]} fill={currentHex} className="absolute inset-0 h-full w-full opacity-35" />
+              <Blob shape={WASH[STAKEHOLDERS.indexOf(current)]} fill={currentHex} className="absolute inset-0 h-full w-full opacity-60" />
               <span className="relative scale-[0.78]">{GLYPHS[current.id]}</span>
             </span>
             <h4 className="font-display text-2xl text-ink sm:text-[1.7rem]">{current.role}</h4>

@@ -1,5 +1,11 @@
 <Section id="motivation" title="Motivation" kicker="01">
 
+<Callout title="Proposed design, not built">
+
+This page documents the proposed hardware architecture for AURA. The mechanical and electronic system was designed conceptually and in CAD, but the complete integrated hardware was not constructed or experimentally validated during this iGEM season.
+
+</Callout>
+
 Our hardware design addresses these functions through two connected modules: a sampling assembly that controls liquid delivery and a sensing assembly that converts the response into electronic measurements. Together, these form the hardware concept for AURA.
 
 The design separates the main milk passage from the sampling pathway. A portion of liquid would enter a dedicated sensing chamber, while the main passage remains available for through-flow. Measurements would then be transmitted to the app, avoiding the need for an onboard screen.
@@ -135,7 +141,7 @@ A regulated supply powers the hardware. The microcontroller communicates measure
 
 The DNA probe provides molecular recognition through its intended interaction with complementary miR-223 RNA. The FET provides the electrical transduction interface.
 
-The sensing approach would investigate whether target binding near the active region produces a measurable change in transistor behaviour. The electrical response would be interpreted in the context of the operating conditions and target-recognition system, rather than as a direct identification of mastitis.
+The sensing approach would investigate whether target binding near the active region produces a measurable change in transistor behaviour. The electrical response would be interpreted in the context of the operating conditions and target-recognition system.
 
 ### Readout Circuit
 
@@ -149,7 +155,7 @@ The acquisition front end would condition the signal for digitisation. Its measu
 
 The microcontroller would coordinate acquisition, associate readings with timestamps, and communicate them to the app.
 
-Digitisation could use an internal ADC or additional conversion circuitry. The architecture leaves this implementation open rather than treating a separate external ADC as mandatory.
+Digitisation could use an internal ADC or additional conversion circuitry. The architecture leaves this implementation open.
 
 A regulated supply would support the reader and controller. Sensitive measurement paths would be arranged separately from any future actuator-power wiring.
 

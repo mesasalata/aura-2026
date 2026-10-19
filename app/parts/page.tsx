@@ -4,24 +4,23 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 
 export const metadata: Metadata = {
   title: "Parts",
-  description: "BioBricks and composite parts for AURA biosensor screening and reporter expression.",
+  description: "AURA's seven registry parts: four miR-223 catapult probes and three strand-displacement reset strands, plus the other oligonucleotides we used.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "basic", label: "Basic parts" },
-  { id: "composite", label: "Composites" },
-  { id: "measurement", label: "Measurement" },
-  { id: "contribution", label: "For future teams" },
-];
+  { id: "probes", label: "Probe parts" },
+  { id: "reset", label: "Reset parts" },
+  { id: "oligos", label: "Other oligos" },
+]
 
 export default function Page() {
   return (
     <WikiMdxShell
       kicker="Wet Lab · Parts"
       accent="butter"
-      title="Registry parts & constructs"
-      lede="Sequences, intended use, and characterisation status for every part we submit."
+      title="Registry parts & oligonucleotides"
+      lede="Sequences, modifications and results for the seven DNA parts we submit."
       current="/parts"
       toc={TOC}
     >

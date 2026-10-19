@@ -10,11 +10,12 @@ import { ImpactBeats } from "@/components/home/impact-beats";
 import { ParlourBeat } from "@/components/home/parlour-beat";
 import { SignalBeats } from "@/components/home/signal-beats";
 import { Button } from "@/components/ui/button";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
+import { Stagger, StaggerItem } from "@/components/motion/reveal";
 import { Parallax } from "@/components/motion/parallax";
 import { DbtlWheel } from "@/components/viz/dbtl-wheel";
-import { IdeaCast } from "@/components/viz/art-cast";
+import { IdeaZoom } from "@/components/home/idea-zoom";
 import { ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: {
@@ -57,12 +58,20 @@ export default function HomePage() {
                 lede="SCC is already widely used in dairy farming. The challenge is to produce a signal that could complement existing monitoring approaches rather than simply repeat what they already provide."
               />
             </Parallax>
-            <Stagger className="space-y-3">
-              {DETECTION.map((d) => (
+            <Stagger className="space-y-5">
+              {DETECTION.map((d, i) => (
                 <StaggerItem key={d.name}>
-                  <div className="border-b border-ink/10 py-4">
-                    <p className="font-medium text-ink">{d.name}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-ink-70">{d.limit}</p>
+                  <div
+                    className={cn(
+                      "hand flex gap-4 p-5",
+                      ["bg-butter/70 -rotate-[0.6deg]", "bg-milk rotate-[0.5deg]", "bg-pink-soft/60 -rotate-[0.3deg]"][i % 3],
+                    )}
+                  >
+                    <span className="num-pop bg-milk">{i + 1}</span>
+                    <div>
+                      <p className="font-display text-xl text-ink">{d.name}</p>
+                      <p className="mt-1 leading-relaxed text-ink/80">{d.limit}</p>
+                    </div>
                   </div>
                 </StaggerItem>
               ))}
@@ -74,38 +83,16 @@ export default function HomePage() {
 
       <WaveSeam from={CREAM50} to={INK} />
 
-      <section className="section-dark relative overflow-hidden">
-        <Container size="wide" className="relative py-24">
-          <div className="flex items-center gap-10 lg:gap-16">
-            <Reveal className="min-w-0 flex-1">
-              <Parallax speed={30}>
-                <p className="font-display text-[clamp(1.55rem,2.4vw+0.5rem,2.55rem)] leading-[1.22] tracking-tight text-milk">
-                  What if a biosensor could detect{" "}
-                  <span className="text-aura">signs of the cow&apos;s response to infection</span>?
-                </p>
-              </Parallax>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-milk/70">
-                {IDEA_LINE}
-              </p>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-milk/60">
-                {IDEA_BLURB}
-              </p>
-              <div className="mt-8">
-                {/* <Button asChild variant="signal">
-                  <Link href="/description">
-                    Read the description <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button> */}
-              </div>
-            </Reveal>
-            <Reveal className="relative hidden shrink-0 lg:block">
-              <IdeaCast />
-            </Reveal>
-          </div>
-        </Container>
-      </section>
-
-      <WaveSeam from={INK} to={MILK} />
+      <IdeaZoom
+        title={
+          <>
+            What if a biosensor could detect{" "}
+            <span className="text-aura">signs of the cow&apos;s response to infection</span>?
+          </>
+        }
+        line={IDEA_LINE}
+        blurb={IDEA_BLURB}
+      />
 
       <SignalBeats />
 

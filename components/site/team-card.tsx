@@ -21,7 +21,7 @@ export function TeamCard({ member }: { member: Member }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="hand group relative flex h-full flex-col overflow-hidden border-ink/15 bg-milk p-6 sm:p-7"
+      className="hand group relative flex h-full flex-col overflow-hidden border-ink bg-milk p-6 sm:p-7"
     >
       <div
         className="absolute -right-10 -top-10 h-28 w-28 rounded-full opacity-15 blur-2xl transition-opacity duration-300 group-hover:opacity-35"

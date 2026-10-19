@@ -1,34 +1,100 @@
-<Section id="overview" title="Human practices overview" kicker="01">
+<Section id="overview" title="Human Practices" kicker="01">
 
-AURA only matters if the people who would use it would trust it. Human Practices is how we listened - to farmers, vets, processors, regulators, and consumers - and how that listening changed the design.
+AURA was shaped not only by our laboratory work, but also by conversations with people in different fields. Human Practices helped us test AURA against real-world needs and change the project when our assumptions were wrong.
 
-</Section>
-
-<Section id="approach" title="Our approach" kicker="02">
-
-We ran semi-structured interviews and follow-ups across the dairy value chain. Themes were coded anonymously and mapped to engineering decisions. We did not treat HP as a separate essay - it is part of how the biosensor was scoped.
+On this page we describe who we spoke to, why, and what we learned. How each conversation changed AURA is described on our Integrated Human Practices page.
 
 </Section>
 
-<Section id="map" title="Stakeholder map" kicker="03">
+<Section id="farmers" title="Farmer perspectives" kicker="02">
 
-Select a node to see what we heard and how it changed AURA.
+### Why did we contact them?
 
-<StakeholderMap />
+Between January and February, we spoke with local Swiss dairy farmers to understand whether they would actually find an early mastitis-detection system useful.<sup>[1]</sup>
 
-</Section>
+### What did we learn?
 
-<Section id="themes" title="Cross-cutting themes" kicker="04">
+The farmers we spoke with had relatively small herds and told us that they already took very close individual care of their cows. Some said they only had around one mastitis case per year, so they did not feel that a separate detection system would be worth the cost. They felt that visually noticing changes in the cow was usually enough for them.<sup>[1]</sup>
 
-- **Trust through routine** - fits milking, not the lab
-- **Honest scope** - screen, not diagnosis; antibiotics not automatic
-- **Containment** - no environmental release of engineered material
-- **Plain language** - explain synbio without jargon or fear
+They also told us that a diagnostic system would only become more useful to them if it could detect a much wider range of diseases, rather than mastitis alone.<sup>[1]</sup>
 
 </Section>
 
-<Section id="outreach" title="Outreach" kicker="05">
+<Section id="baumert" title="Amandine Baumert" kicker="03">
 
-Beyond interviews, we ran education sessions and shared plain-language explainers. Materials are linked from the Education page.
+### Why did we contact her?
+
+Dr Baumert is a veterinarian who works with Cattle Health Switzerland (RGS) at their Berne location. She focuses on creating sustainable agricultural development through prioritising livestock welfare and an interdisciplinary approach to veterinary medicine. RGS works in cooperation with the Swiss Livestock Health Association (NTGS) as a large non-profit cattle health organisation to promote cattle and calf health, economic cattle farming and cattle welfare in Switzerland through support to farmers and veterinarians.<sup>[2]</sup>
+
+This organisation’s goals are not only synonymous with the aim of our diagnostic, but they also enable the organisation to have contact with the farmers and vets who would be using our product. By contacting [RGS-NTGS](https://www.rgs-ntgs.ch/) we were able to ask questions to the stakeholders in the market for our product.
+
+### What did we learn?
+
+At the moment, veterinarians and farmers rely on lab analysis and PCR of milk samples to diagnose mastitic infections and similar disorders. However, rapid PCR does not provide a comprehensive analysis of the bacterial cause. This can create difficulties when generating treatment plans, as not all bacterial strains are treated with antibiotics, to avoid creating resistant bacteria. Additionally, these tests cost around 30 CHF per sample, contributing to large economic costs for farmers struggling with a mastitis outbreak. Many large industry milking machines already use conductivity readers to detect mastitis 1–2 days prior to physiological presentation, so our device would interest veterinarians and medium-sized milking parlours.<sup>[3]</sup>
+
+</Section>
+
+<Section id="romano" title="Alicia Romano" kicker="04">
+
+### Why did we contact her?
+
+She is a **PhD student at Agroscope**, based in the **Food Microbial Systems** unit. She is also enrolled in the **Graduate School of Cellular and Biomedical Sciences at the University of Bern**. She was selected as a 2023 National Mastitis Council scholarship winner, recognized for her research detecting the *adlb* gene as a marker for contagiousness in *S. aureus* mastitis, with her PhD focusing on detecting antibiotic-resistant genes in bacteria and discovering the correlation between bacteria found in the mammary gland and in the surrounding environment. Alicia Romano is a specialist with extensive knowledge of mastitis and *S. aureus*, allowing us to discuss and evolve our ideas with a specialist in the field.<sup>[4]</sup>
+
+### What did we learn?
+
+There are many qualitative tests farmers can run on-site when cattle present with clinical mastitis; milk qualities visibly change: colour, viscosity, and turbidity. As such, clinical cases often require microanalysis of milk samples to determine which bacterial cultures are present and if they are active. Determining the bacteria type is crucial for correctly prescribing antibiotics, but microanalysis is costly and takes time. The industry would benefit mostly from a differentiating diagnostic: a tool that can assert the type of bacteria. This would allow farmers to take the proper precautionary measures depending on whether the bacteria are contagious or environmental, preventing further spread.<sup>[5]</sup>
+
+</Section>
+
+<Section id="nakatsuka" title="Nako Nakatsuka" kicker="05">
+
+### Why did we contact her?
+
+Dr. Nako Nakatsuka is a researcher at EPFL whose work sits at the intersection of bioelectronics, nanotechnology, and neurochemistry. A major theme of her work is using field-effect transistor (FET)-based sensors for neurotransmitter quantification. Her expertise in using bio-FET sensors for quantification of biomolecules was valuable to our project, allowing our team to discuss our design with a professional who understands all the nuances of using these sensors. We contacted Dr. Nakatsuka to collaborate on the design of our DNA catapult strands and how to best engineer their attachment to the surface for optimal sensitivity and specificity.<sup>[6]</sup>
+
+### What did we learn?
+
+In our discussion we learnt about the significance of Debye length on the sensitivity of the detection tool. She helped us to understand how to design our catapult, giving us insight on how long the stems and loops should be to associate and dissociate independent of external influence. Additionally, she helped us to identify a crucial error in the calibration of our output signal: the influence of free ions, which are highly present in raw milk.<sup>[7]</sup>
+
+</Section>
+
+<Section id="meyer" title="Pitt Meyer" kicker="06">
+
+### Why did we contact him?
+
+Pitt Meyer is an EPFL-based doctoral advisor and PhD student who supported our team on the *practical engineering and experimental planning* side of building and validating our biosensor concept. He has experience with the iGEM competition and worked with us on the past project.<sup>[8]</sup>
+
+### What did we learn?
+
+We learnt a lot from our meetings with Pitt Meyer; he assisted us in designing our DNA, running simulations on software we were unable to access and providing general guidance. Pitt helped us translate our “DNA catapult / hairpin” sensing idea into something testable in the lab, guiding decisions around sequence design (e.g., stem/loop length trade-offs for reversible binding), how to generate and compare multiple design variants, and how to structure early experiments so we could detect a clear signal before doing heavy optimization. Pitt also explained to us and brainstormed how to design catapult strands, teaching us the skills to produce nucleic acid designs in the future.<sup>[8]</sup>
+
+</Section>
+
+<Section id="reatch" title="Dea Mariette Müller and Hannah Schoch at Reatch" kicker="07">
+
+### Why did we contact them?
+
+Reatch is a Swiss, non-partisan science–society think tank and association that works to bring scientific evidence more directly into public discussion and political decision-making. They do this by running projects and training programs that help researchers and students communicate science clearly, engage with media and policy processes, and create platforms and events where science, society, and politics can interact constructively. Hannah and Dea are board members at Reatch and discussed the potential ways we could collaborate to develop educational plans and outreach programs.<sup>[9,10]</sup>
+
+</Section>
+
+<Section id="responsible" title="Responsible implementation" kicker="08">
+
+AURA is intended as a screening tool, not a veterinary diagnosis. A positive signal will act as a good warning for mastitis, which is very helpful to prompt further investigation. The final system would also fit into routine milking with minimal additional work for farmers. Our experimental work was cell-free and in vitro, with no animal or environmental release.
+
+</Section>
+
+<Section id="references" title="References" kicker="09">
+
+1. Local Swiss dairy farmers. Consultations with the AURA team, January–February 2026.
+2. Rindergesundheit Schweiz (RGS). “Über uns” and “Team.” RGS describes itself as a Swiss non-profit cattle-health organization supporting farmers and veterinarians and lists Amandine Baumert among its Bern-based veterinary staff. [rgs-ntgs.ch](https://www.rgs-ntgs.ch/Ueber-uns)
+3. Amandine Baumert, Rindergesundheit Schweiz (RGS). Zoom consultation with the AURA team, 2026.
+4. National Mastitis Council. “National Mastitis Council Names its 2023 Scholars,” 2022; Romanò, A., et al. “Staphylococcus aureus From Goats Are Genetically Heterogeneous and Distinct to Bovine Ones.” *Frontiers in Veterinary Science* 7 (2020): 628. [nmconline.org](https://www.nmconline.org/2022/08/22/national-mastitis-council-names-its-2023-scholars/)
+5. Alicia Romano, Agroscope. Zoom consultation with the AURA team, April 14, 2026.
+6. EPFL Laboratory of Chemical Nanotechnology (CHEMINA). “Meet the Team”; Nakatsuka, N., et al. “Aptamer-field-effect transistors overcome Debye length limitations for small-molecule sensing.” *Science* 362, no. 6412 (2018): 319–324. DOI: 10.1126/science.aao6750. [epfl.ch](https://www.epfl.ch/labs/chemina/meet-the-team/)
+7. Nako Nakatsuka, EPFL. Zoom consultation with the AURA team, April 21, 2026.
+8. Pitt Meyer, EPFL. Multiple Zoom consultations with the AURA team, May 2026.
+9. Reatch! Research. Think. Change. Reatch describes itself as an independent Swiss science-oriented organization working at the interface of science, society, and politics through public dialogue, publications, workshops, and training. [reatch.ch](https://reatch.ch/files/Mehrfachausschreibung_Vorstand.pdf)
+10. Dea Mariette Müller and Hannah Schoch, Reatch. Zoom consultation with the AURA team, June 2026.
 
 </Section>

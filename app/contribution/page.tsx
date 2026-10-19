@@ -5,27 +5,26 @@ import { WikiMdxShell } from "@/components/site/wiki-mdx-shell";
 export const metadata: Metadata = {
   title: "Contribution",
   description:
-    "Parts, protocols, design frameworks, and lessons AURA leaves for future iGEM teams and researchers.",
+    "Registry parts, a fluorescence characterization workflow, reset experiments and software that AURA leaves for future iGEM teams.",
 };
 
 const TOC = [
   { id: "overview", label: "Overview" },
-  { id: "parts", label: "Parts" },
-  { id: "protocols", label: "Protocols" },
-  { id: "framework", label: "Design framework" },
-  { id: "software", label: "Software" },
-  { id: "hp", label: "Human practices" },
-  { id: "lessons", label: "Lessons" },
-  { id: "collaboration", label: "Collaboration" },
-];
+  { id: "probes", label: "miR-223 probes" },
+  { id: "characterization", label: "Characterization" },
+  { id: "rna", label: "RNA validation" },
+  { id: "reset", label: "Reset and reuse" },
+  { id: "software", label: "UdderNet" },
+  { id: "future", label: "For future teams" },
+]
 
 export default function ContributionPage() {
   return (
     <WikiMdxShell
       kicker="Project · Contribution"
       accent="signal"
-      title="What we leave for the next team"
-      lede="Registry parts, reproducible methods, stakeholder-informed design frameworks, and the dead ends we documented so you do not have to hit them."
+      title="Reusable parts, methods, and software for nucleic-acid biosensing"
+      lede="Seven registry parts, a fluorescence workflow for comparing probes, two documented reset strategies, and open-source software."
       current="/contribution"
       toc={TOC}
     >

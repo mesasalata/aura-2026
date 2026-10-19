@@ -1,147 +1,355 @@
-<Section id="design-1" title="Design 1" kicker="01">
+<Section id="rationale" title="Rationale" kicker="01">
 
-The catapult probe developed by Park *et al.* was originally designed to detect **miR-21**. Binding of the target miRNA causes a conformational change in the DNA structure, which can alter the surface potential detected by a field-effect transistor (FET). 1-s2.0-S1385894725006059-main
+We used iterative Design–Build–Test–Learn cycles to adapt a DNA catapult probe for miR-223 detection, improve its fluorescence response, validate it with RNA at 39 °C, and investigate two approaches for resetting the sensor.
 
-For this project, the target was **miR-223**, a biomarker being investigated for mastitis detection. The original miR-21 recognition region therefore had to be adapted to recognize miR-223 while maintaining the overall catapult structure.
+miR-223 was identified as a promising biomarker for bovine mastitis because its concentration in milk has been reported to change in association with the inflammatory response to mastitis.<sup>[1]</sup> This provides a potential molecular target for the development of a rapid diagnostic system.
 
-The sequences of miR-21 and miR-223 were compared, and the target-recognition region of the original catapult was replaced with a sequence complementary to miR-223. Two initial miR-223 designs were produced, including one designed to preserve the geometry of the original catapult as closely as possible.
+Previous work by Nakatsuka *et al.* demonstrated the use of surface-immobilized DNA probes with field-effect transistor (FET) sensing.<sup>[2]</sup> Binding of a complementary nucleic-acid target can alter the local charge environment near the sensor surface, producing an electrical response that the FET is able to detect.
 
-***[ADD FIGURE: diagram comparing the original miR-21 catapult with the adapted miR-223 catapult. Highlight the region that was replaced.]***
-
-***[ADD TABLE OR SEQUENCES: original miR-21 target, miR-223 target, original catapult sequence and adapted miR-223 sequence.]***
+Based on this principle, the proposed detection system was designed to recognize miR-223 in milk through target-specific nucleic-acid binding and convert this interaction into a measurable signal.
 
 </Section>
 
-<Section id="build-1" title="Build 1" kicker="02">
+<Section id="cycle-1" title="Cycle 1: Adapting the catapult probe to miR-223" kicker="02">
 
-The adapted miR-223 catapult sequences were designed **in silico**. Their predicted secondary structures were then analyzed using **RNAfold**.
+### Design 1
 
-RNAfold was used to determine whether changing the target-recognition region disrupted the stem-loop structure required for the catapult mechanism.
+The catapult probe developed by Park *et al.* was originally designed to detect miR-21. Binding of the target miRNA causes a conformational change in the DNA structure, which can alter the surface potential detected by a field-effect transistor (FET).<sup>[3]</sup>
 
-***[ADD: exact RNAfold settings used, if recorded - e.g. temperature and any other parameters you deliberately changed. Do not add conditions that were not actually used.]***
+For this project, the target was miR-223, a biomarker being investigated for mastitis detection. The original miR-21 recognition region therefore had to be adapted to recognize miR-223 while maintaining the overall catapult structure.
 
-</Section>
+The sequences of miR-21 and miR-223 were compared, and the target-recognition region of the original catapult was replaced with a sequence complementary to miR-223. We kept the catapult architecture the same, but replaced the target-recognition sequence.
 
-<Section id="test-1" title="Test 1" kicker="03">
+<DataTable
+  head={["Sequence", "5′ → 3′"]}
+  rows={[
+    ["miR-21 DNA target (Park’s original system)", <code>TAGCTTATCAGACTGATGTTGA</code>],
+    ["Original miR-21 recognition region", <code>TCAACATCAGTCTGATAAGCTA</code>],
+    ["miR-223 DNA target", <code>TGTCAGTTTGTCAAATACCCCA</code>],
+    ["miR-223 recognition region", <code>TGGGGTATTTGACAAACTGACA</code>],
+  ]}
+/>
 
-The predicted secondary structure of the adapted miR-223 catapult was compared with that of the original catapult design.
+The rest of the catapult structure remained the same.
 
-The RNAfold predictions showed that the adapted miR-223 sequence retained the intended **stem-loop/catapult architecture**, indicating that replacement of the target-recognition region did not prevent formation of the required structure.
+### Build 1
 
-***[ADD FIGURE: RNAfold prediction of original catapult.]***
+The original miR-21 catapult sequence was adapted by replacing its target-recognition region with a sequence complementary to miR-223, producing the miR223CatapultDesign_v2.
 
-***[ADD FIGURE: RNAfold prediction of adapted miR-223 catapult. Put these side-by-side if possible.]***
+The original miR-21 catapult and adapted miR-223 catapult were computationally modeled both in the absence and presence of their respective target miRNAs. Simulations were carried out at 25 °C, 150 mM Na⁺ and 2 mM Mg²⁺, with each strand modeled at a concentration of 1 µM.
 
-***[ADD DATA if available: predicted minimum free energy (MFE) or other RNAfold output for each design. If you did not record/use these values, do not invent them.]***
+### Test 1
 
-At this stage, the results provided **computational evidence for the structural feasibility of the adapted design**, rather than experimental confirmation of miR-223 binding.
+The predicted structures of the adapted miR223CatapultDesign_v2 were compared with those of the original miR-21 catapult, both in the absence and presence of their respective target miRNAs.
 
-</Section>
+The original catapult formed the expected stem-loop structure with a predicted free energy of −12.92 kcal/mol, while the adapted miR-223 probe formed a closely comparable structure with a predicted free energy of −13.91 kcal/mol.
 
-<Section id="learn-1" title="Learn 1" kicker="04">
+In the presence of their respective targets, the original miR-21 system had a predicted free energy of −30.79 kcal/mol, while the adapted miR-223 system had a predicted free energy of −30.91 kcal/mol.
 
-The RNAfold predictions suggested that the miR-21 recognition region could be replaced with a miR-223 recognition sequence **without disrupting the intended catapult structure**. A complete redesign of the probe was therefore unnecessary.
+<DataTable
+  head={["Structure", "Predicted free energy (kcal/mol)"]}
+  rows={[
+    ["Original catapult", "−12.92"],
+    ["Original catapult + miR-21", "−30.79"],
+    ["miR223CatapultDesign_v2", "−13.91"],
+    ["miR223CatapultDesign_v2 + miR-223", "−30.91"],
+  ]}
+/>
 
-However, the next objective was not only to detect miR-223, but eventually to **remove the bound target so that the sensor could be reset and reused**. Strong base-pairing between miR-223 and the probe could make this removal more difficult.
+These results suggested that replacing the miR-21 recognition region with a sequence complementary to miR-223 preserved the intended catapult structure and allowed formation of a stable target-bound complex. At this stage, this provided computational evidence for the feasibility of the adapted design.
 
-The next design cycle therefore focused on **modifying selected base-paired regions of the probe**. The aim was to make the target easier to remove while maintaining the structural change required for detection.
+### Learn 1
 
-***[ADD SMALL ARROW/DIAGRAM: “Cycle 1 result → catapult structure retained → Cycle 2: reduce base-pairing to improve target removability.”]***
+The NUPACK predictions suggested that the miR-21 recognition region could be replaced with a miR-223 recognition sequence without disrupting the intended catapult structure. A complete redesign of the probe was therefore unnecessary.
 
-</Section>
+However, the next objective was not only to detect miR-223, but eventually to remove the bound target so that the sensor could be reset and reused. Strong base-pairing between miR-223 and the probe could make this removal more difficult.
 
-<Section id="design-2" title="Design 2" kicker="05">
-
-Following Cycle 1, the adapted miR-223 catapult was predicted to retain the intended stem-loop structure. The next engineering goal was to make the sensor **reusable**.
-
-After detection, miR-223 would need to be removed from the catapult so that the probe could return to its original state. Strong base-pairing between the target and probe could make this removal difficult. Several variants were therefore designed with changes to selected base-paired regions, with the aim of making future target removal easier **without preventing the probe from responding to miR-223**.
-
-The variants selected for experimental testing were:
-
-- the baseline **miR223CatapultDesign_v2**;
-- a probe with **1 bp replaced in the invasion region**;
-- a probe with the **stem shortened by 2 bp**; and
-- a probe with the **3′ end shortened by 2 bp**.
-
-***[ADD FIGURE: show the four probe structures/sequences side-by-side and highlight exactly which base pairs were changed in each.]***
-
-***[ADD 1–2 SENTENCES explaining why each specific region was chosen for modification, if this was recorded by the team.]***
-
-</Section>
-
-<Section id="build-2" title="Build 2" kicker="06">
-
-To experimentally compare the designs, the probes were synthesized with a **BHQ-1 quencher** and **6-FAM fluorophore** positioned at opposite ends of the catapult sequence.
-
-In the closed state, the fluorophore and quencher remain close together, producing low fluorescence. Opening of the probe separates them, allowing fluorescence to increase. This provided a simple way to test whether the modified catapult designs could still respond to the target before integration with the FET.
-
-A synthetic **DNA analogue of miR-223** was used as the target in this first experimental comparison to reduce experimental complexity. The catapult probes were tested at a final concentration of **100 nM** in **1× PBS supplemented with 5 mM MgCl₂**, with fluorescence monitored for **120 minutes at 30.3°C**.
-
-***[ADD FIGURE: simple diagram showing closed FAM–BHQ probe → target binds → probe opens → fluorescence increases.]***
-
-***[ADD TABLE: exact probe and target sequences. You already have these data.]***
+The next design cycle therefore focused on modifying selected base-paired regions of the probe. The aim was to make the target easier to remove while maintaining the structural change required for detection.
 
 </Section>
 
-<Section id="test-2" title="Test 2" kicker="07">
+<Section id="cycle-2" title="Cycle 2: Designing for future reuse" kicker="03">
 
-Each catapult variant was exposed to the synthetic miR-223 DNA target and its fluorescence response was measured over 120 minutes.
+### Design 2
 
-The fluorescence measurements showed clear differences between the probe designs. Performance was compared using the signal-to-noise ratio (SNR).
+The next engineering goal after the adapted miR-223 catapult was predicted to keep the intended stem-loop structure was to support future sensor reuse.
 
-<table>
-  <thead>
-    <tr>
-      <th>Catapult design</th>
-      <th>SNR</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Baseline miR-223 v2</td>
-      <td>6.73</td>
-    </tr>
-    <tr>
-      <td>Stem 2 bp shorter</td>
-      <td>11.81</td>
-    </tr>
-    <tr>
-      <td>Invasion region 1 bp replaced</td>
-      <td>15.59</td>
-    </tr>
-    <tr>
-      <td>3′ end 2 bp shorter</td>
-      <td><strong>17.96</strong></td>
-    </tr>
-  </tbody>
-</table>
+After detection, miR-223 would need to be removed from the catapult so that the probe could return to its original state. Strong base-pairing between the target and probe could make this removal difficult. Several variants were therefore designed with changes to selected base-paired regions, with the aim of making future target removal easier without preventing the probe from responding to miR-223.
 
-The **3′-end 2-bp-shorter probe produced the highest SNR of 17.96**, compared with 6.73 for the baseline miR-223 design. This represented approximately a **2.7-fold increase in SNR**.
+To explore how reducing or altering base-pairing might improve future target removal, a larger set of miR-223 catapult variants was designed and evaluated computationally. The variants altered either the stem length, the length of the 3′ invasion region, or individual bases within the invasion region.
 
-***[ADD GRAPH: SNR of the four miR-223 probe variants. This is probably the most important figure in this cycle.]***
+<DataTable
+  head={["Design", "Modification", "Status"]}
+  rows={[
+    ["miR223CatapultDesign_v2", "Baseline miR-223 design", "Tested"],
+    ["mir223CatapultDesign_v2_stem1bpShorter", "Stem shortened by 1 bp", "Simulated only"],
+    ["mir223CatapultDesign_v2_stem2bpShorter", "Stem shortened by 2 bp", "Tested"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion1bpShorter", "3′ end of invasion region shortened by 1 bp", "Simulated only"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion2bpShorter", "3′ end of invasion region shortened by 2 bp", "Simulated only"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion3bpShorter", "3′ end of invasion region shortened by 3 bp", "Simulated only"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion1bpReplaced", "1 bp replaced in the 3′ invasion region", "Tested"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion2bpReplaced", "2 bp replaced in the 3′ invasion region", "Simulated only"],
+    ["mir223CatapultDesign_v2_3primEndOfInvasionRegion3bpReplaced", "3 bp replaced in the 3′ invasion region", "Simulated only"],
+    ["mir223CatapultDesign_v2_PatsDesign", "Shifted alternative design", "Simulated only"],
+    ["miR223CatapultDesign_v2_3primEnd2bpShorter", "3′ end shortened by 2 bp", "Tested"],
+  ]}
+/>
 
-***[ADD GRAPH: fluorescence vs time for the different probe variants, if the curves are clear enough to compare.]***
+The variants used three modification strategies: shortening the stem, shortening the 3′ end of the invasion region, or replacing bases within the invasion region. Shortening the stem was intended to reduce the overall stability of the closed structure, while shortening or replacing bases within the invasion region was intended to reduce the stability of target binding. These changes were designed to make later removal of miR-223 easier while retaining enough complementarity for target-induced opening.
 
-***[ADD ERROR BARS / replicate information if available. Your results table already contains mean fluorescence and SD for some conditions.]***
+### Build 2
 
-The results demonstrated that reducing or altering base-pairing in selected regions did **not prevent the catapult from responding to the target**. In fact, several modified designs produced a stronger signal relative to background than the baseline probe.
+Four probe designs were selected for experimental testing: the baseline miR223CatapultDesign_v2, the stem −2 bp variant, the 1-bp invasion-region replacement, and the 3′-end-2-bp-shorter variant. The first three came from the original computational screening, while the 3′-end-2-bp-shorter design was added subsequently.
 
-Importantly, this experiment tested **detection performance**, not target removal itself. Whether the shortened design actually makes miR-223 easier to remove was therefore left for a later engineering cycle.
+Each probe contained a BHQ-1 quencher and 6-FAM fluorophore. In the closed catapult, FAM and BHQ-1 would be close together, so the quencher would suppress fluorescence. When the target opens the probe, their separation increases, allowing fluorescence to be detected.
+
+<DataTable
+  head={["Oligonucleotide", "Sequence (5′ → 3′)", "Modification"]}
+  rows={[
+    ["miR223_DNA", <code>TGTCAGTTTGTCAAATACCCCA</code>, "None"],
+    ["miR223CatapultDesign_v2", <code>TGGGGTATTTGACAAACTGACACGCGTCAAATACCCCA</code>, "5′ BHQ-1, 3′ 6-FAM"],
+    ["miR223CatapultDesign_v2_3primEndOfInvasionRegion1bpReplaced", <code>TGGGGTATTTGACAAACTGACTCGCGTCAAATACCCCA</code>, "5′ BHQ-1, 3′ 6-FAM"],
+    ["miR223CatapultDesign_v2_stem2bpShorter", <code>GGGTATTTGACAAACTGACACGCGTCAAATACCC</code>, "5′ BHQ-1, 3′ 6-FAM"],
+    ["miR223CatapultDesign_v2_3primEnd2bpShorter", <code>TGGGGTATTTGACAAACTGACACGCTGTCAAATACCC</code>, "5′ BHQ-1, 3′ 6-FAM"],
+  ]}
+/>
+
+A synthetic DNA analogue of miR-223 was used as the target for this first experimental test. Probes were tested at a final concentration of 100 nM in 1× PBS with 5 mM MgCl₂, and fluorescence was monitored for 120 minutes at 30 °C.
+
+<WikiFigure src="/images/Engineering%20catapult%20opening%20diagram.png" caption="Fluorescence-based validation of catapult opening. In the closed probe, 6-FAM is quenched by BHQ-1. Target binding opens the probe, separating the fluorophore and quencher and increasing fluorescence." width="md" />
+
+### Test 2A: computational screening
+
+The designed variants were first evaluated computationally under the same conditions used in Cycle 1 (25 °C, 150 mM Na⁺, 2 mM Mg²⁺, 1 µM strands). The screened variants were predicted to retain the required hairpin structure in the absence of miR-223. Their predicted behavior in the presence of miR-223 was then compared using secondary-structure predictions and species-distribution analysis.
+
+The simulations predicted that the screened designs could bind miR-223 effectively, so they were taken forward for experimental testing.
+
+<WikiFigure src="/images/Engineering%20species%20distribution.png" caption="Predicted species distribution of selected miR-223 catapult variants in the presence of miR-223. Simulations were performed at 25 °C, 150 mM Na⁺, 2 mM Mg²⁺, with 1 µM input strands. Each selected construct was predicted to form predominantly the intended probe–miR-223 complex, with little predicted unbound or side-product species." width="lg" />
+
+The 3′-end-2-bp-shorter design was chosen later, so it was not part of the original computational screening.
+
+### Test 2B: experimental validation
+
+Each of the four miR-223 catapult variants was exposed to the synthetic miR-223 DNA target, and fluorescence was monitored over 120 minutes. Probe performance was compared using the signal-to-noise ratio (SNR):
+
+<DataTable
+  head={["Catapult design", "SNR"]}
+  rows={[
+    ["Baseline miR223CatapultDesign_v2", "6.73"],
+    ["Stem −2 bp", "11.81"],
+    ["1 bp invasion-region replacement", "15.59"],
+    [<strong>3′ end −2 bp</strong>, <strong>17.96</strong>],
+  ]}
+/>
+
+The 3′-end-2-bp-shorter probe produced the highest SNR of 17.96, compared with 6.73 for the baseline design. This represented an approximately 2.7-fold increase in SNR. The same design also produced a mean fluorescence of 22,130 ± 491 RFU, compared with 16,716 ± 64 RFU for the baseline probe, which is consistent with its improved signal-to-background performance.
+
+The results showed that reducing or altering base-pairing in selected regions did not prevent the catapult from responding to the target. In fact, several modified designs produced a stronger signal relative to background than the baseline probe.
+
+Importantly, this experiment tested detection performance, not target removal itself. Whether the shortened design actually makes miR-223 easier to remove was therefore left for a later engineering cycle.
+
+### Learn 2
+
+The experiment showed that the probe could be modified to support future sensor reuse without losing its ability to detect the target.
+
+Of the designs tested, the 3′-end-2-bp-shorter probe performed best, producing the strongest signal relative to background. It was therefore selected for further development.
+
+This was useful because the probe had originally been shortened to make target removal easier. The modification not only maintained detection, but also improved the fluorescence response under these conditions.
+
+However, two major questions remained. The experiment had used a synthetic DNA analogue rather than actual miR-223 RNA, and the assay conditions did not yet represent the intended operating conditions of the final milk sensor.
+
+The next engineering cycle therefore carried the 3′-end-2-bp-shorter probe forward to determine whether it could function with actual miR-223 and under conditions closer to those expected during mastitis testing.
 
 </Section>
 
-<Section id="learn-2" title="Learn 2" kicker="08">
+<Section id="cycle-3" title="Cycle 3: Validating the lead probe with miR-223 RNA at 39 °C" kicker="04">
 
-The experiment showed that modifications intended to support future sensor regeneration could be introduced **without losing the catapult's ability to respond to the target**.
+### Design 3
 
-Among the tested variants, the **3′-end 2-bp-shorter design** produced the strongest signal relative to background and was therefore selected as the lead architecture for continued development.
+Cycle 2 identified the 3′-end-2-bp-shortened probe as the strongest-performing design in the fluorescence assay. However, that experiment used a synthetic DNA analogue of miR-223 and was performed under conditions that did not fully represent the intended use of the sensor.
 
-This result was particularly useful because shortening the probe had initially been introduced to make future target removal more feasible, yet the modification also maintained - and under these assay conditions improved - the measurable fluorescence response.
+The final sensor is intended to detect miR-223 in milk shortly after milking. Milk leaving the udder is expected to be relatively warm, so a higher temperature could potentially weaken nucleic-acid hybridization and reduce probe opening.
 
-However, two major questions remained. The experiment had used a **synthetic DNA analogue rather than actual miR-223 RNA**, and the assay conditions did not yet represent the intended operating conditions of the final milk sensor.
+The next cycle therefore addressed two questions:
 
-The next engineering cycle therefore carried the **3′-end 2-bp-shorter probe** forward to determine whether it could function with actual miR-223 and under conditions closer to those expected during mastitis testing.
+1. Can the selected probe respond to actual synthetic miR-223 RNA, rather than only a DNA analogue?
+2. Does the sensing mechanism remain functional at approximately 39 °C?
 
-***[ADD SMALL FLOW DIAGRAM: “Best variant = 3′ end 2 bp shorter → selected for Cycle 3 → test with actual miR-223 / relevant temperature.”]***
+The DNA analogue was retained as a reference so that its response could be compared with that of the RNA target.
+
+### Build 3
+
+The selected probe was prepared under three main conditions: probe with no target, probe with complementary miR-223 DNA analogue, and probe with synthetic miR-223 RNA.
+
+Each condition was tested using three technical replicates, and fluorescence was monitored over 30 minutes at 39 °C. The assay used the same FAM/BHQ fluorescence principle established in Cycle 2, where probe opening increases the distance between the fluorophore and quencher and therefore increases fluorescence.
+
+<DataTable
+  head={["Condition", "Probe final concentration", "Target final concentration", "Replicates", "Temperature", "Time"]}
+  rows={[
+    ["Probe only", "100 nM", "0 nM", "3", "39 °C", "30 min"],
+    ["Probe + miR-223 DNA analogue", "100 nM", "100 nM", "3", "39 °C", "30 min"],
+    ["Probe + synthetic miR-223 RNA", "100 nM", "100 nM", "3", "39 °C", "30 min"],
+  ]}
+/>
+
+### Test 3
+
+The no-target control remained at low fluorescence throughout the measurement period, decreasing slightly from approximately 3,164 RFU to 2,828 RFU.
+
+The complementary DNA target produced a much larger response, increasing from approximately 16,212 RFU to 29,165 RFU over 30 minutes.
+
+Most importantly, synthetic miR-223 RNA also produced a strong fluorescence increase, rising from approximately 4,138 RFU to 20,595 RFU.
+
+<WikiFigure src="/images/Experiments%20miR-223%20detection%20at%2039C.png" caption="miRNA-223 detection at 39 °C. Fluorescence of the selected probe was measured over 30 minutes in no-target control, complementary DNA target and synthetic miRNA-223 RNA conditions. Three technical replicates are shown for each condition." width="lg" />
+
+The DNA signal was already high at the first recorded measurement. Because probe and target had been mixed before the first plate-reader reading, this should not be interpreted as instantaneous binding at exactly time zero.
+
+The DNA and RNA targets also showed different response patterns. DNA produced a faster and stronger initial signal, whereas RNA fluorescence increased more gradually. The purpose of this experiment, however, was not to demonstrate identical DNA and RNA kinetics, but to determine whether actual miR-223 RNA could still trigger probe opening at 39 °C.
+
+### Learn 3
+
+The experiment showed that increasing the assay temperature to 39 °C did not prevent target-dependent probe opening.
+
+Most importantly, synthetic miR-223 RNA produced a clear fluorescence response above the no-target control, showing that the molecular sensing mechanism was still functional even when moving from the simplified DNA analogue to the intended RNA target.
+
+This result supported continued development of the 3′-end-2-bp-shortened probe and allowed the next engineering question to be addressed: whether the bound RNA could be removed after detection.
+
+</Section>
+
+<Section id="cycle-4" title="Cycle 4: RNase H-mediated removal of bound miR-223" kicker="05">
+
+### Design 4
+
+After demonstrating that miR-223 RNA could open the probe at 39 °C, the next challenge was to determine whether the signal could be reversed.
+
+For a reusable sensor, the probe should ideally be able to return toward its original closed state after detecting a target. If miR-223 remains bound, the sensor would remain in a high-fluorescence state and would be unable to perform repeated measurements.
+
+RNase H was selected as one possible reset mechanism because it cleaves RNA when the RNA is hybridized to complementary DNA. Since miR-223 forms an RNA–DNA hybrid with the catapult probe, degradation of the bound RNA could disrupt the complex and allow the probe to move back toward its closed state.
+
+The engineering question was therefore: **can RNase H reduce the fluorescence generated by bound miR-223 RNA?**
+
+<WikiFigure src="/images/Engineering%20RNase%20H%20reset%20diagram.png" caption="RNase H cleaves the miR-223 RNA bound to the open probe, so the probe can move back toward its closed, quenched state." width="lg" />
+
+### Build 4
+
+The selected 3′-end-2-bp-shortened probe was combined with synthetic miR-223 RNA and treated with RNase H at 39 °C. Reference and control conditions were included to distinguish RNase H-associated changes in fluorescence from background changes.
+
+The experiment was also repeated across the other probe variants to determine whether the same pattern occurred more broadly across the catapult designs.
+
+<DataTable
+  head={["Condition", "Probe", "Target", "RNase H", "Replicates", "Temperature", "Time"]}
+  rows={[
+    ["miR-223 RNA + RNase H", "100 nM", "100 nM miR-223 RNA", "0.4 µL/reaction", "3", "39 °C", "30 min"],
+    ["ssDNA-223 reference", "100 nM", "100 nM ssDNA-223", "None", "3", "39 °C", "30 min"],
+    ["No-target control", "100 nM", "None", "None", "3", "39 °C", "30 min"],
+  ]}
+/>
+
+### Test 4
+
+For the selected 3′-end-2-bp-shortened probe, RNA-associated fluorescence decreased from approximately 26,466 RFU at 0 minutes to 7,279 RFU after 30 minutes, corresponding to a 72.5% decrease. In comparison, the DNA reference decreased by approximately 18.1%, from 37,469 RFU to 30,681 RFU, and the no-target control remained low, changing only from approximately 2,441 RFU to 2,651 RFU.
+
+<WikiFigure src="/images/Experiments%20RNase%20H%20effect.png" caption="Effect of RNase H on miRNA-223 sensor fluorescence. Fluorescence was monitored over 30 minutes for three RNA + RNase H replicates, three DNA reference replicates and three no-target controls using the selected probe design." width="lg" />
+
+The same general pattern was observed across all four miR-223 probe designs:
+
+<DataTable
+  head={["Probe design", "RNA-associated decrease", "DNA reference decrease"]}
+  rows={[
+    ["Original v2", "71.9%", "24.8%"],
+    ["1 bp modification", "64.6%", "15.5%"],
+    ["Stem −2 bp", "68.9%", "21.3%"],
+    ["3′ end −2 bp", "72.5%", "18.1%"],
+  ]}
+/>
+
+<WikiFigure src="/images/Experiments%20fluorescence%20remaining%20after%20RNase%20H.png" caption="Fluorescence remaining after 30 minutes during the RNase H experiment. RNA + RNase H samples retained only approximately 27–35% of their initial fluorescence across all four probe designs, whereas DNA reference samples retained approximately 75–85%." width="lg" />
+
+The RNA-associated decrease was consistently much greater than the decrease observed in the DNA references. After RNase H treatment, addition of fresh ssDNA miR-223 produced a renewed increase in fluorescence, showing that the probe remained capable of responding to a new target after the reset attempt.
+
+One limitation is that the DNA reference samples were not treated with RNase H. Therefore, the experiment does not prove that the larger fluorescence decrease was caused only by RNase H acting on RNA, although the results are consistent with RNase H-mediated degradation of the bound RNA.
+
+### Learn 4
+
+RNase H substantially reduced the fluorescence generated after miR-223 RNA binding, with the selected 3′-end-2-bp-shortened probe showing a 72.5% decrease. This provided proof-of-concept evidence that the target-generated signal could be actively reduced after detection.
+
+However, fluorescence did not return completely to the no-target level, indicating that the sensor had not been fully regenerated. The probe nevertheless remained capable of responding to a new target after the reset attempt.
+
+Because the signal was not fully restored to its original state, the next engineering cycle investigated an alternative strand-displacement-based reset mechanism.
+
+</Section>
+
+<Section id="cycle-5" title="Cycle 5: Strand-displacement reset" kicker="06">
+
+### Design 5
+
+A second reset strategy was designed using toehold-mediated strand displacement. Rather than enzymatically degrading miR-223, this approach aimed to use a complementary DNA strand to invade the target-bound complex and remove the target from the catapult probe.
+
+Two replacer strands were designed with different invasion-region lengths: a 9 bp invasion-region replacer and a 13 bp invasion-region replacer.
+
+The replacer strands were biotinylated so that replacer-associated complexes could potentially be captured using streptavidin beads and removed during washing. After washing, a sensorResetter strand was added, followed by fresh target, to test whether the probe could respond again after the attempted reset.
+
+The purpose of comparing 9 bp and 13 bp invasion regions was to determine whether invasion length influenced the ability of the replacer strand to interact with and remove the bound target.
+
+<WikiFigure src="/images/Engineering%20strand%20displacement%20reset%20diagram.png" caption="A biotinylated replacer strand displaces the bound target, a streptavidin bead captures the replacer complex, and the closed probe is ready for a new target." width="lg" />
+
+<DataTable
+  head={["Strand", "Sequence (5′ → 3′)", "Modification"]}
+  rows={[
+    ["9-bp replacer + 20-bp overhang", <code>ATTTGACAGCGTGTCAGTTTGTCAAATACCCCACAAAAACCAACAAAACACAC</code>, "5′ biotin"],
+    ["13-bp replacer + 20-bp overhang", <code>GTATTTGACAGCGTGTCAGTTTGTCAAATACCCCACAAAAACCAACAAAACACAC</code>, "5′ biotin"],
+    ["sensorResetter", <code>GTGTGTTTTGTTGGTTTTTGTGGGGTATTTGACAAACTGACACGCTGTCAAATAC</code>, "None"],
+  ]}
+/>
+
+### Build 5
+
+Sensor complexes containing either DNA or RNA target were prepared. Each target condition was tested with both the 9 bp and 13 bp replacers, giving four conditions: DNA with 9 bp, DNA with 13 bp, RNA with 9 bp, and RNA with 13 bp.
+
+### Test 5
+
+Following bead processing, all four conditions remained at relatively low fluorescence and showed only small changes over the 120-minute measurement period. Approximate mean fluorescence changed as follows:
+
+<DataTable
+  head={["Condition", "Initial RFU", "Final RFU"]}
+  rows={[
+    ["DNA, 9 bp", "673", "656"],
+    ["DNA, 13 bp", "677", "625"],
+    ["RNA, 9 bp", "603", "508"],
+    ["RNA, 13 bp", "388", "315"],
+  ]}
+/>
+
+No condition showed the large, clear time-dependent fluorescence response that would provide strong evidence of successful strand-displacement resetting.
+
+<WikiFigure src="/images/Experiments%20bead%20strand%20displacement.png" caption="Fluorescence following bead-based strand displacement. Mean fluorescence of bead-processed sensor samples containing DNA or RNA target and either the 9 bp or 13 bp replacer was monitored for 120 minutes. No substantial time-dependent change in fluorescence was observed for any of the four conditions." width="lg" />
+
+Because many beads were likely lost during washing, the low fluorescence after bead processing could not be confidently attributed to successful strand displacement. Some of the signal may simply have been lost with bead-bound sensor.
+
+However, the first wash eluate showed only weak fluorescence compared with controls that were not exposed to beads, suggesting that the sensors had initially attached to the beads. The bead-binding step therefore likely worked, but the subsequent resetting step could not be evaluated conclusively.
+
+<WikiFigure src="/images/Experiments%20first%20wash%20eluate.png" caption="Fluorescence in the first wash eluate compared with no-bead controls. The first wash eluates showed substantially lower fluorescence than the corresponding no-bead controls for all four target/replacer conditions." width="lg" />
+
+### Learn 5
+
+The strand-displacement experiment did not provide conclusive evidence of successful sensor resetting.
+
+The main limitation might not have necessarily been a failure of the molecular mechanism itself, but the bead-handling procedure. Bead-bound material that was lost during washing could have prevented successful resetting from being distinguished from a physical loss of the sensor.
+
+The experiment nevertheless gave us useful information for the next iteration. The weak fluorescence in the initial wash was consistent with initial bead association, suggesting that the bead-binding step may have occurred successfully.
+
+Future optimization should therefore focus on:
+
+- increasing or optimizing bead quantity;
+- improving bead retention and washing to minimize loss of bead-bound sensor;
+- repeating the strand-displacement experiment with controls that directly distinguish molecular resetting from physical sensor loss.
+
+</Section>
+
+<Section id="references" title="References" kicker="07">
+
+1. Mazzilli, M., et al. “Differential Expression of miR-223-3p and miR-26-5p According to Different Stages of Mastitis in Dairy Cows.” *Biomolecules* 15, no. 2 (2025): 235. [https://doi.org/10.3390/biom15020235](https://doi.org/10.3390/biom15020235)
+2. Nakatsuka, N., et al. “Aptamer-Field-Effect Transistors Overcome Debye Length Limitations for Small-Molecule Sensing.” *Science* 362, no. 6412 (2018): 319–324. [https://doi.org/10.1126/science.aao6750](https://doi.org/10.1126/science.aao6750)
+3. Park, J. C., et al. “Catapult-like DNA Actuator for Highly Stable and Ultrasensitive Detection of Urinary miRNA.” *Chemical Engineering Journal* 506 (2025): 159806. [https://doi.org/10.1016/j.cej.2025.159806](https://doi.org/10.1016/j.cej.2025.159806)
 
 </Section>
